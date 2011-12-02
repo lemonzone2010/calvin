@@ -15,10 +15,12 @@ import javax.persistence.Column;
 import javax.persistence.Table;
 
 /**
+ * 
  * A class to map objects to and from solr documents.
  * 
  * @version $Id: DocumentObjectBinder.java 945270 2010-05-17 17:45:18Z rmuir $
  * @since solr 1.3
+ * Xiayong rewirte from solr source code.
  */
 public class HibernateDocBinder {
 	private final Map<Class, List<DocField>> infocache = new ConcurrentHashMap<Class, List<DocField>>();
