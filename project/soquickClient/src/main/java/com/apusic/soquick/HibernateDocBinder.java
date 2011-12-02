@@ -22,6 +22,7 @@ import javax.persistence.Table;
  * @since solr 1.3
  * Xiayong rewirte from solr source code.
  */
+@SuppressWarnings("rawtypes")
 public class HibernateDocBinder {
 	private final Map<Class, List<DocField>> infocache = new ConcurrentHashMap<Class, List<DocField>>();
 	private final static String ID="id";
@@ -71,6 +72,7 @@ public class HibernateDocBinder {
 		SolrInputDocument doc = new SolrInputDocument();
 		for (DocField field : fields) {
 			if (field.dynamicFieldNamePatternMatcher != null && field.get(obj) != null && field.isContainedInMap) {
+				@SuppressWarnings("unchecked")
 				Map<String, Object> mapValue = (HashMap<String, Object>) field.get(obj);
 				for (Map.Entry<String, Object> e : mapValue.entrySet()) {
 					doc.setField(e.getKey(), e.getValue(), 1.0f);
@@ -96,6 +98,7 @@ public class HibernateDocBinder {
 		return fields;
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<DocField> collectInfo(Class clazz) {
 		List<DocField> fields = new ArrayList<DocField>();
 		Class superClazz = clazz;
@@ -340,6 +343,7 @@ public class HibernateDocBinder {
 			return null;
 		}
 
+		@SuppressWarnings("unchecked")
 		<T> void inject(T obj, SolrDocument sdoc) {
 			Object val = getFieldValue(sdoc);
 			if (val == null) {

@@ -3,12 +3,10 @@ package com.apusic.soquick;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
 
 public class SolrServiceTest extends BaseTestCase {
@@ -17,7 +15,7 @@ public class SolrServiceTest extends BaseTestCase {
 	SolrService solrService = new SolrService(url);
 
 	@Test
-	public void testAddHibernateItem()  {
+	public void testAddItem() {
 		ItemH item = new ItemH();
 		item.setId("1230");
 		item.setTitle("测试1111");
@@ -27,7 +25,7 @@ public class SolrServiceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testAddHibernateItem1()  {
+	public void testAddItem1() {
 		ItemH item = new ItemH();
 		item.setId("1231");
 		item.setTitle("测试2222");
@@ -40,12 +38,14 @@ public class SolrServiceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testQueryHibernateItem_Querys(){
-		testAddHibernateItem();
-		
+	public void testQuery() {
+		testDeleteAll();
+		testAddItem();
+		testAddItem1();
+
 		Query query = new Query(ItemH.class, "content", "武汉");
-		// query.and("title", "测试");
-		// query.not("title", "测试");
+		query.and("title", "测试");
+		query.not("title", "2222");
 
 		Calendar calendar = Calendar.getInstance(Locale.US);
 		calendar.set(2010, 1, 1);
@@ -60,9 +60,24 @@ public class SolrServiceTest extends BaseTestCase {
 		assertNotNull(result.getResult());
 		assertTrue("返回的结果数大于0", result.getResult().size() > 0);
 	}
+
+	@Test
+	public void testDeleteAll() {
+		Query query = new Query(ItemH.class, "*", "*");
+		solrService.delete(query);
+	}
+
 	@Test
 	public void testDelete() {
 		Query query = new Query(ItemH.class, "content", "武汉");
+		
+		testAddItem();
+		Page<ItemH> result = solrService.query(query);
+		assertTrue("返回的结果数大于0", result.getResult().size() > 0);
+		
 		solrService.delete(query);
+		
+		result = solrService.query(query);
+		assertTrue("返回的结果数等于0", result.getResult().size() == 0);
 	}
 }
