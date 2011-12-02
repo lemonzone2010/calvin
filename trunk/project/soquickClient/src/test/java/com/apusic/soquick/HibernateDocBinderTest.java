@@ -26,8 +26,6 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
-import junit.framework.TestCase;
-
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -212,6 +210,7 @@ public class HibernateDocBinderTest extends BaseTestCase
 		@Column
 		String id;
 
+		@SuppressWarnings("unused")
 		private boolean inStock;
 		private String aaa;
 
