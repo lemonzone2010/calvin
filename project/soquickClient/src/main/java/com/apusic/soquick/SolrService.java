@@ -42,7 +42,7 @@ public class SolrService {
 
 	}
 
-	// TODO RANG,分组，分页,not,ge等参看lucene语法
+	// TODO 分组，分页,ge等参看lucene语法
 	public <T> Page<T> query(Query q) {
 		Page<T> ret = new Page<T>();
 
@@ -54,7 +54,7 @@ public class SolrService {
 			ret.setNumFound(rsp.getResults().getNumFound());
 			ret.setqTime(Long.valueOf(rsp.getHeader().get("QTime").toString()));
 
-			System.out.println(rsp.getResults());
+			logger.info(rsp.getResults());
 			@SuppressWarnings("unchecked")
 			List<T> beans = getBinder().getBeans(q.getQueryClazz(), rsp.getResults());
 
@@ -87,6 +87,20 @@ public class SolrService {
 		} catch (Exception e) {
 			logger.error("删除SOLR索引出错:" + q, e);
 			throw new SoQuickException("删除SOLR索引出错:" + q, e);
+		}
+	}
+
+	/**
+	 * 与SOLR SYSTEM PING, 主要是检测solr是否down掉
+	 * 
+	 * @return String
+	 */
+	public static String ping() {
+		try {
+			return solrServer.ping().getResponse().toString();
+		} catch (Exception e) {
+			logger.error("PING SOLR服务器出错", e);
+			throw new SoQuickException("PING SOLR服务器出错", e);
 		}
 	}
 }
