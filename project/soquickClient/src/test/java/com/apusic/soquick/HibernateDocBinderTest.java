@@ -38,7 +38,7 @@ import org.apache.solr.common.SolrInputField;
 import org.apache.solr.common.util.NamedList;
 import org.junit.Assert;
 
-public class TestHibernateDocBinder extends TestCase 
+public class HibernateDocBinderTest extends BaseTestCase
 {
   public void testSimple() throws Exception {
 	HibernateDocBinder binder = new HibernateDocBinder();
