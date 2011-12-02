@@ -29,10 +29,11 @@ public class Query {
 		add(field, value, " AND ");
 		return this;
 	}
+	public Query not(String field, String value) {
+		add(field, value, " NOT ");
+		return this;
+	}
 
-	/*
-	 * public Query or(Query a, Query b) { add(a, b, " OR "); return this; }
-	 */
 	public Query or(String field, String value) {
 		add(field, value, " OR ");
 		return this;
@@ -44,9 +45,9 @@ public class Query {
 			return this;
 		}
 		if (value.length == 1) {
-			q += " AND " + getField(field) + ":[" + getString(value[0]) + " TO *]";
+			q += " AND " + getFieldName(field) + ":[" + getString(value[0]) + " TO *]";
 		} else {
-			q += " AND " + getField(field) + ":[" + getString(value[0]) + " TO " + getString(value[1]) + "]";
+			q += " AND " + getFieldName(field) + ":[" + getString(value[0]) + " TO " + getString(value[1]) + "]";
 		}
 		return this;
 	}
@@ -56,25 +57,16 @@ public class Query {
 	}
 
 	private Query add(String field, String value, String condition) {
-		// if (StringUtils.isBlank(q)) {
-		// q += getField(field) + ":" + value;
-		// } else {
-		q += condition + getField(field) + ":" + value;
-		// }
+		q += condition + getFieldName(field) + ":" + value;
 		return this;
 	}
-
-	/*
-	 * public Query add(Query a, Query b, String condition) { q += " ( " +
-	 * a.toString() + condition + b.toString() + ") "; return this; }
-	 */
 
 	@Override
 	public String toString() {
 		return StringUtils.isBlank(q) ? "*:*" : q;
 	}
 
-	private String getField(String fieldName) {
+	private String getFieldName(String fieldName) {
 		Class<?> superClazz = clazz;
 		String tableName = "";
 		if (superClazz.isAnnotationPresent(Table.class)) {

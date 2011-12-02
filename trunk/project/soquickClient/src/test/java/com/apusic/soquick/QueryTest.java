@@ -1,9 +1,8 @@
 package com.apusic.soquick;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import org.junit.Test;
