@@ -1,11 +1,7 @@
 package com.apusic.soquick;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,13 +10,7 @@ import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
-import org.apache.solr.client.solrj.request.AbstractUpdateRequest;
-import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.params.CommonParams;
-import org.apache.solr.common.util.NamedList;
 
 public class SolrService {
 	protected static final Log logger = LogFactory.getLog(SolrService.class);
@@ -54,56 +44,27 @@ public class SolrService {
 
 	}
 
-	public <T> Page<T> query(String keyword, Class<T> clazz) throws SolrServerException, IOException {
+	// TODO RANG,分组，分页,not,ge等参看lucene语法
+	public <T> Page<T> query(Query q) {
 		Page<T> ret = new Page<T>();
 
-		SolrQuery query = new SolrQuery();
-		query.setQuery("F_Table.F_content:" + keyword + " OR F_Table.F_title:测试111");
-		// query.add("F_Table.F_title", "测试2222");
-		// query.setQuery(keyword);
-		// query.set(CommonParams.DF, "F_Table.F_content");
-		// query.set("q.op", "AND");
-		// query.addFilterQuery("F_Table.F_title:测试111");
-		// query.setRows(20);
-		// query.setTerms(true);
-		// query.add("F_Table.F_publishedDate", "2011-12-1");
-		/*
-		 * query.addFacetField("F_Table.F_publishedDate"); Calendar calendar =
-		 * Calendar.getInstance(Locale.UK); calendar.set(2010, 1, 1); Date start
-		 * = calendar.getTime(); calendar.set(2011, 1, 1); Date end =
-		 * calendar.getTime();
-		 * query.addDateRangeFacet("F_Table.F_publishedDate", start, end,
-		 * "+1MONTH");
-		 */
-		// query.addField("title");
-		// query.setFields("content");
-		// query.addSortField("publishedDate", SolrQuery.ORDER.asc);
+		try {
+			SolrQuery query = new SolrQuery();
+			query.setQuery(q.toString());
 
-		QueryResponse rsp = solrServer.query(query);
-		ret.setNumFound(rsp.getResults().getNumFound());
-		ret.setqTime(Long.valueOf(rsp.getHeader().get("QTime").toString()));
-		System.out.println(rsp.getResults());
-		List<T> beans = getBinder().getBeans(clazz, rsp.getResults());
+			QueryResponse rsp = solrServer.query(query);
+			ret.setNumFound(rsp.getResults().getNumFound());
+			ret.setqTime(Long.valueOf(rsp.getHeader().get("QTime").toString()));
 
-		ret.setResult(beans);
-		return ret;
-	}
+			System.out.println(rsp.getResults());
+			@SuppressWarnings("unchecked")
+			List<T> beans = getBinder().getBeans(q.getQueryClazz(), rsp.getResults());
 
-	//TODO RANG,分组，分页,not,ge等参看lucene语法
-	public <T> Page<T> query(Query q) throws SolrServerException, IOException {
-		Page<T> ret = new Page<T>();
-
-		SolrQuery query = new SolrQuery();
-		query.setQuery(q.toString());
-
-		QueryResponse rsp = solrServer.query(query);
-		ret.setNumFound(rsp.getResults().getNumFound());
-		ret.setqTime(Long.valueOf(rsp.getHeader().get("QTime").toString()));
-
-		System.out.println(rsp.getResults());
-		List<T> beans = getBinder().getBeans(q.getQueryClazz(), rsp.getResults());
-
-		ret.setResult(beans);
+			ret.setResult(beans);
+		} catch (Exception e) {
+			logger.error("SOLR查询出错:" + q.toString(), e);
+			throw new SoQuickException("SOLR查询出错:" + q.toString(), e);
+		}
 		return ret;
 	}
 
@@ -111,8 +72,23 @@ public class SolrService {
 		return binder;
 	}
 
-	public <T> void add(T a) throws IOException, SolrServerException {
-		solrServer.add(getBinder().toSolrInputDocument(a));
-		solrServer.commit();
+	public void add(Object o) {
+		try {
+			solrServer.add(getBinder().toSolrInputDocument(o));
+			solrServer.commit();
+		} catch (Exception e) {
+			logger.error("增加SOLR索引出错:" + o, e);
+			throw new SoQuickException("增加SOLR索引出错:" + o, e);
+		}
+	}
+
+	public void delete(Query q) {
+		try {
+			solrServer.deleteByQuery(q.toString());
+			solrServer.commit();
+		} catch (Exception e) {
+			logger.error("删除SOLR索引出错:" + q, e);
+			throw new SoQuickException("删除SOLR索引出错:" + q, e);
+		}
 	}
 }
