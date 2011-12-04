@@ -65,10 +65,16 @@ public class SolrServiceTest extends BaseTestCase {
 	public void testDeleteAll() {
 		Query query = new Query(ItemH.class, "*", "*");
 		solrService.delete(query);
+
+		query = new Query(ItemH.class, "content", "武汉");
+		Page<ItemH> result = solrService.query(query);
+		assertTrue("返回的结果数等于0", result.getResult().size() == 0);
 	}
 
 	@Test
 	public void testDelete() {
+		testDeleteAll();
+		
 		Query query = new Query(ItemH.class, "content", "武汉");
 		
 		testAddItem();
