@@ -14,6 +14,7 @@
 		lazy-init="false" />
 	<bean id="scheduler" lazy-init="false" autowire="no"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
+		<bean id="jobDetail" class="org.springframework.scheduling.quartz.JobDetailBean"  scope="prototype"></bean>
 
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

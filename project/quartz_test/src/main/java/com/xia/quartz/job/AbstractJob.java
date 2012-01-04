@@ -1,7 +1,6 @@
 package com.xia.quartz.job;
 
 import java.util.Date;
-import java.util.concurrent.Callable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,65 +33,40 @@ public abstract class AbstractJob extends QuartzJobBean {
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		JobDetail jobDetail = context.getJobDetail();
-		final JobDataMap jobDataMap = jobDetail.getJobDataMap();
+		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
-		final JobEntity jobEntity = getJobEntityService().findByJobName(jobDetail.getKey().getName());
+		JobEntity jobEntity = getJobEntityService().findByJobName(jobDetail.getKey().getName());
 		if (jobEntity == null) {
 			logger.error("您要执行的任务不存在:" + jobDetail);
 			throw new JobExecutionException("任务不存在:" + jobDetail.getKey().getName());
 		}
+
 		jobEntity.setStatus(JobStatus.RUNNING);
 		jobEntity.setLastExecTime(new Date());
+		jobEntity.setNextExecTime(context.getNextFireTime());
 		jobEntity.setJobExecCount(jobEntity.getJobExecCount() + 1);
 
-		final JobLogEntity logEntity = new JobLogEntity();
+		JobLogEntity logEntity = new JobLogEntity();
 		logEntity.setJobEntity(jobEntity);
 
 		try {
-			getTrascationHelper().execute(new Callable<Object>() {
-				@Override
-				public Object call() throws Exception {
-					execute(jobDataMap);
-					getJobEntityService().updateJob(jobEntity);
-					saveLog(logEntity);
-					return null;
-				}
-			});
+			execute(jobDataMap);
+			getJobEntityService().updateJob(jobEntity);
+			getJobLogEntityService().addJobLog(logEntity);
 		} catch (Exception e) {
 			logger.error("任务执行出错" + e.getMessage(), e);
 			logEntity.setStatus(JobLogStatus.FAIL);
 			logEntity.setExceptionStackTrace(Util.getStackTrack(e));
 			try {
-				saveLog(logEntity);
-				saveJobErrorStatus(logEntity);
+				getJobLogEntityService().addJobLog(logEntity);
+				jobEntity.setStatus(JobStatus.EXCEPTION);
+				getJobEntityService().updateJob(jobEntity);
 			} catch (Exception e1) {
 				throw new JobExecutionException(e1);
 			}
 			throw new JobExecutionException(e);
 		}
 
-	}
-
-	private void saveJobErrorStatus(final JobLogEntity logEntity) throws Exception {
-		getTrascationHelper().execute(new Callable<Object>() {
-			@Override
-			public Object call() throws Exception {
-				JobEntity jobEntity = logEntity.getJobEntity();
-				jobEntity.setStatus(JobStatus.EXCEPTION);
-				getJobEntityService().updateJob(jobEntity);
-				return null;
-			}
-		});
-	}
-
-	private void saveLog(final JobLogEntity logEntity) throws Exception {
-		getTrascationHelper().execute(new Callable<Object>() {
-			@Override
-			public Object call() throws Exception {
-				getJobLogEntityService().addJobLog(logEntity);
-				return null;
-			}
-		});
 	}
 
 	@Transactional

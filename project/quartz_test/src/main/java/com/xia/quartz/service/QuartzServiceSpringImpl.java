@@ -22,21 +22,17 @@ import org.springframework.stereotype.Service;
 
 import com.xia.quartz.model.JobEntity;
 import com.xia.quartz.model.JobStatus;
+import com.xia.quartz.util.ApplicationContextHolder;
 
 @Component("quartzService")
 @Service
 public class QuartzServiceSpringImpl implements QuartzService, InitializingBean {
-	// TODO 变成service,同时变更状态
 	private final static Log logger = LogFactory.getLog(QuartzServiceSpringImpl.class);
-	// private final static int DELAY_SECOND = 2;
 	private final static String TRIGGER_PREFIX = "trigger_";
 	@Autowired
 	@Qualifier("scheduler")
 	private SchedulerFactoryBean schedulerFactoryBean;
 	private static Scheduler scheduler;
-	@Autowired
-	@Qualifier("jobDetail")
-	private JobDetailBean jobDetail;
 	@Autowired
 	private JobEntityService jobEntityService;
 
@@ -79,6 +75,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 		@SuppressWarnings("unchecked")
 		Class<? extends Job> clazz = (Class<? extends Job>) Class.forName(jobClass);
 
+		JobDetailBean jobDetail = ApplicationContextHolder.getBean("jobDetail");
 		jobDetail.setJobClass(clazz);
 		jobDetail.setName(jobEntity.getJobName());
 		jobDetail.setGroup(jobEntity.getJobGroupName());
@@ -148,7 +145,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	@Override
 	public void rescheduleJob(JobEntity jobEntity) throws SchedulerException {
 		logger.warn("未实现");
-		// logger.debug("继续JOB:" + jobKey);
+		// logger.debug("重新启动JOB:" + jobKey);
 		// scheduler.rescheduleJob(getTriggerKey(jobEntity),
 		// convertTrigger(jobEntity));
 	}
@@ -173,6 +170,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	@Override
 	public void shutdownAll() throws SchedulerException {
 		logger.warn("服务关闭");
+		//scheduler.getJobNames(null);
 		scheduler.shutdown();
 	}
 

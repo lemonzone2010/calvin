@@ -34,9 +34,22 @@ public class JobEntityService {
 		crudService.delete(jobEntity);
 	}
 
+	@Transactional(readOnly = true)
 	public JobEntity findByJobName(String jobName) {
 		List<JobEntity> list = pageQueryService.findListBy(JobEntity.class, "jobName", jobName);
-		return (list.isEmpty()) ? null : list.get(0);
+		JobEntity ret = (list.isEmpty()) ? null : list.get(0);
+		if(null!=ret)ret.getProperties().isEmpty();// 把properties从Lazy中拿出来,如果有opensessioninview，可以去掉,如果开Lazy=false,会出现重复值
+		return ret;
+	}
+
+	@Transactional(readOnly = true)
+	public List<JobEntity> getAll() {
+		List<JobEntity> findAll = pageQueryService.findAll(JobEntity.class);
+		// 把properties从Lazy中拿出来
+		for (JobEntity jobEntity : findAll) {
+			jobEntity.getProperties().isEmpty();
+		}
+		return findAll;
 	}
 
 	public boolean isExistJob(String jobName) {
