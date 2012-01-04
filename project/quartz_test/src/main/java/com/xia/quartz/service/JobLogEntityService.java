@@ -3,6 +3,7 @@ package com.xia.quartz.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.xia.quartz.dao.CrudService;
 import com.xia.quartz.dao.PageQueryService;
@@ -16,6 +17,7 @@ public class JobLogEntityService {
 	@Autowired
 	PageQueryService pageQueryService;
 
+	@Transactional
 	public void addJobLog(JobLogEntity jobLogEntity) {
 		crudService.create(jobLogEntity);
 	}

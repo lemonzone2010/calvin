@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.xia.quartz.dao.CrudService;
 import com.xia.quartz.dao.PageQueryService;
@@ -18,13 +19,17 @@ public class JobEntityService {
 	@Autowired
 	PageQueryService pageQueryService;
 
+	@Transactional
 	public void addJob(JobEntity jobEntity) {
 		crudService.create(jobEntity);
 	}
+
+	@Transactional
 	public void updateJob(JobEntity jobEntity) {
 		crudService.update(jobEntity);
 	}
 
+	@Transactional
 	public void removeJob(JobEntity jobEntity) {
 		crudService.delete(jobEntity);
 	}

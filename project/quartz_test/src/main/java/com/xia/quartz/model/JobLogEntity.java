@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
+//TODO 增加操作人
 @SuppressWarnings("serial")
 @Entity
 public class JobLogEntity extends IdEntity {
@@ -61,4 +62,11 @@ public class JobLogEntity extends IdEntity {
 		}
 		this.exceptionStackTrace = exceptionStackTrace;
 	}
+
+	@Override
+	public String toString() {
+		return "JobLogEntity [execTime=" + execTime + ", status=" + status + ", jobEntity=" + jobEntity
+				+ ", exceptionStackTrace=" + exceptionStackTrace + "]";
+	}
+	
 }
