@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.CronTrigger;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.xia.quartz.model.JobEntity;
+import com.xia.quartz.model.JobStatus;
 
 @Component("quartzService")
 @Service
@@ -35,6 +37,8 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	@Autowired
 	@Qualifier("jobDetail")
 	private JobDetailBean jobDetail;
+	@Autowired
+	private JobEntityService jobEntityService;
 
 	/*
 	 * (non-Javadoc)
@@ -49,6 +53,12 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 		try {
 			JobDetail jobDetail = convertJob(jobEntity);
 			CronTrigger triggerCorn = convertTrigger(jobEntity);
+			if (StringUtils.isNotBlank(jobEntity.getJobGroupName())) {
+				jobEntity.setJobGroupName(jobDetail.getGroup());
+			}
+			jobEntity.setStatus(JobStatus.RUNNING);
+			jobEntityService.updateJob(jobEntity);
+
 			Date ft = scheduler.scheduleJob(jobDetail, triggerCorn);
 			logger.debug("任务:" + jobDetail.getKey() + " will run at: " + ft.toLocaleString());
 		} catch (ParseException e) {
@@ -64,7 +74,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	}
 
 	private JobDetail convertJob(JobEntity jobEntity) throws ClassNotFoundException {
-		logger.debug("Job converting:" + jobEntity);
+		logger.debug("Job converting:" + jobEntity.getJobName());
 		String jobClass = jobEntity.getJobClass();
 		@SuppressWarnings("unchecked")
 		Class<? extends Job> clazz = (Class<? extends Job>) Class.forName(jobClass);
@@ -86,6 +96,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	public void startScheduler() throws SchedulerException {
 		scheduler.start();
 		logger.debug("开始Scheduler:" + scheduler);
+		// 状态未处理
 	}
 
 	/*
@@ -100,12 +111,16 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 		logger.debug("暂停JOB:" + jobEntity);
 		scheduler.pauseJob(jobEntity.getJobName(), jobEntity.getJobGroupName());
 		// scheduler.interrupt(jobKey);
+		jobEntity.setStatus(JobStatus.PAUSED);
+		jobEntityService.updateJob(jobEntity);
 	}
 
 	@Override
 	public void resumeJob(JobEntity jobEntity) throws SchedulerException {
 		logger.debug("继续JOB:" + jobEntity.getJobName() + jobEntity.getJobGroupName());
 		scheduler.resumeJob(jobEntity.getJobName(), jobEntity.getJobGroupName());
+		jobEntity.setStatus(JobStatus.RUNNING);
+		jobEntityService.updateJob(jobEntity);
 	}
 
 	/*
@@ -119,6 +134,8 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	public void unscheduleJob(JobEntity jobEntity) throws SchedulerException {
 		logger.debug("卸载JOB:" + jobEntity.getJobName() + jobEntity.getJobGroupName());
 		scheduler.unscheduleJob(jobEntity.getJobName(), jobEntity.getJobGroupName());
+		jobEntity.setStatus(JobStatus.WAITTING);
+		jobEntityService.updateJob(jobEntity);
 	}
 
 	/*
@@ -143,7 +160,9 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	 */
 	@Override
 	public void pauseAll() throws SchedulerException {
+		logger.warn("暂停所有");
 		scheduler.standby();
+		// 状态未处理
 	}
 
 	/*
@@ -153,6 +172,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	 */
 	@Override
 	public void shutdownAll() throws SchedulerException {
+		logger.warn("服务关闭");
 		scheduler.shutdown();
 	}
 

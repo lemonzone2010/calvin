@@ -10,6 +10,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +26,7 @@ public class JobEntity extends IdEntity {
 	private String jobCronExpress;
 	private String jobDesc;
 	private String jobGroupName;
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@MapKeyColumn
 	@CollectionTable(name = "t_job_properties")
 	private Map<String, String> properties = new HashMap<String, String>();
@@ -158,4 +159,14 @@ public class JobEntity extends IdEntity {
 	public void setJobGroupName(String jobGroupName) {
 		this.jobGroupName = jobGroupName;
 	}
+
+	@Override
+	public String toString() {
+		return "JobEntity [jobName=" + jobName + ", jobClass=" + jobClass + ", jobCronExpress=" + jobCronExpress
+				+ ", jobDesc=" + jobDesc + ", jobGroupName=" + jobGroupName + ", properties=" + properties
+				+ ", jobExecCount=" + jobExecCount + ", createTime=" + createTime + ", lastExecTime=" + lastExecTime
+				+ ", jobClassIsBeanName=" + jobClassIsBeanName + ", status=" + status + "]";
+	}
+	
+	
 }
