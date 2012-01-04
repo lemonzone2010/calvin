@@ -6,6 +6,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import com.xia.quartz.job.InvokerJobBean;
 import com.xia.quartz.model.JobEntity;
 import com.xia.quartz.model.JobStatus;
 import com.xia.quartz.util.ApplicationContextHolder;
@@ -22,12 +24,14 @@ import com.xia.quartz.util.ApplicationContextHolder;
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 public class JobStatusTest {
-	public static void main(String[] args) throws SchedulerException, ClassNotFoundException, InterruptedException {
+	public static void main(String[] args) throws SchedulerException, ClassNotFoundException, InterruptedException,
+			NoSuchMethodException {
 		new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		startAll();
+		// startAll();
+		new JobStatusTest().testStartInvokerJob();
 	}
 
-	private static void startAll() throws SchedulerException, ClassNotFoundException {
+	private static void startAll() throws SchedulerException, ClassNotFoundException, NoSuchMethodException {
 		QuartzService quartzService = ApplicationContextHolder.getBean("quartzService");
 		JobEntityService jobService = ApplicationContextHolder.getBean("jobEntityService");
 		List<JobEntity> all = jobService.getAll();
@@ -40,7 +44,32 @@ public class JobStatusTest {
 	JobEntityService jobEntityService;
 
 	@Test
-	public void testStartJob() throws SchedulerException, ClassNotFoundException, InterruptedException {
+	public void testGetInvokerJob() throws SchedulerException, ClassNotFoundException, InterruptedException,
+			NoSuchMethodException {
+		InvokerJobBean s = ApplicationContextHolder.getBean("invokerJobBean");
+		s.setTargetBeanName("nonQuartzJob");
+		s.setTargetMethod("execute");
+		s.afterPropertiesSet();
+		JobDetail object = s.getObject();
+		Assert.assertNotNull(object);
+	}
+
+	@Test
+	public void testStartInvokerJob() throws SchedulerException, ClassNotFoundException, InterruptedException,
+			NoSuchMethodException {
+		// 先保存此任务，再测试
+		QuartzService quartzService = ApplicationContextHolder.getBean("quartzService");
+		JobEntity jobEntity = JobEntityServiceTest.newJobEntity();
+		jobEntity.setJobClass("nonQuartzJob");
+		jobEntity.setJobMethod("execute");
+		// jobEntity.setJobClass("jobDetailInvoker");
+		jobEntity.setJobClassIsBeanName(true);
+		quartzService.startJob(jobEntity);
+	}
+
+	@Test
+	public void testStartJob() throws SchedulerException, ClassNotFoundException, InterruptedException,
+			NoSuchMethodException {
 		// 先保存此任务，再测试
 		QuartzService quartzService = ApplicationContextHolder.getBean("quartzService");
 		JobEntity jobEntity = JobEntityServiceTest.newJobEntity();
@@ -59,7 +88,8 @@ public class JobStatusTest {
 	}
 
 	@Test
-	public void testPauseJob() throws SchedulerException, ClassNotFoundException, InterruptedException {
+	public void testPauseJob() throws SchedulerException, ClassNotFoundException, InterruptedException,
+			NoSuchMethodException {
 		JobEntity jobEntity = JobEntityServiceTest.newJobEntity();
 		jobEntityService.addJob(jobEntity);
 
