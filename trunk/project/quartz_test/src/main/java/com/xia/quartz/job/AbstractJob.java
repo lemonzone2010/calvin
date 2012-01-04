@@ -31,11 +31,6 @@ import com.xia.quartz.util.Util;
 public abstract class AbstractJob extends QuartzJobBean {
 	protected final static Log logger = LogFactory.getLog(AbstractJob.class);
 
-	// @Autowired
-	// JobLogEntityService jobLogEntityService;
-	// @Autowired
-	// JobEntityService jobEntityService;
-
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		JobDetail jobDetail = context.getJobDetail();
