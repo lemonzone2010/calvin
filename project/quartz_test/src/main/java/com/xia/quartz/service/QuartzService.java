@@ -8,9 +8,9 @@ import com.xia.quartz.model.JobEntity;
 
 public interface QuartzService {
 
-	public void startJobs(List<JobEntity> jobEntitys) throws SchedulerException, ClassNotFoundException;
+	public void startJobs(List<JobEntity> jobEntitys) throws SchedulerException, ClassNotFoundException,NoSuchMethodException;
 
-	public void startJob(JobEntity jobEntity) throws SchedulerException, ClassNotFoundException;
+	public void startJob(JobEntity jobEntity) throws SchedulerException, ClassNotFoundException,NoSuchMethodException;
 
 	public void startScheduler() throws SchedulerException;
 

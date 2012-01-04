@@ -21,12 +21,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class JobEntity extends IdEntity {
 	@Column(unique = true)
-	private String jobName;
-	private String jobClass;
-	private String jobCronExpress;
-	private String jobDesc;
-	private String jobGroupName;
-	@ElementCollection(fetch=FetchType.LAZY)
+	private String jobName;//任务名
+	private String jobClass;//类名或者bean名
+	private String jobMethod;//如果为bean名，对应执行的方法
+	private String jobCronExpress;//表达式
+	private String jobDesc;//任务描述
+	private String jobGroupName;//Group名
+	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "t_job_properties")
 	private Map<String, String> properties = new HashMap<String, String>();
 	private int jobExecCount;
@@ -39,8 +40,8 @@ public class JobEntity extends IdEntity {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date nextExecTime;
-	private boolean jobClassIsBeanName = false;// jobClass是一个Spring
-												// Bean还是一个Class
+	// true=继承Job类，false=spring bean,没有继承job类
+	private boolean jobClassIsBeanName = false;
 	@Enumerated(EnumType.STRING)
 	private JobStatus status = JobStatus.WAITTING;
 
@@ -162,7 +163,6 @@ public class JobEntity extends IdEntity {
 		this.jobGroupName = jobGroupName;
 	}
 
-
 	public Date getNextExecTime() {
 		return nextExecTime;
 	}
@@ -179,6 +179,13 @@ public class JobEntity extends IdEntity {
 				+ ", nextExecTime=" + nextExecTime + ", jobClassIsBeanName=" + jobClassIsBeanName + ", status="
 				+ status + "]";
 	}
-	
-	
+
+	public String getJobMethod() {
+		return jobMethod;
+	}
+
+	public void setJobMethod(String jobMethod) {
+		this.jobMethod = jobMethod;
+	}
+
 }

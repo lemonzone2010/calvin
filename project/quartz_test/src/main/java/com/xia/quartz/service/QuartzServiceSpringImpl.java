@@ -16,10 +16,12 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.quartz.JobDetailBean;
+import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.xia.quartz.job.InvokerJobBean;
 import com.xia.quartz.model.JobEntity;
 import com.xia.quartz.model.JobStatus;
 import com.xia.quartz.util.ApplicationContextHolder;
@@ -45,7 +47,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void startJob(JobEntity jobEntity) throws SchedulerException, ClassNotFoundException {
+	public void startJob(JobEntity jobEntity) throws SchedulerException, ClassNotFoundException, NoSuchMethodException {
 		try {
 			JobDetail jobDetail = convertJob(jobEntity);
 			CronTrigger triggerCorn = convertTrigger(jobEntity);
@@ -69,14 +71,24 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 		return triggerCorn;
 	}
 
-	private JobDetail convertJob(JobEntity jobEntity) throws ClassNotFoundException {
-		logger.debug("Job converting:" + jobEntity.getJobName());
-		String jobClass = jobEntity.getJobClass();
-		@SuppressWarnings("unchecked")
-		Class<? extends Job> clazz = (Class<? extends Job>) Class.forName(jobClass);
+	private JobDetail convertJob(JobEntity jobEntity) throws ClassNotFoundException, NoSuchMethodException {
+		logger.debug("Job生成中:" + jobEntity.getJobName());
 
-		JobDetailBean jobDetail = ApplicationContextHolder.getBean("jobDetail");
-		jobDetail.setJobClass(clazz);
+		JobDetail jobDetail;
+		if (jobEntity.isJobClassIsBeanName()) {
+			//jobDetail = ApplicationContextHolder.getBean(jobEntity.getJobClass());
+			InvokerJobBean bean=ApplicationContextHolder.getBean("invokerJobBean");
+			bean.setTargetBeanName(jobEntity.getJobClass());
+			bean.setTargetMethod(jobEntity.getJobMethod());
+			bean.afterPropertiesSet();
+			jobDetail=bean.getObject();
+		} else {
+			String jobClass = jobEntity.getJobClass();
+			@SuppressWarnings("unchecked")
+			Class<? extends Job> clazz = (Class<? extends Job>) Class.forName(jobClass);
+			jobDetail = ApplicationContextHolder.getBean("jobDetail");
+			jobDetail.setJobClass(clazz);
+		}
 		jobDetail.setName(jobEntity.getJobName());
 		jobDetail.setGroup(jobEntity.getJobGroupName());
 		jobDetail.setDescription(jobEntity.getJobDesc());
@@ -170,12 +182,12 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	@Override
 	public void shutdownAll() throws SchedulerException {
 		logger.warn("服务关闭");
-		//scheduler.getJobNames(null);
+		// scheduler.getJobNames(null);
 		scheduler.shutdown();
 	}
 
 	@Override
-	public void startJobs(List<JobEntity> jobEntitys) throws SchedulerException, ClassNotFoundException {
+	public void startJobs(List<JobEntity> jobEntitys) throws SchedulerException, ClassNotFoundException, NoSuchMethodException {
 		for (JobEntity jobEntity : jobEntitys) {
 			startJob(jobEntity);
 		}
