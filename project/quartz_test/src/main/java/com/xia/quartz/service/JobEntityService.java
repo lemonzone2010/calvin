@@ -12,7 +12,7 @@ import com.xia.quartz.model.JobEntity;
 
 @Component
 @Service
-public class JobService {
+public class JobEntityService {
 	@Autowired
 	private CrudService crudService;
 	@Autowired
@@ -20,6 +20,9 @@ public class JobService {
 
 	public void addJob(JobEntity jobEntity) {
 		crudService.create(jobEntity);
+	}
+	public void updateJob(JobEntity jobEntity) {
+		crudService.update(jobEntity);
 	}
 
 	public void removeJob(JobEntity jobEntity) {

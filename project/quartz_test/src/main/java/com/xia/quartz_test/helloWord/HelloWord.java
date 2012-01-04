@@ -1,4 +1,6 @@
-package com.xia.quartz_test.helloWord;
+/*以下是2.0的代码
+ * 
+ * package com.xia.quartz_test.helloWord;
 
 import java.util.Date;
 
@@ -20,10 +22,10 @@ import org.quartz.impl.StdSchedulerFactory;
 
 public class HelloWord {
 
-	/**
+	*//**
 	 * @param args
 	 * @throws Exception
-	 */
+	 *//*
 	public static void main(String[] args) throws Exception {
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		JobDetail jobDetail = JobBuilder.newJob(HelloWorldJob.class).withIdentity("helloworldJob", "helloGroup")
@@ -55,7 +57,7 @@ public class HelloWord {
 	            .build();
 		// ft = scheduler.scheduleJob(jobDetail, trigger1);
 		CronTrigger triggerCorn=TriggerBuilder.newTrigger().withIdentity("trigger4", "helloGroup")
-				.withSchedule(CronScheduleBuilder.cronSchedule("*/1 * * * * ?")).build();
+				.withSchedule(CronScheduleBuilder.cronSchedule("1 * * * * ?")).build();
 		ft = scheduler.scheduleJob(jobDetail, triggerCorn);
 		 System.out.println(jobDetail.getKey() +
 	                " will run at: " + ft +  
@@ -63,20 +65,5 @@ public class HelloWord {
 	                " times, every " + trigger1.getRepeatInterval() / 1000 + " seconds");
 	}
 
-	static void scheduleJob(Scheduler scheduler) throws Exception {
-		JobDetail jobDetail = JobBuilder.newJob(HelloWorldJob.class).withIdentity("helloworldJob", "helloGroup")
-				.build();
-		// jobDetail.getJobDataMap().put("name", "xiayong");
-
-		Date runTime = DateBuilder.evenMinuteDateAfterNow();
-		System.out.println(runTime);
-
-		Trigger trigger = TriggerBuilder.newTrigger().withIdentity("helloTrigger", "helloGroup").startAt(runTime)
-				.build();
-
-		scheduler.scheduleJob(jobDetail, trigger);
-
-		System.out.println(jobDetail.getKey());
-	}
-
 }
+*/

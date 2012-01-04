@@ -1,4 +1,4 @@
-package com.xia.quartz.service;
+package com.xia.quartz.job;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
