@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKeyClass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,8 +26,7 @@ public class JobEntity extends IdEntity {
 	private String jobCronExpress;
 	private String jobDesc;
 	private String jobGroupName;
-	@ElementCollection(fetch=FetchType.EAGER)
-	@MapKeyColumn
+	@ElementCollection(fetch=FetchType.LAZY)
 	@CollectionTable(name = "t_job_properties")
 	private Map<String, String> properties = new HashMap<String, String>();
 	private int jobExecCount;
@@ -37,6 +36,9 @@ public class JobEntity extends IdEntity {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastExecTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date nextExecTime;
 	private boolean jobClassIsBeanName = false;// jobClass是一个Spring
 												// Bean还是一个Class
 	@Enumerated(EnumType.STRING)
@@ -160,12 +162,22 @@ public class JobEntity extends IdEntity {
 		this.jobGroupName = jobGroupName;
 	}
 
+
+	public Date getNextExecTime() {
+		return nextExecTime;
+	}
+
+	public void setNextExecTime(Date nextExecTime) {
+		this.nextExecTime = nextExecTime;
+	}
+
 	@Override
 	public String toString() {
 		return "JobEntity [jobName=" + jobName + ", jobClass=" + jobClass + ", jobCronExpress=" + jobCronExpress
 				+ ", jobDesc=" + jobDesc + ", jobGroupName=" + jobGroupName + ", properties=" + properties
 				+ ", jobExecCount=" + jobExecCount + ", createTime=" + createTime + ", lastExecTime=" + lastExecTime
-				+ ", jobClassIsBeanName=" + jobClassIsBeanName + ", status=" + status + "]";
+				+ ", nextExecTime=" + nextExecTime + ", jobClassIsBeanName=" + jobClassIsBeanName + ", status="
+				+ status + "]";
 	}
 	
 	

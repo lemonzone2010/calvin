@@ -1,5 +1,7 @@
 package com.xia.quartz.service;
 
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -22,14 +24,20 @@ import com.xia.quartz.util.ApplicationContextHolder;
 public class JobStatusTest {
 	public static void main(String[] args) throws SchedulerException, ClassNotFoundException, InterruptedException {
 		new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		JobDetailImpl im = ApplicationContextHolder.getBean("jobDetail");
-		new JobStatusTest().testStartJob();
+		startAll();
+	}
+
+	private static void startAll() throws SchedulerException, ClassNotFoundException {
+		QuartzService quartzService = ApplicationContextHolder.getBean("quartzService");
+		JobEntityService jobService = ApplicationContextHolder.getBean("jobEntityService");
+		List<JobEntity> all = jobService.getAll();
+		quartzService.startJobs(all);
 	}
 
 	@Autowired
 	QuartzService quartzService;
 	@Autowired
-	JobEntityService jobService;
+	JobEntityService jobEntityService;
 
 	@Test
 	public void testStartJob() throws SchedulerException, ClassNotFoundException, InterruptedException {
@@ -53,7 +61,7 @@ public class JobStatusTest {
 	@Test
 	public void testPauseJob() throws SchedulerException, ClassNotFoundException, InterruptedException {
 		JobEntity jobEntity = JobEntityServiceTest.newJobEntity();
-		jobService.addJob(jobEntity);
+		jobEntityService.addJob(jobEntity);
 
 		quartzService.startJob(jobEntity);
 		Assert.assertEquals(JobStatus.RUNNING, jobEntity.getStatus());
