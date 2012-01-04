@@ -2,16 +2,12 @@ package com.xia.quartz_test.helloWord;
 
 import java.util.Date;
 
-import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.PersistJobDataAfterExecution;
 
-@PersistJobDataAfterExecution
-@DisallowConcurrentExecution
 public class HelloWorldJob implements Job {
 
 	public HelloWorldJob() {

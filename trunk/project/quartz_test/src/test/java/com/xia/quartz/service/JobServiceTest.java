@@ -9,7 +9,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.xia.quartz.model.JobEntity;
-import com.xia.quartz.service.JobService;
+import com.xia.quartz.service.JobEntityService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
@@ -17,7 +17,7 @@ import com.xia.quartz.service.JobService;
 public class JobServiceTest {
 
 	@Autowired
-	JobService jobService;
+	JobEntityService jobService;
 
 	@Test
 	@Transactional
@@ -31,6 +31,6 @@ public class JobServiceTest {
 
 		jobService.addJob(jobEntity);
 		
-		jobService.removeJob(jobEntity);
+		//jobService.removeJob(jobEntity);
 	}
 }
