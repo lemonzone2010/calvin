@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.xia.quartz.dao.CrudService;
+import com.xia.quartz.dao.Page;
 import com.xia.quartz.dao.PageQueryService;
 import com.xia.quartz.model.JobEntity;
 
@@ -34,11 +35,19 @@ public class JobEntityService {
 		crudService.delete(jobEntity);
 	}
 
+	@Transactional
+	public void deleteById(Long id) {
+		crudService.delete(JobEntity.class, id);
+	}
+	@Transactional(readOnly = true)
+	public JobEntity getById(Long id) {
+		return	crudService.retrieve(JobEntity.class, id);
+	}
 	@Transactional(readOnly = true)
 	public JobEntity findJobEntityByJobName(String jobName) {
 		List<JobEntity> list = pageQueryService.findListBy(JobEntity.class, "jobName", jobName);
 		JobEntity ret = (list.isEmpty()) ? null : list.get(0);
-		//if(null!=ret)ret.getProperties().isEmpty();// 把properties从Lazy中拿出来,如果有opensessioninview，可以去掉,如果开Lazy=false,会出现重复值
+		if(null!=ret)ret.getProperties().isEmpty();// 把properties从Lazy中拿出来,如果有opensessioninview，可以去掉,如果开Lazy=false,会出现重复值
 		return ret;
 	}
 
@@ -46,10 +55,14 @@ public class JobEntityService {
 	public List<JobEntity> getAllJobEntitys() {
 		List<JobEntity> findAll = pageQueryService.findAll(JobEntity.class);
 		// 把properties从Lazy中拿出来
-		/*for (JobEntity jobEntity : findAll) {
+		for (JobEntity jobEntity : findAll) {
 			jobEntity.getProperties().isEmpty();
-		}*/
+		}
 		return findAll;
+	}
+	
+	public Page<JobEntity> getAllJobEntitysAsPage(Page<JobEntity> p) {
+		return pageQueryService.findPage(JobEntity.class, p);
 	}
 
 	public boolean isExistJobEntity(String jobName) {

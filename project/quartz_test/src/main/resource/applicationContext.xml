@@ -20,6 +20,7 @@
 		scope="prototype"></bean>
 
 	<bean id="nonQuartzJob" class="com.xia.quartz.job.NonQuartzJob"></bean>
+	<bean id="InitStartAllJob" class="com.xia.quartz.job.InitStartAllJob" lazy-init="false"></bean>
 	
 	<bean id="jobDetailInvoker" name="jobDetailInvoker"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">

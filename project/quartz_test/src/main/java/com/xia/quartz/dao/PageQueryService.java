@@ -19,4 +19,5 @@ public interface PageQueryService {
 
 	public <T> List<T> findByExample(T t);
 
+	<T> Page<T> findPage(Class<T> clazz, Page<T> p);
 }

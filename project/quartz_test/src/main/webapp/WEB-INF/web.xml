@@ -15,6 +15,9 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>com.xia.quartz.job.InitStartAllJob</listener-class>
+	</listener>
 
 	<!-- Filter 定义 -->
 	<!-- Character Encoding filter -->

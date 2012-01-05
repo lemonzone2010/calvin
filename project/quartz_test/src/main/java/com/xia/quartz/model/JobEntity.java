@@ -14,16 +14,22 @@ import javax.persistence.FetchType;
 import javax.persistence.MapKeyClass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @SuppressWarnings("serial")
 @Entity
 public class JobEntity extends IdEntity {
+	@NotBlank
 	@Column(unique = true)
 	private String jobName;//任务名
+	@NotBlank
 	private String jobClass;//类名或者bean名
 	private String jobMethod;//如果为bean名，对应执行的方法
+	@NotNull
 	private String jobCronExpress;//表达式
 	private String jobDesc;//任务描述
 	private String jobGroupName;//Group名
@@ -78,7 +84,7 @@ public class JobEntity extends IdEntity {
 	public void setJobDesc(String jobDesc) {
 		this.jobDesc = jobDesc;
 	}
-
+	@JsonIgnore
 	public Map<String, String> getProperties() {
 		return properties;
 	}

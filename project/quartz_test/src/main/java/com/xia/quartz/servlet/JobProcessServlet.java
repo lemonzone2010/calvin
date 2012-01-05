@@ -1,7 +1,9 @@
 package com.xia.quartz.servlet;
 
 import java.io.IOException;
-import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Map;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -9,18 +11,27 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Validator;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.xia.quartz.dao.Page;
+import com.xia.quartz.model.JobEntity;
+import com.xia.quartz.service.JobEntityService;
+import com.xia.quartz.service.QuartzService;
+import com.xia.quartz.util.ApplicationContextHolder;
 
 /**
  * Servlet implementation class JobProcessServlet
  */
 public class JobProcessServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ApplicationContext ctx;
-
-	// private SchedulerService schedulerService;
+	protected final static String RESULT = "result";
+	private static QuartzService quartzService;
+	private static JobEntityService jobEntityService;
+	private static ObjectMapper mapper = new ObjectMapper();
+	private Validator validator;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -33,9 +44,10 @@ public class JobProcessServlet extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
-		// schedulerService = (SchedulerService)
-		// ctx.getBean("schedulerService");
+		mapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+		quartzService = ApplicationContextHolder.getBean("quartzService");
+		jobEntityService = ApplicationContextHolder.getBean("jobEntityService");
+		validator = ApplicationContextHolder.getBean("validator");
 	}
 
 	/**
@@ -44,44 +56,85 @@ public class JobProcessServlet extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 			IOException {
-		String jobtype = request.getParameter("jobtype");
-		String action = request.getParameter("action");
-		System.out.println(11);
-		/*
-		 * if (jobtype.equals("0") && action.equals("add")) {
-		 * this.addSimpleTrigger(request, response); } else if
-		 * (jobtype.equals("1") && action.equals("add")) {
-		 * this.addCronTriggerByExpression(request, response); } else if
-		 * (jobtype.equals("2") && action.equals("add")) {
-		 * this.addCronTriggerBy(request, response); } else if
-		 * (jobtype.equals("100") && action.equals("query")) {
-		 * this.getQrtzTriggers(request, response); } else if
-		 * (jobtype.equals("200") && action.equals("pause")) {
-		 * this.pauseTrigger(request, response); } else if
-		 * (jobtype.equals("200") && action.equals("resume")) {
-		 * this.resumeTrigger(request, response); } else if
-		 * (jobtype.equals("200") && action.equals("remove")) {
-		 * this.removeTrigdger(request, response); }
-		 */
+		String jobtype = request.getParameter("id");
+		String action = request.getParameter("actionType");
+		if (StringUtils.equals(action, "query")) {
+			query(request, response);
+		} else if (StringUtils.equals(action, "add")) {
+			add(request, response);
+		} else if (StringUtils.equals(action, "delete")) {
+			delete(request, response);
+		}else if (StringUtils.equals(action, "modify")) {
+			modify(request, response);
+		}
 	}
 
-	/**
-	 * 根据名称和组别暂停Tigger
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws IOException
-	 */
-	private void removeTrigdger(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// request.setCharacterEncoding("UTF-8");
-		String triggerName = URLDecoder.decode(request.getParameter("triggerName"), "utf-8");
-		String group = URLDecoder.decode(request.getParameter("group"), "utf-8");
-
-		/*
-		 * boolean rs = schedulerService.removeTrigdger(triggerName, group); if
-		 * (rs) { response.getWriter().println(0); } else {
-		 * response.getWriter().println(1); }
-		 */
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.setContentType("application/json");
+		try {
+			String[] ids = request.getParameterValues("items[]");
+			for (String string : ids) {
+				jobEntityService.deleteById(Long.valueOf(string));
+			}
+			mapper.writeValue(response.getOutputStream(), getSuccessResult());
+		} catch (Exception e) {
+			mapper.writeValue(response.getOutputStream(), getFailResult(e.getMessage()));
+		}
+		response.getOutputStream().close();
 	}
 
+	private void modify(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.setContentType("application/json");
+		JobEntity newJob = mapper.readValue(request.getInputStream(), JobEntity.class);
+		try {
+			newJob.validate(validator);
+			JobEntity update=jobEntityService.getById(newJob.getId());
+			update.setJobName(newJob.getJobName());
+			update.setJobClass(newJob.getJobClass());
+			update.setJobCronExpress(newJob.getJobCronExpress());
+			update.setJobDesc(newJob.getJobDesc());
+			update.setJobClassIsBeanName(newJob.isJobClassIsBeanName());
+			jobEntityService.saveJobEntity(update);
+			mapper.writeValue(response.getOutputStream(), getSuccessResult());
+		} catch (Exception e) {
+			mapper.writeValue(response.getOutputStream(), getFailResult(e.getMessage()));
+		}
+		response.getOutputStream().close();
+	}
+	private void add(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.setContentType("application/json");
+		JobEntity newJob = mapper.readValue(request.getInputStream(), JobEntity.class);
+		try {
+			newJob.validate(validator);
+			jobEntityService.saveJobEntity(newJob);
+			mapper.writeValue(response.getOutputStream(), getSuccessResult());
+		} catch (Exception e) {
+			mapper.writeValue(response.getOutputStream(), getFailResult(e.getMessage()));
+		}
+		response.getOutputStream().close();
+	}
+
+	private void query(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Page<JobEntity> p = new Page<JobEntity>();
+		p.setRequestMap(request.getParameterMap());
+		p = jobEntityService.getAllJobEntitysAsPage(p);
+
+		response.setContentType("application/json");
+		mapper.writeValue(response.getOutputStream(), p);
+		response.getOutputStream().close();
+	}
+
+	protected Map<String, Result> getSuccessResult(Object extend) {
+		Result successResult = Result.getSuccessResult();
+		successResult.setExtend(extend);
+		return Collections.singletonMap(RESULT, successResult);
+	}
+
+	protected Map<String, Result> getSuccessResult() {
+		return Collections.singletonMap(RESULT, Result.getSuccessResult());
+	}
+
+	protected Map<String, Result> getFailResult(String failMsg) {
+		return Collections.singletonMap(RESULT, Result.getFailResult(failMsg));
+	}
 }

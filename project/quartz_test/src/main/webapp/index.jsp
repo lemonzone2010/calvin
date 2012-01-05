@@ -1,7 +1,4 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
 <html>
-<body>
-<h2>Hello World!</h2>
-<a href="demo">demo</a>
-<a href="demo1">demo1</a>
-</body>
-</html>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<a href=JobEntityindex.jsp>JobEntityindex.jsp</a></html>

@@ -9,6 +9,7 @@ public class NonQuartzJob {
 	JobEntityService jobEntityService;
 	public void execute() {
 		System.out.println("Ok");
-		jobEntityService.findJobEntityByJobName("test");
+		throw new RuntimeException("test");
+		//jobEntityService.findJobEntityByJobName("test");
 	}
 }
