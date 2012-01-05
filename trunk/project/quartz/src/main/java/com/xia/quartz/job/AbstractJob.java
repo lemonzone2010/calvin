@@ -32,7 +32,7 @@ public abstract class AbstractJob extends QuartzJobBean {
 	
 
 	@Override
-	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+	protected final void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		JobDetail jobDetail = context.getJobDetail();
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
@@ -80,11 +80,11 @@ public abstract class AbstractJob extends QuartzJobBean {
 	@Transactional
 	public abstract void execute(JobDataMap jobDataMap) throws Exception;
 
-	public JobLogEntityService getJobLogEntityService() {
+	private JobLogEntityService getJobLogEntityService() {
 		return ApplicationContextHolder.getBean("jobLogEntityService");
 	}
 
-	public JobEntityService getJobEntityService() {
+	private JobEntityService getJobEntityService() {
 		return ApplicationContextHolder.getBean("jobEntityService");
 	}
 
