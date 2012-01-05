@@ -6,13 +6,26 @@ import org.quartz.SchedulerException;
 
 import com.xia.quartz.model.JobEntity;
 
+/**
+ * 对现在的任务进行管理
+ * 原想针对spring有一个实现，针对quartz实现一个的，现仅实现对Spring的实现
+ * @author calvinx
+ *
+ */
 public interface QuartzService {
-
+	/**
+	 * 等待表达时时间才执行
+	 * 
+	 * @param jobEntity
+	 * @throws SchedulerException
+	 * @throws ClassNotFoundException
+	 * @throws NoSuchMethodException
+	 */
 	public void startJobs(List<JobEntity> jobEntitys) throws SchedulerException, ClassNotFoundException,
 			NoSuchMethodException;
 
 	/**
-	 * 它会等表达时时间才执行
+	 * 等待表达时时间才执行
 	 * 
 	 * @param jobEntity
 	 * @throws SchedulerException
@@ -22,7 +35,7 @@ public interface QuartzService {
 	public void startJob(JobEntity jobEntity) throws SchedulerException, ClassNotFoundException, NoSuchMethodException;
 
 	/**
-	 * 仅仅执行一次，立即执行,仅对已存在的JOB而言
+	 * 仅仅执行一次，立即执行,仅对已存在的JOB而言,注：它不会保存JOB，而是对Enitiy转化JOB且执行
 	 * 
 	 * @param jobEntity
 	 * @throws SchedulerException
@@ -32,6 +45,10 @@ public interface QuartzService {
 	public void startJobImmediatelyOnce(JobEntity jobEntity) throws SchedulerException, ClassNotFoundException,
 			NoSuchMethodException;
 
+	/**
+	 * 启动scheduler,默认自动已启动了，仅在shutDown后调用
+	 * @throws SchedulerException
+	 */
 	public void startScheduler() throws SchedulerException;
 
 	/**
