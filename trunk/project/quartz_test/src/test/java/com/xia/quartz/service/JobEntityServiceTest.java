@@ -23,7 +23,7 @@ public class JobEntityServiceTest {
 	@Transactional
 	public void addJob() {
 		jobEntity = newJobEntity();
-		jobService.addJob(jobEntity);
+		jobService.saveJobEntity(jobEntity);
 	}
 
 	public static JobEntity newJobEntity() {
@@ -41,6 +41,6 @@ public class JobEntityServiceTest {
 	@Transactional
 	public void removeJob() {
 		addJob();
-		jobService.removeJob(jobEntity);
+		jobService.removeJobEntity(jobEntity);
 	}
 }

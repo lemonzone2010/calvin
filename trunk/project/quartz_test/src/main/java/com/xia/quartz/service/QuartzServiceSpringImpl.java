@@ -51,9 +51,9 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 			CronTrigger triggerCorn = convertTrigger(jobEntity);
 			if (StringUtils.isNotBlank(jobEntity.getJobGroupName())) {
 				jobEntity.setJobGroupName(jobDetail.getGroup());
+				jobEntityService.updateJobEntity(jobEntity);
 			}
-			jobEntity.setStatus(JobStatus.RUNNING);
-			jobEntityService.updateJob(jobEntity);
+			//jobEntity.setStatus(JobStatus.WAITTING);
 
 			Date ft = scheduler.scheduleJob(jobDetail, triggerCorn);
 			logger.debug("任务:" + jobDetail.getKey() + " will run at: " + ft.toLocaleString());
@@ -73,14 +73,14 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 		logger.debug("Job生成中:" + jobEntity.getJobName());
 
 		JobDetail jobDetail;
-		if (jobEntity.isJobClassIsBeanName()) {
+		if (jobEntity.isJobClassIsBeanName()) {//如果是spring bean
 			//jobDetail = ApplicationContextHolder.getBean(jobEntity.getJobClass());
 			InvokerJobBean bean=ApplicationContextHolder.getBean("invokerJobBean");
 			bean.setTargetBeanName(jobEntity.getJobClass());
 			bean.setTargetMethod(jobEntity.getJobMethod());
 			bean.afterPropertiesSet();
 			jobDetail=bean.getObject();
-		} else {
+		} else {//如果是继承的是Job类
 			String jobClass = jobEntity.getJobClass();
 			@SuppressWarnings("unchecked")
 			Class<? extends Job> clazz = (Class<? extends Job>) Class.forName(jobClass);
@@ -90,7 +90,11 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 		jobDetail.setName(jobEntity.getJobName());
 		jobDetail.setGroup(jobEntity.getJobGroupName());
 		jobDetail.setDescription(jobEntity.getJobDesc());
-		jobDetail.getJobDataMap().putAll(jobEntity.getProperties());
+		try {
+			jobDetail.getJobDataMap().putAll(jobEntity.getProperties());
+		} catch (Exception e) {
+			logger.error("Lazy加载时session已关闭，可能只有在测试中出现:"+e.getMessage(), e);
+		}
 		return (JobDetail) jobDetail;
 	}
 
@@ -119,7 +123,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 		scheduler.pauseJob(jobEntity.getJobName(), jobEntity.getJobGroupName());
 		// scheduler.interrupt(jobKey);
 		jobEntity.setStatus(JobStatus.PAUSED);
-		jobEntityService.updateJob(jobEntity);
+		jobEntityService.updateJobEntity(jobEntity);
 	}
 
 	@Override
@@ -127,7 +131,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 		logger.debug("继续JOB:" + jobEntity.getJobName() + jobEntity.getJobGroupName());
 		scheduler.resumeJob(jobEntity.getJobName(), jobEntity.getJobGroupName());
 		jobEntity.setStatus(JobStatus.RUNNING);
-		jobEntityService.updateJob(jobEntity);
+		jobEntityService.updateJobEntity(jobEntity);
 	}
 
 	/*
@@ -142,7 +146,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 		logger.debug("卸载JOB:" + jobEntity.getJobName() + jobEntity.getJobGroupName());
 		scheduler.unscheduleJob(jobEntity.getJobName(), jobEntity.getJobGroupName());
 		jobEntity.setStatus(JobStatus.WAITTING);
-		jobEntityService.updateJob(jobEntity);
+		jobEntityService.updateJobEntity(jobEntity);
 	}
 
 	/*
@@ -195,6 +199,13 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		scheduler = schedulerFactoryBean.getScheduler();
+	}
+
+	@Override
+	public void startJobImmediatelyOnce(JobEntity jobEntity) throws SchedulerException, ClassNotFoundException,
+			NoSuchMethodException {
+		logger.debug("立即执行JOB:" + jobEntity.getJobName() + jobEntity.getJobGroupName());
+		scheduler.triggerJob(jobEntity.getJobName(), jobEntity.getJobGroupName());		
 	}
 
 }

@@ -28,13 +28,13 @@ public class JobStatusTest {
 			NoSuchMethodException {
 		new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 		// startAll();
-		new JobStatusTest().testStartInvokerJob();
+		new JobStatusTest().testStartInvokerJob();//测试时，为了JOB连续性，只能使用MAIN启动，不用@Test
 	}
 
 	private static void startAll() throws SchedulerException, ClassNotFoundException, NoSuchMethodException {
 		QuartzService quartzService = ApplicationContextHolder.getBean("quartzService");
 		JobEntityService jobService = ApplicationContextHolder.getBean("jobEntityService");
-		List<JobEntity> all = jobService.getAll();
+		List<JobEntity> all = jobService.getAllJobEntitys();
 		quartzService.startJobs(all);
 	}
 
@@ -64,7 +64,11 @@ public class JobStatusTest {
 		jobEntity.setJobMethod("execute");
 		// jobEntity.setJobClass("jobDetailInvoker");
 		jobEntity.setJobClassIsBeanName(true);
+		
+		JobEntityService jobEntityService = ApplicationContextHolder.getBean("jobEntityService");
+		jobEntityService.saveJobEntity(jobEntity);
 		quartzService.startJob(jobEntity);
+		quartzService.startJobImmediatelyOnce(jobEntity);
 	}
 
 	@Test
@@ -91,7 +95,7 @@ public class JobStatusTest {
 	public void testPauseJob() throws SchedulerException, ClassNotFoundException, InterruptedException,
 			NoSuchMethodException {
 		JobEntity jobEntity = JobEntityServiceTest.newJobEntity();
-		jobEntityService.addJob(jobEntity);
+		jobEntityService.saveJobEntity(jobEntity);
 
 		quartzService.startJob(jobEntity);
 		Assert.assertEquals(JobStatus.RUNNING, jobEntity.getStatus());

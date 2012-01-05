@@ -8,7 +8,7 @@ public class DemoSpringJob  extends AbstractJob {
 
 	@Override
 	public void execute(JobDataMap jobDataMap) throws Exception {
-		JobEntity job = getJobEntityService().findByJobName("Demo任务_1325661555923");
+		JobEntity job = getJobEntityService().findJobEntityByJobName("Demo任务_1325661555923");
 		logger.debug("Finded:"+job);
 	}
 
