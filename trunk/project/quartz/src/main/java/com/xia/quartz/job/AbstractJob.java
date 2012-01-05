@@ -29,19 +29,37 @@ import com.xia.quartz.util.Util;
  */
 public abstract class AbstractJob extends QuartzJobBean {
 	protected final static Log logger = LogFactory.getLog(AbstractJob.class);
-	
 
 	@Override
 	protected final void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		JobDetail jobDetail = context.getJobDetail();
-		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
 		JobEntity jobEntity = getJobEntityService().findJobEntityByJobName(jobDetail.getKey().getName());
-		if (jobEntity == null) {
-			logger.error("您要执行的任务不存在:" + jobDetail);
-			throw new JobExecutionException("任务不存在:" + jobDetail.getKey().getName());
+		JobLogEntity logEntity = preExecute(context, jobEntity);
+
+		try {
+			long start = System.currentTimeMillis();
+
+			execute(jobDetail.getJobDataMap());//
+
+			jobEntity.setJobUsedTime(System.currentTimeMillis() - start);
+			jobEntity.setStatus(JobStatus.WAITTING);
+			getJobEntityService().updateJobEntity(jobEntity);
+			getJobLogEntityService().addJobLog(logEntity);
+		} catch (Exception e) {
+			logger.error("任务执行出错" + e.getMessage(), e);
+			dealException(jobEntity, logEntity, e);
+			throw new JobExecutionException(e);
 		}
-		
+
+	}
+
+	private JobLogEntity preExecute(JobExecutionContext context, JobEntity jobEntity) throws JobExecutionException {
+		if (jobEntity == null) {
+			logger.error("您要执行的任务不存在:" + context.getJobDetail().getName());
+			throw new JobExecutionException("任务不存在:" + context.getJobDetail().getName());
+		}
+
 		jobEntity.setStatus(JobStatus.RUNNING);
 		jobEntity.setLastExecTime(new Date());
 		jobEntity.setNextExecTime(context.getNextFireTime());
@@ -49,32 +67,23 @@ public abstract class AbstractJob extends QuartzJobBean {
 
 		JobLogEntity logEntity = new JobLogEntity();
 		logEntity.setJobEntity(jobEntity);
+		getJobEntityService().updateJobEntity(jobEntity);
+		return logEntity;
+	}
 
+	private void dealException(JobEntity jobEntity, JobLogEntity logEntity, Exception e) throws JobExecutionException {
+		ExceptionEventDispather.getInstance().notify(jobEntity);
+		logEntity.setStatus(JobLogStatus.FAIL);
+		logEntity.setExceptionStackTrace(Util.getStackTrack(e));
 		try {
-			getJobEntityService().updateJobEntity(jobEntity);
-			long start=System.currentTimeMillis();
-			execute(jobDataMap);
-			jobEntity.setJobUsedTime(System.currentTimeMillis()-start);
-			jobEntity.setStatus(JobStatus.WAITTING);
-			getJobEntityService().updateJobEntity(jobEntity);
 			getJobLogEntityService().addJobLog(logEntity);
-		} catch (Exception e) {
-			logger.error("任务执行出错" + e.getMessage(), e);
-			ExceptionEventDispather.getInstance().notify(jobEntity);
-			logEntity.setStatus(JobLogStatus.FAIL);
-			logEntity.setExceptionStackTrace(Util.getStackTrack(e));
-			try {
-				getJobLogEntityService().addJobLog(logEntity);
-				jobEntity.setJobExceptionCount(jobEntity.getJobExceptionCount()+1);
-				jobEntity.setStatus(JobStatus.EXCEPTION);
-				jobEntity.setLastExeceptionTime(new Date());
-				getJobEntityService().updateJobEntity(jobEntity);
-			} catch (Exception e1) {
-				throw new JobExecutionException(e1);
-			}
-			throw new JobExecutionException(e);
+			jobEntity.setJobExceptionCount(jobEntity.getJobExceptionCount() + 1);
+			jobEntity.setStatus(JobStatus.EXCEPTION);
+			jobEntity.setLastExeceptionTime(new Date());
+			getJobEntityService().updateJobEntity(jobEntity);
+		} catch (Exception e1) {
+			throw new JobExecutionException(e1);
 		}
-
 	}
 
 	@Transactional
