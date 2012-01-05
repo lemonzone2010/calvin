@@ -187,7 +187,7 @@ public class JobEntity extends IdEntity {
 	@Override
 	public String toString() {
 		return "JobEntity [jobName=" + jobName + ", jobClass=" + jobClass + ", jobCronExpress=" + jobCronExpress
-				+ ", jobDesc=" + jobDesc + ", jobGroupName=" + jobGroupName + ", properties=" + properties
+				+ ", jobDesc=" + jobDesc + ", jobGroupName=" + jobGroupName 
 				+ ", jobExecCount=" + jobExecCount + ", createTime=" + createTime + ", lastExecTime=" + lastExecTime
 				+ ", nextExecTime=" + nextExecTime + ", jobClassIsBeanName=" + jobClassIsBeanName + ", status="
 				+ status + "]";
