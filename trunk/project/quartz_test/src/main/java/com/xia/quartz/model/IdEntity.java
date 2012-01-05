@@ -214,20 +214,20 @@ public abstract class IdEntity implements Serializable {
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-/*	@Transient
+	@Transient
 	String __errorMessage="";
 	public IdEntity validate(Validator validator) {
 		__errorMessage = "";
 		Set<ConstraintViolation<IdEntity>> failures = validator.validate(this);
 		if (!failures.isEmpty()) {
 			for (ConstraintViolation<IdEntity> failure : failures) {
-				String message = ApplicationContextHolder.getMessage(failure.getRootBeanClass().getSimpleName()+"."+failure.getPropertyPath());
-				__errorMessage += (message + " " + failure.getMessage());
+				String message = failure.getPropertyPath().toString();
+				__errorMessage += (message + " " + failure.getMessage())+"\\n";
 			}
 		}
 		if (StringUtils.isNotBlank(__errorMessage)) {
 			throw new RuntimeException(__errorMessage);
 		}
 		return this;
-	}*/
+	}
 }

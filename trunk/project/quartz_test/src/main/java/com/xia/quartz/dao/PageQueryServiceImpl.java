@@ -1,11 +1,15 @@
 package com.xia.quartz.dao;
 
 import java.util.List;
+import java.util.Map.Entry;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
@@ -64,5 +68,25 @@ public class PageQueryServiceImpl implements PageQueryService {//TODO:Test case
 	@Override
 	public <T> List<T> findListBy(Class<T> clazz, String property, String value) {
 		return hibernateTemplate.find("from " + clazz.getName() + " where " + property + "=?", value);
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	public <T> Page<T> findPage(Class<T> clazz, Page<T> p) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(clazz);
+
+		for (Entry<String, String> t : p.getQMap().entrySet()) {
+			criteria.add(Restrictions.ilike(t.getKey(), t.getValue() + "%"));
+		}
+
+		if (p.isOrderBySetted()) {
+			if (StringUtils.equalsIgnoreCase("asc", p.getOrderDirect()))
+				criteria.addOrder(Order.asc(p.getOrderBy()));
+			else
+				criteria.addOrder(Order.desc(p.getOrderBy()));
+		}
+		p.setRows((List<T>) hibernateTemplate.findByCriteria(criteria, p.getOffset(), p.getPageSize()));
+		p.setTotal(getRowCount(criteria));
+		return p;
 	}
 }
