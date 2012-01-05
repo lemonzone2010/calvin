@@ -8,7 +8,13 @@ public class NonQuartzJob {
 	@Autowired
 	JobEntityService jobEntityService;
 	public void execute() {
-		System.out.println("Ok");
+		System.out.println("NonQuartzJob Runned.");
+		try {
+			Thread.sleep(8000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		throw new RuntimeException("test");
 		//jobEntityService.findJobEntityByJobName("test");
 	}

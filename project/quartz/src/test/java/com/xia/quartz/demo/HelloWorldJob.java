@@ -1,4 +1,4 @@
-package com.xia.quartz_test.helloWord;
+package com.xia.quartz.demo;
 
 import java.util.Date;
 

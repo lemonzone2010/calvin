@@ -21,36 +21,9 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.MethodInvoker;
 
 /**
- * {@link org.springframework.beans.factory.FactoryBean} that exposes a
- * {@link org.quartz.JobDetail} object which delegates job execution to a
- * specified (static or non-static) method. Avoids the need for implementing
- * a one-line Quartz Job that just invokes an existing service method on a
- * Spring-managed target bean.
- *
- * <p>Inherits common configuration properties from the {@link MethodInvoker}
- * base class, such as {@link #setTargetObject "targetObject"} and
- * {@link #setTargetMethod "targetMethod"}, adding support for lookup of the target
- * bean by name through the {@link #setTargetBeanName "targetBeanName"} property
- * (as alternative to specifying a "targetObject" directly, allowing for
- * non-singleton target objects).
- *
- * <p>Supports both concurrently running jobs and non-currently running
- * jobs through the "concurrent" property. Jobs created by this
- * MethodInvokingJobDetailFactoryBean are by default volatile and durable
- * (according to Quartz terminology).
- *
- * <p><b>NOTE: JobDetails created via this FactoryBean are <i>not</i>
- * serializable and thus not suitable for persistent job stores.</b>
- * You need to implement your own Quartz Job as a thin wrapper for each case
- * where you want a persistent job to delegate to a specific service method.
- *
- * @author Juergen Hoeller
- * @author Alef Arendsen
- * @since 18.02.2004
- * @see #setTargetBeanName
- * @see #setTargetObject
- * @see #setTargetMethod
- * @see #setConcurrent
+ * 从别的地儿复制过来的，对已经实现了未继承job的任务，要用到MethodInvokingJobDetailFactoryBean包装成job时
+ * xiayong
+ * @see org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean
  */
 public class InvokerJobBean extends ArgumentConvertingMethodInvoker
 	implements  BeanNameAware, BeanClassLoaderAware, BeanFactoryAware {

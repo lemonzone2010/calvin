@@ -29,6 +29,7 @@ import com.xia.quartz.util.Util;
  */
 public abstract class AbstractJob extends QuartzJobBean {
 	protected final static Log logger = LogFactory.getLog(AbstractJob.class);
+	
 
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
@@ -40,7 +41,7 @@ public abstract class AbstractJob extends QuartzJobBean {
 			logger.error("您要执行的任务不存在:" + jobDetail);
 			throw new JobExecutionException("任务不存在:" + jobDetail.getKey().getName());
 		}
-System.out.println(context);
+		
 		jobEntity.setStatus(JobStatus.RUNNING);
 		jobEntity.setLastExecTime(new Date());
 		jobEntity.setNextExecTime(context.getNextFireTime());
@@ -59,11 +60,14 @@ System.out.println(context);
 			getJobLogEntityService().addJobLog(logEntity);
 		} catch (Exception e) {
 			logger.error("任务执行出错" + e.getMessage(), e);
+			ExceptionEventDispather.getInstance().notify(jobEntity);
 			logEntity.setStatus(JobLogStatus.FAIL);
 			logEntity.setExceptionStackTrace(Util.getStackTrack(e));
 			try {
 				getJobLogEntityService().addJobLog(logEntity);
+				jobEntity.setJobExceptionCount(jobEntity.getJobExceptionCount()+1);
 				jobEntity.setStatus(JobStatus.EXCEPTION);
+				jobEntity.setLastExeceptionTime(new Date());
 				getJobEntityService().updateJobEntity(jobEntity);
 			} catch (Exception e1) {
 				throw new JobExecutionException(e1);

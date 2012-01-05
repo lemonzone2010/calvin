@@ -1,3 +1,4 @@
+package com.xia.quartz.demo;
 /*以下是2.0的代码
  * 
  * package com.xia.quartz_test.helloWord;
