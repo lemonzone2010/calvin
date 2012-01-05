@@ -123,8 +123,9 @@
  				<th field="nextExecTime" width="120" >下次执行时间</th>
  				<th field="lastExecTime" width="120" >上次执行时间</th>
  				<th field="jobUsedTime" width="50" >本次执行时长(MS)</th>
- 				<th field="jobExecCount" width="50" >执行次数</th>
- 				<th field="createTime" width="120" >创建时间</th>
+ 				<th field="jobExecCount" width="50" >执行数</th>
+ 				<th field="jobExceptionCount" width="50" >异常数</th>
+ 				<th field="lastExeceptionTime" width="120" >上次异常时间</th>
  			</tr>
 		</thead>
 	</table>

@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.MapKeyClass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -25,14 +24,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class JobEntity extends IdEntity {
 	@NotBlank
 	@Column(unique = true)
-	private String jobName;//任务名
+	private String jobName;// 任务名
 	@NotBlank
-	private String jobClass;//类名或者bean名
-	private String jobMethod;//如果为bean名，对应执行的方法
+	private String jobClass;// 类名或者bean名
+	private String jobMethod;// 如果为bean名，对应执行的方法
 	@NotNull
-	private String jobCronExpress;//表达式
-	private String jobDesc;//任务描述
-	private String jobGroupName;//Group名
+	private String jobCronExpress;// 表达式
+	private String jobDesc;// 任务描述
+	private String jobGroupName;// Group名
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "t_job_properties")
 	private Map<String, String> properties = new HashMap<String, String>();
@@ -50,8 +49,13 @@ public class JobEntity extends IdEntity {
 	private boolean jobClassIsBeanName = false;
 	@Enumerated(EnumType.STRING)
 	private JobStatus status = JobStatus.WAITTING;
+
+	private long jobUsedTime;// ms
+	private long jobExceptionCount;//任务异常总数
 	
-	private long jobUsedTime;//ms
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastExeceptionTime;
 
 	public String getJobName() {
 		return jobName;
@@ -84,6 +88,7 @@ public class JobEntity extends IdEntity {
 	public void setJobDesc(String jobDesc) {
 		this.jobDesc = jobDesc;
 	}
+
 	@JsonIgnore
 	public Map<String, String> getProperties() {
 		return properties;
@@ -202,6 +207,22 @@ public class JobEntity extends IdEntity {
 
 	public void setJobUsedTime(long jobUsedTime) {
 		this.jobUsedTime = jobUsedTime;
+	}
+
+	public long getJobExceptionCount() {
+		return jobExceptionCount;
+	}
+
+	public void setJobExceptionCount(long jobExceptionCount) {
+		this.jobExceptionCount = jobExceptionCount;
+	}
+
+	public Date getLastExeceptionTime() {
+		return lastExeceptionTime;
+	}
+
+	public void setLastExeceptionTime(Date lastExeceptionTime) {
+		this.lastExeceptionTime = lastExeceptionTime;
 	}
 
 }

@@ -16,7 +16,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<listener>
-		<listener-class>com.xia.quartz.job.InitStartAllJob</listener-class>
+		<listener-class>com.xia.quartz.job.InitStartAllJobListener</listener-class>
 	</listener>
 
 	<!-- Filter 定义 -->
