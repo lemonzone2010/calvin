@@ -44,6 +44,8 @@ public class JobEntity extends IdEntity {
 	private boolean jobClassIsBeanName = false;
 	@Enumerated(EnumType.STRING)
 	private JobStatus status = JobStatus.WAITTING;
+	
+	private long jobUsedTime;//ms
 
 	public String getJobName() {
 		return jobName;
@@ -186,6 +188,14 @@ public class JobEntity extends IdEntity {
 
 	public void setJobMethod(String jobMethod) {
 		this.jobMethod = jobMethod;
+	}
+
+	public long getJobUsedTime() {
+		return jobUsedTime;
+	}
+
+	public void setJobUsedTime(long jobUsedTime) {
+		this.jobUsedTime = jobUsedTime;
 	}
 
 }

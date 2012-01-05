@@ -9,6 +9,6 @@ public class NonQuartzJob {
 	JobEntityService jobEntityService;
 	public void execute() {
 		System.out.println("Ok");
-		jobEntityService.findByJobName("test");
+		jobEntityService.findJobEntityByJobName("test");
 	}
 }

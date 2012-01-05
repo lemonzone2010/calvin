@@ -20,39 +20,39 @@ public class JobEntityService {
 	PageQueryService pageQueryService;
 
 	@Transactional
-	public void addJob(JobEntity jobEntity) {
+	public void saveJobEntity(JobEntity jobEntity) {
 		crudService.create(jobEntity);
 	}
 
 	@Transactional
-	public void updateJob(JobEntity jobEntity) {
+	public void updateJobEntity(JobEntity jobEntity) {
 		crudService.update(jobEntity);
 	}
 
 	@Transactional
-	public void removeJob(JobEntity jobEntity) {
+	public void removeJobEntity(JobEntity jobEntity) {
 		crudService.delete(jobEntity);
 	}
 
 	@Transactional(readOnly = true)
-	public JobEntity findByJobName(String jobName) {
+	public JobEntity findJobEntityByJobName(String jobName) {
 		List<JobEntity> list = pageQueryService.findListBy(JobEntity.class, "jobName", jobName);
 		JobEntity ret = (list.isEmpty()) ? null : list.get(0);
-		if(null!=ret)ret.getProperties().isEmpty();// 把properties从Lazy中拿出来,如果有opensessioninview，可以去掉,如果开Lazy=false,会出现重复值
+		//if(null!=ret)ret.getProperties().isEmpty();// 把properties从Lazy中拿出来,如果有opensessioninview，可以去掉,如果开Lazy=false,会出现重复值
 		return ret;
 	}
 
 	@Transactional(readOnly = true)
-	public List<JobEntity> getAll() {
+	public List<JobEntity> getAllJobEntitys() {
 		List<JobEntity> findAll = pageQueryService.findAll(JobEntity.class);
 		// 把properties从Lazy中拿出来
-		for (JobEntity jobEntity : findAll) {
+		/*for (JobEntity jobEntity : findAll) {
 			jobEntity.getProperties().isEmpty();
-		}
+		}*/
 		return findAll;
 	}
 
-	public boolean isExistJob(String jobName) {
-		return null != findByJobName(jobName);
+	public boolean isExistJobEntity(String jobName) {
+		return null != findJobEntityByJobName(jobName);
 	}
 }

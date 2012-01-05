@@ -35,12 +35,12 @@ public abstract class AbstractJob extends QuartzJobBean {
 		JobDetail jobDetail = context.getJobDetail();
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
-		JobEntity jobEntity = getJobEntityService().findByJobName(jobDetail.getKey().getName());
+		JobEntity jobEntity = getJobEntityService().findJobEntityByJobName(jobDetail.getKey().getName());
 		if (jobEntity == null) {
 			logger.error("您要执行的任务不存在:" + jobDetail);
 			throw new JobExecutionException("任务不存在:" + jobDetail.getKey().getName());
 		}
-
+System.out.println(context);
 		jobEntity.setStatus(JobStatus.RUNNING);
 		jobEntity.setLastExecTime(new Date());
 		jobEntity.setNextExecTime(context.getNextFireTime());
@@ -50,8 +50,12 @@ public abstract class AbstractJob extends QuartzJobBean {
 		logEntity.setJobEntity(jobEntity);
 
 		try {
+			getJobEntityService().updateJobEntity(jobEntity);
+			long start=System.currentTimeMillis();
 			execute(jobDataMap);
-			getJobEntityService().updateJob(jobEntity);
+			jobEntity.setJobUsedTime(System.currentTimeMillis()-start);
+			jobEntity.setStatus(JobStatus.WAITTING);
+			getJobEntityService().updateJobEntity(jobEntity);
 			getJobLogEntityService().addJobLog(logEntity);
 		} catch (Exception e) {
 			logger.error("任务执行出错" + e.getMessage(), e);
@@ -60,7 +64,7 @@ public abstract class AbstractJob extends QuartzJobBean {
 			try {
 				getJobLogEntityService().addJobLog(logEntity);
 				jobEntity.setStatus(JobStatus.EXCEPTION);
-				getJobEntityService().updateJob(jobEntity);
+				getJobEntityService().updateJobEntity(jobEntity);
 			} catch (Exception e1) {
 				throw new JobExecutionException(e1);
 			}
@@ -80,6 +84,7 @@ public abstract class AbstractJob extends QuartzJobBean {
 		return ApplicationContextHolder.getBean("jobEntityService");
 	}
 
+	@SuppressWarnings("unused")
 	private TrascationHelper getTrascationHelper() {
 		return ApplicationContextHolder.getBean("trascationHelper");
 	}
