@@ -21,9 +21,9 @@ public interface CrudService {
 	//Remove the object state from the database. And the object becomes detached
 	void delete(Object e);
 
-	void deleteAll(Collection e);
+	void deleteAll(Collection<?> e);
 
-	<T extends Serializable> void delete(Class clazz, T id);
+	<T extends Serializable> void delete(Class<?> clazz, T id);
 
 	//Gets the underlying implementation object
 	Object getDelegate();

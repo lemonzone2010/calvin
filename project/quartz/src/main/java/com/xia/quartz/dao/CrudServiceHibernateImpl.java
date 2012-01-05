@@ -43,12 +43,12 @@ public class CrudServiceHibernateImpl implements CrudService{
 		hibernateTemplate.delete(entity);
 	}
 
-	public void deleteAll(Collection entities) {
+	public void deleteAll(Collection<?> entities) {
 		hibernateTemplate.deleteAll(entities);
 	}
 
-	public <T extends Serializable> void delete(Class clazz, T id) {
-		//First retrieve the entity intance by its id
+	public <T extends Serializable> void delete(Class<?> clazz, T id) {
+		//First retrieve the entity instance by its id
 		Object entity = retrieve(clazz, id);
 		if (entity != null){
 			this.delete(entity);

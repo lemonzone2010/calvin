@@ -23,6 +23,7 @@ public class ApplicationContextHolder implements ApplicationContextAware {
 		T bean = (T) ctx.getBean(StringUtils.uncapitalize(clazz.getSimpleName()));
 		return (T) bean;
 	}
+	@SuppressWarnings("unchecked")
 	public static <T> T getBean(String name) {
 		return (T) ctx.getBean(name);
 	}
