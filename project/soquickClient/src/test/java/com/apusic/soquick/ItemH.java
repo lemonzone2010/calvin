@@ -3,10 +3,12 @@ package com.apusic.soquick;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "F_Table")
 public class ItemH {
+	@Id
 	@Column
 	String id;
 	@Column(name = "F_title")

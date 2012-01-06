@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.nio.ByteBuffer;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -20,12 +21,14 @@ import javax.persistence.Table;
  * 
  * @version $Id: DocumentObjectBinder.java 945270 2010-05-17 17:45:18Z rmuir $
  * @since solr 1.3
- * Xiayong rewirte from solr source code.
+ * <br/>Xiayong rewirte from solr source code.<br/>
+ * 转化规则为:<br/>
+ *<b> @ID字段:</b>solrName=会生成@Column.name,value=@table.name+"."+@column.value<br/>
+ * <b>非@ID字段:</b>solrName=@table.name+"."+会生成@Column.name,value=@column.value
  */
 @SuppressWarnings("rawtypes")
 public class HibernateDocBinder {
 	private final Map<Class, List<DocField>> infocache = new ConcurrentHashMap<Class, List<DocField>>();
-	private final static String ID="id";
 	private final static String SPLIT_CHAR=".";//split table and filed
 
 	public HibernateDocBinder() {
@@ -78,7 +81,7 @@ public class HibernateDocBinder {
 					doc.setField(e.getKey(), e.getValue(), 1.0f);
 				}
 			} else {
-				if(StringUtils.equals(field.name, ID)){
+				if(field.isId){
 					doc.setField(field.name, field.tableName+SPLIT_CHAR+field.get(obj), 1.0f);
 				}else {
 					doc.setField(field.tableName+SPLIT_CHAR+field.name, field.get(obj), 1.0f);
@@ -128,7 +131,7 @@ public class HibernateDocBinder {
 		private Method setter;
 		private Method getter;
 		private Class type;
-		private boolean isArray = false, isList = false;
+		private boolean isArray = false, isList = false,isId=false;
 
 		/*
 		 * dynamic fields may use a Map based data structure to bind a given
@@ -146,6 +149,7 @@ public class HibernateDocBinder {
 			} else {
 				setter = (Method) member;
 			}
+			isId=member.isAnnotationPresent(Id.class);
 			Column annotation = member.getAnnotation(Column.class);
 			storeName(annotation);
 			storeType();
@@ -287,9 +291,10 @@ public class HibernateDocBinder {
 		@SuppressWarnings("unchecked")
 		private Object getFieldValue(SolrDocument sdoc) {
 			Object fieldValue = sdoc.getFieldValue(name);
-			if(!StringUtils.equals(ID, name)) {
-				fieldValue = sdoc.getFieldValue(tableName+SPLIT_CHAR+name);
+			if(isId) {
+				return fieldValue;
 			}
+			fieldValue = sdoc.getFieldValue(tableName+SPLIT_CHAR+name);
 			if (fieldValue != null) {
 				// this is not a dynamic field. so return te value
 				return fieldValue;
@@ -349,7 +354,7 @@ public class HibernateDocBinder {
 			if (val == null) {
 				return;
 			}
-			if(StringUtils.equals(ID, name)) {
+			if(isId) {
 				val=StringUtils.substringAfter(val.toString(), tableName+SPLIT_CHAR);
 			}
 			if (isArray && !isContainedInMap) {
