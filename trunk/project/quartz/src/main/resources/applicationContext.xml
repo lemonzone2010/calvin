@@ -23,6 +23,11 @@
 	
 	<bean class="com.xia.quartz.job.InitStartAllJobListener" lazy-init="false" ></bean>
 	
+	
+	<bean id="demoSpringJob" class="com.xia.quartz.job.DemoSpringJob">
+		<property name="jobEntityService" ref="jobEntityService"></property>
+	</bean>
+	
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />

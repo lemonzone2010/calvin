@@ -74,8 +74,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 
 		JobDetail jobDetail;
 		if (jobEntity.isJobClassIsBeanName()) {//如果是spring bean
-			//jobDetail = ApplicationContextHolder.getBean(jobEntity.getJobClass());
-			InvokerJobBean bean=ApplicationContextHolder.getBean("invokerJobBean");
+			InvokerJobBean bean=ApplicationContextHolder.getBean("invokerJobBean");//通过invokerJobBean转换
 			bean.setTargetBeanName(jobEntity.getJobClass());
 			bean.setTargetMethod(jobEntity.getJobMethod());
 			bean.afterPropertiesSet();
@@ -93,7 +92,7 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 		try {
 			jobDetail.getJobDataMap().putAll(jobEntity.getProperties());
 		} catch (Exception e) {
-			logger.error("Lazy加载时session已关闭，可能只有在测试中出现:"+e.getMessage(), e);
+			logger.error("Lazy加载时session已关闭，可能只有在测试中出现:"+e.getMessage());
 		}
 		return (JobDetail) jobDetail;
 	}
