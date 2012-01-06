@@ -1,30 +1,43 @@
 package com.apusic.soquick;
 
-import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Table;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.common.util.DateUtil;
 
-public class Query {
-	Class<?> clazz;
-	String q = "";
+/**
+ * 已实现：and,or,not,order,range
+ * @author xiayong
+ *
+ */
+public class Query extends AbstractSolrQuery{
+	private Map<String,ORDER> order=new HashMap<String,ORDER>();
+	
 
-	/*
-	 * public Query(Class<?> clazz) { this.clazz = clazz; }
+	/**
+	 * @param clazz 有hibernate注解的类
+	 * @param field bean类的属性,可为*
+	 * @param value 对应属性要查询的值，可为*
 	 */
-
 	public Query(Class<?> clazz, String field, String value) {
-		this.clazz = clazz;
+		super(clazz, field, value);
+		//检查是否有hibernate注解
 		add(field, value, "");
 	}
 
+	/**
+	 * @param field
+	 * @param isAsc 是否升序
+	 * @return
+	 */
+	public Query addSort(String field, boolean isAsc) {
+		order.put(getFieldName(field), isAsc ? ORDER.asc : ORDER.desc);
+		return this;
+	}
 	public Query and(String field, String value) {
 		add(field, value, " AND ");
 		return this;
@@ -57,6 +70,10 @@ public class Query {
 	}
 
 	private Query add(String field, String value, String condition) {
+		if(StringUtils.contains(field, "*")&&StringUtils.equals("*", value)) {
+			if(!(StringUtils.equals(field, "*")&&StringUtils.equals("*", value)))
+				throw new SoQuickException("filed里不能带*.(例外：value为*时，field可为*)");
+		}
 		q += condition + getFieldName(field) + ":" + value;
 		return this;
 	}
@@ -65,36 +82,19 @@ public class Query {
 	public String toString() {
 		return StringUtils.isBlank(q) ? "*:*" : q;
 	}
-
-	private String getFieldName(String fieldName) {
-		Class<?> superClazz = clazz;
-		String tableName = "";
-		if (superClazz.isAnnotationPresent(Table.class)) {
-			tableName = ((Table) superClazz.getAnnotation(Table.class)).name();
+	
+	/*private String encoding(String o) {
+		try {
+			return java.net.URLEncoder.encode(o, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			return o;
 		}
-		ArrayList<AccessibleObject> members = new ArrayList<AccessibleObject>();
-		while (superClazz != null && superClazz != Object.class) {
-			members.addAll(Arrays.asList(superClazz.getDeclaredFields()));
-			members.addAll(Arrays.asList(superClazz.getDeclaredMethods()));
-			superClazz = superClazz.getSuperclass();
-		}
-		for (AccessibleObject member : members) {
-			if (member.isAnnotationPresent(Column.class)) {
-				String name = member.getAnnotation(Column.class).name();
-				if (StringUtils.isNotBlank(name) && member instanceof Field
-						&& StringUtils.endsWith(((Field) member).getName(), fieldName)) {
-					return tableName + "." + name;
-				} else {
-					// TODO 对方法名的解析标记语言
-				}
-			}
-		}
-		return fieldName;
+	}*/
+	public Map<String, ORDER> getOrder() {
+		return order;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public Class getQueryClazz() {
-		return clazz;
-	}
+
+
 
 }

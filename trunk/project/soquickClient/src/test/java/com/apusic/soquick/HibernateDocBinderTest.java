@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
@@ -35,9 +36,18 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.SolrInputField;
 import org.apache.solr.common.util.NamedList;
 import org.junit.Assert;
+import org.junit.Test;
 
+/**
+ * 测试与solr的交互是否正确：正向把BEAN生成SOLR Document,反向通过Solr Docuemnt转化为BEAN
+ * 
+ * @author xiayong
+ *
+ */
 public class HibernateDocBinderTest extends BaseTestCase
 {
+	//简单的转化
+	@Test
   public void testSimple() throws Exception {
 	HibernateDocBinder binder = new HibernateDocBinder();
     XMLResponseParser parser = new XMLResponseParser();
@@ -47,15 +57,15 @@ public class HibernateDocBinderTest extends BaseTestCase
     SolrDocumentList solDocList = res.getResults();
     List<Item> l = binder.getBeans(Item.class,res.getResults());
     Assert.assertEquals(solDocList.size(), l.size());
-    Assert.assertEquals(solDocList.get(0).getFieldValue("features"), l.get(0).features);
+    Assert.assertEquals(solDocList.get(0).getFieldValue("F_ITEM.features"), l.get(0).features);
 
     Item item = new Item();
     item.id = "aaa";
     item.categories = new String[] { "aaa", "bbb", "ccc" };
     SolrInputDocument out = binder.toSolrInputDocument( item );
 
-    Assert.assertEquals( item.id, out.getFieldValue( "id" ) );
-    SolrInputField catfield = out.getField( "cat" );
+    Assert.assertEquals("F_ITEM."+ item.id, out.getFieldValue( "F_id" ) );
+    SolrInputField catfield = out.getField( "F_ITEM.cat" );
     Assert.assertEquals( 3, catfield.getValueCount() );
     Assert.assertEquals( "[aaa, bbb, ccc]", catfield.getValue().toString() );
 
@@ -70,17 +80,18 @@ public class HibernateDocBinderTest extends BaseTestCase
       // ok -- this should happen...
     }
   }
+	@Test
   public void testSingleVal4Array(){
 	  HibernateDocBinder binder = new HibernateDocBinder();
     SolrDocumentList solDocList = new SolrDocumentList();
     SolrDocument d = new SolrDocument();
     solDocList.add(d);
-    d.setField("cat","hello");
+    d.setField("F_ITEM.cat","hello");
     List<Item> l = binder.getBeans(Item.class,solDocList);
     Assert.assertEquals("hello", l.get(0).categories[0]);
 
   }
-
+	@Test
   public void testDynamicFieldBinding(){
 	  HibernateDocBinder binder = new HibernateDocBinder();
     XMLResponseParser parser = new XMLResponseParser();
@@ -94,7 +105,7 @@ public class HibernateDocBinderTest extends BaseTestCase
     Assert.assertEquals("[Mobile Store, iPod Store]", l.get(3).supplier.get("supplier_1").toString());
     Assert.assertEquals("[CCTV Store]", l.get(3).supplier.get("supplier_2").toString());
   }
-
+	@Test
   public void testToAndFromSolrDocument()
   {
     Item item = new Item();
@@ -159,7 +170,8 @@ public class HibernateDocBinderTest extends BaseTestCase
   }
   @Table(name = "F_ITEM")
   public static class Item {
-	  @Column
+	  @Id
+	  @Column(name="F_id")
     String id;
 
 	  @Column(name="cat")
@@ -228,29 +240,30 @@ public class HibernateDocBinderTest extends BaseTestCase
 			this.aaa = aaa;
 		}
 	}
-
   public static final String xml = 
-    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-    "<response>" +
-    "<lst name=\"responseHeader\"><int name=\"status\">0</int><int name=\"QTime\">0</int><lst name=\"params\"><str name=\"start\">0</str><str name=\"q\">*:*\n" +
-    "</str><str name=\"version\">2.2</str><str name=\"rows\">4</str></lst></lst><result name=\"response\" numFound=\"26\" start=\"0\"><doc><arr name=\"cat\">" +
-    "<str>electronics</str><str>hard drive</str></arr><arr name=\"features\"><str>7200RPM, 8MB cache, IDE Ultra ATA-133</str>" +
-    "<str>NoiseGuard, SilentSeek technology, Fluid Dynamic Bearing (FDB) motor</str></arr><str name=\"id\">SP2514N</str>" +
-    "<bool name=\"inStock\">true</bool><str name=\"manu\">Samsung Electronics Co. Ltd.</str><str name=\"name\">Samsung SpinPoint P120 SP2514N - hard drive - 250 GB - ATA-133</str>" +
-    "<int name=\"popularity\">6</int><float name=\"price\">92.0</float><str name=\"sku\">SP2514N</str><date name=\"timestamp\">2008-04-16T10:35:57.078Z</date></doc>" +
-    "<doc><arr name=\"cat\"><str>electronics</str><str>hard drive</str></arr><arr name=\"features\"><str>SATA 3.0Gb/s, NCQ</str><str>8.5ms seek</str>" +
-    "<str>16MB cache</str></arr><str name=\"id\">6H500F0</str><bool name=\"inStock\">true</bool><str name=\"manu\">Maxtor Corp.</str>" +
-    "<str name=\"name\">Maxtor DiamondMax 11 - hard drive - 500 GB - SATA-300</str><int name=\"popularity\">6</int><float name=\"price\">350.0</float>" +
-    "<str name=\"sku\">6H500F0</str><date name=\"timestamp\">2008-04-16T10:35:57.109Z</date></doc><doc><arr name=\"cat\"><str>electronics</str>" +
-    "<str>connector</str></arr><arr name=\"features\"><str>car power adapter, white</str></arr><str name=\"id\">F8V7067-APL-KIT</str>" +
-    "<bool name=\"inStock\">false</bool><str name=\"manu\">Belkin</str><str name=\"name\">Belkin Mobile Power Cord for iPod w/ Dock</str>" +
-    "<int name=\"popularity\">1</int><float name=\"price\">19.95</float><str name=\"sku\">F8V7067-APL-KIT</str>" +
-    "<date name=\"timestamp\">2008-04-16T10:35:57.140Z</date><float name=\"weight\">4.0</float></doc><doc>" +
-    "<arr name=\"cat\"><str>electronics</str><str>connector</str></arr><arr name=\"features\">" +
-    "<str>car power adapter for iPod, white</str></arr><str name=\"id\">IW-02</str><bool name=\"inStock\">false</bool>" +
-    "<str name=\"manu\">Belkin</str><str name=\"name\">iPod &amp; iPod Mini USB 2.0 Cable</str>" +
-    "<int name=\"popularity\">1</int><float name=\"price\">11.5</float><str name=\"sku\">IW-02</str>" +
-    "<str name=\"supplier_1\">Mobile Store</str><str name=\"supplier_1\">iPod Store</str><str name=\"supplier_2\">CCTV Store</str>" +
-    "<date name=\"timestamp\">2008-04-16T10:35:57.140Z</date><float name=\"weight\">2.0</float></doc></result>\n" +
-    "</response>";
+ "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+			+ "<response>"
+			+ "<lst name=\"responseHeader\"><int name=\"status\">0</int><int name=\"QTime\">0</int><lst name=\"params\"><str name=\"start\">0</str><str name=\"q\">*:*\n"
+			+ "</str><str name=\"version\">2.2</str><str name=\"rows\">4</str></lst></lst><result name=\"response\" numFound=\"26\" start=\"0\">" +
+			
+			"<doc><arr name=\"F_ITEM.cat\">"
+			+ "<str>electronics</str><str>hard drive</str></arr><arr name=\"F_ITEM.features\"><str>7200RPM, 8MB cache, IDE Ultra ATA-133</str>"
+			+ "<str>NoiseGuard, SilentSeek technology, Fluid Dynamic Bearing (FDB) motor</str></arr><str name=\"F_id\">F_ITEM.SP2514N</str>"
+			+ "<bool name=\"F_ITEM.inStock\">true</bool><str name=\"F_ITEM.manu\">Samsung Electronics Co. Ltd.</str><str name=\"F_ITEM.name\">Samsung SpinPoint P120 SP2514N - hard drive - 250 GB - ATA-133</str>"
+			+ "<int name=\"F_ITEM.popularity\">6</int><float name=\"F_ITEM.price\">92.0</float><str name=\"sku\">SP2514N</str><date name=\"timestamp\">2008-04-16T10:35:57.078Z</date></doc>"
+			+ "<doc><arr name=\"F_ITEM.cat\"><str>electronics</str><str>hard drive</str></arr><arr name=\"features\"><str>SATA 3.0Gb/s, NCQ</str><str>8.5ms seek</str>"
+			+ "<str>16MB cache</str></arr><str name=\"F_id\">F_ITEM.6H500F0</str><bool name=\"inStock\">true</bool><str name=\"manu\">Maxtor Corp.</str>"
+			+ "<str name=\"name\">Maxtor DiamondMax 11 - hard drive - 500 GB - SATA-300</str><int name=\"popularity\">6</int><float name=\"price\">350.0</float>"
+			+ "<str name=\"sku\">6H500F0</str><date name=\"timestamp\">2008-04-16T10:35:57.109Z</date></doc><doc><arr name=\"cat\"><str>electronics</str>"
+			+ "<str>connector</str></arr><arr name=\"features\"><str>car power adapter, white</str></arr><str name=\"id\">F8V7067-APL-KIT</str>"
+			+ "<bool name=\"inStock\">false</bool><str name=\"manu\">Belkin</str><str name=\"name\">Belkin Mobile Power Cord for iPod w/ Dock</str>"
+			+ "<int name=\"popularity\">1</int><float name=\"price\">19.95</float><str name=\"sku\">F8V7067-APL-KIT</str>"
+			+ "<date name=\"timestamp\">2008-04-16T10:35:57.140Z</date><float name=\"weight\">4.0</float></doc><doc>"
+			+ "<arr name=\"cat\"><str>electronics</str><str>connector</str></arr><arr name=\"features\">"
+			+ "<str>car power adapter for iPod, white</str></arr><str name=\"id\">IW-02</str><bool name=\"inStock\">false</bool>"
+			+ "<str name=\"manu\">Belkin</str><str name=\"name\">iPod &amp; iPod Mini USB 2.0 Cable</str>"
+			+ "<int name=\"popularity\">1</int><float name=\"price\">11.5</float><str name=\"sku\">IW-02</str>"
+			+ "<str name=\"supplier_1\">Mobile Store</str><str name=\"supplier_1\">iPod Store</str><str name=\"supplier_2\">CCTV Store</str>"
+			+ "<date name=\"timestamp\">2008-04-16T10:35:57.140Z</date><float name=\"weight\">2.0</float></doc></result>\n"
+			+ "</response>";
 }
