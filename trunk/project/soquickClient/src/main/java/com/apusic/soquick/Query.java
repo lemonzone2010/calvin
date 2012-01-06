@@ -1,6 +1,5 @@
 package com.apusic.soquick;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
