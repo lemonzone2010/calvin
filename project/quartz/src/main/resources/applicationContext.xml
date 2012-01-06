@@ -21,13 +21,8 @@
 
 	<bean id="nonQuartzJob" class="com.xia.quartz.job.NonQuartzJob"></bean>
 	
-	<bean id="jobDetailInvoker" name="jobDetailInvoker"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="nonQuartzJob" />
-		<property name="targetMethod">
-			<value>execute</value>
-		</property>
-	</bean>
+	<bean class="com.xia.quartz.job.InitStartAllJobListener" lazy-init="false" ></bean>
+	
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />

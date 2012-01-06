@@ -5,12 +5,14 @@ import java.util.List;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.springframework.beans.factory.InitializingBean;
+
 import com.xia.quartz.model.JobEntity;
 import com.xia.quartz.service.JobEntityService;
 import com.xia.quartz.service.QuartzService;
 import com.xia.quartz.util.ApplicationContextHolder;
 
-public class InitStartAllJobListener implements ServletContextListener {
+public class InitStartAllJobListener implements ServletContextListener,InitializingBean {
 
 	public void afterPropertiesSet() throws Exception {
 		ExceptionEventDispather.getInstance().addObserver(new NopExceptionListener());
@@ -26,7 +28,6 @@ public class InitStartAllJobListener implements ServletContextListener {
 		try {
 			afterPropertiesSet();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -34,7 +35,6 @@ public class InitStartAllJobListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		// TODO Auto-generated method stub
 		
 	}
 
