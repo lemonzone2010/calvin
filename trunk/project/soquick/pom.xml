@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.apusic.ebiz.soquick</groupId>
+  <version>1.0.0-SNAPSHOT</version>
+  <artifactId>soquick</artifactId>
+  <packaging>war</packaging>
+  <name>soquick</name>
+  <!-- 
+    <parent>
+        <artifactId>ebiz-webproject-template</artifactId>
+        <groupId>com.apusic.ebiz</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+  </parent>
+ -->
+  <build>
+        <sourceDirectory>target/classes</sourceDirectory>
+        <testOutputDirectory>bin</testOutputDirectory>
+        <outputDirectory>target/classes</outputDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/config</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1-alpha-1</version>
+                <configuration>
+                    <webappDirectory>target/${artifactId}</webappDirectory>
+                    <warSourceDirectory>web/WebContent</warSourceDirectory>
+                    <warSourceExcludes>${excludedSources}</warSourceExcludes>
+                </configuration>
+            </plugin>
+        </plugins>
+  </build>
+
+  <dependencies>
+<!-- 	<dependency>
+    	<groupId>org.operamasks</groupId>
+    	<artifactId>operamasks-spring</artifactId>
+    	<version>2.3.0</version>
+    </dependency> -->
+  	
+	<dependency>
+		<groupId>org.apache.solr</groupId>
+		<artifactId>solr-core</artifactId>
+		<version>3.4.0</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.lucene</groupId>
+		<artifactId>lucene-core</artifactId>
+		<version>3.4.0</version>
+	</dependency>
+  </dependencies>
+</project>
