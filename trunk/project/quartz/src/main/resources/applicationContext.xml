@@ -19,7 +19,9 @@
 	<bean id="invokerJobBean" class="com.xia.quartz.job.InvokerJobBean"
 		scope="prototype"></bean>
 
-	<bean id="nonQuartzJob" class="com.xia.quartz.job.NonQuartzJob"></bean>
+	<bean id="nonQuartzJob" class="com.xia.quartz.job.NonQuartzJob">
+		<property name="jobEntityService" ref="jobEntityService"/>
+	</bean>
 	
 	<bean class="com.xia.quartz.job.InitStartAllJobListener" lazy-init="false" ></bean>
 	
