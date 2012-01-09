@@ -1,13 +1,12 @@
 package com.xia.quartz.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 /**
  * 与具体ORM实现无关的分页查询结果封
@@ -118,7 +117,7 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 			startPageNo = Math.max(endPageNo - count, 1);
 		}
 
-		List<Integer> result = Lists.newArrayList();
+		List<Integer> result = new ArrayList<Integer>();
 		for (int i = startPageNo; i <= endPageNo; i++) {
 			result.add(i);
 		}
@@ -192,7 +191,7 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 	}
 
 	public Map<String, String> getQMap() {
-		Map<String, String> ret = Maps.newHashMap();
+		Map<String, String> ret = new HashMap<String, String>();
 		if (StringUtils.isNotBlank(q)) {
 			String kv[] = q.split(":");
 			if (kv.length < 2) {
