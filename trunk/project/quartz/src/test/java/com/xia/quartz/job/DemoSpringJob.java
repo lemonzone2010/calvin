@@ -10,7 +10,7 @@ public class DemoSpringJob  extends AbstractJob {
 	JobEntityService jobEntityService;
 	@Override
 	public void execute(JobDataMap jobDataMap) throws Exception {
-		//JobEntity job = getJobEntityService().findJobEntityByJobName("Demo任务_1325661555923");
+		//JobEntity job = jobEntityService.findJobEntityByJobName("Demo任务_1325661555923");
 		logger.debug("DemoSpringJob Runned:"+jobEntityService);
 	}
 	public void setJobEntityService(JobEntityService jobEntityService) {
