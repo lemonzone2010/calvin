@@ -15,7 +15,7 @@ public class NonQuartzJob {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		throw new RuntimeException("test");
+	//	throw new RuntimeException("test");
 		//jobEntityService.findJobEntityByJobName("test");
 	}
 }
