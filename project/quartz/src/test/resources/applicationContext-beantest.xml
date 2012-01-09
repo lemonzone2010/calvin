@@ -22,7 +22,7 @@
 
 	<bean class="com.xia.quartz.spring.DomainClass" scope="prototype"
 		id="domainClass">
-		<property name="nopService" ref="nopService" />
+		<!-- <property name="nopService" ref="nopService" /> -->
 	</bean>
 
 	<context:annotation-config />

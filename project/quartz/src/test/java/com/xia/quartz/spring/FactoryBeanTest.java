@@ -18,7 +18,7 @@ public class FactoryBeanTest implements FactoryBean<MyBean>, BeanNameAware, MyAw
 	String name;
 	DemoSpringJob demoSpringJob;
 	BeanFactory beanFactory;
-
+	private NopService nopService;
 	/**
 	 * @param args
 	 * @throws Exception
@@ -30,6 +30,7 @@ public class FactoryBeanTest implements FactoryBean<MyBean>, BeanNameAware, MyAw
 				"classpath:applicationContext-beantest.xml");
 		MyBean bean2 = (MyBean) context.getBean("FactoryBeanTest");
 		bean2.hello();
+		bean2.getNopService().test();
 
 		DomainClass class1 = (DomainClass) context.getBean("domainClass");
 		class1.test();
@@ -46,7 +47,9 @@ public class FactoryBeanTest implements FactoryBean<MyBean>, BeanNameAware, MyAw
 
 	@Override
 	public MyBean getObject() throws Exception {
-		return new MyBean();
+		MyBean myBean = new MyBean();
+		myBean.setNopService(nopService);
+		return myBean;
 	}
 
 	@Override
@@ -82,6 +85,10 @@ public class FactoryBeanTest implements FactoryBean<MyBean>, BeanNameAware, MyAw
 
 	public void setBeanFactory(BeanFactory beanFactory) {
 		this.beanFactory = beanFactory;
+	}
+
+	public void setNopService(NopService nopService) {
+		this.nopService = nopService;
 	}
 
 }
