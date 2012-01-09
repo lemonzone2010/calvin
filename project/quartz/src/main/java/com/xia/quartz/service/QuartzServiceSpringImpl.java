@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,8 +26,8 @@ import com.xia.quartz.model.JobEntity;
 import com.xia.quartz.model.JobStatus;
 import com.xia.quartz.util.ApplicationContextHolder;
 
-@Component("quartzService")
-@Service
+//@Component("quartzService")
+@Service("quartzService")
 public class QuartzServiceSpringImpl implements QuartzService, InitializingBean {
 	private final static Log logger = LogFactory.getLog(QuartzServiceSpringImpl.class);
 	private final static String TRIGGER_PREFIX = "trigger_";
@@ -33,7 +35,8 @@ public class QuartzServiceSpringImpl implements QuartzService, InitializingBean 
 	@Qualifier("scheduler")
 	private SchedulerFactoryBean schedulerFactoryBean;
 	private static Scheduler scheduler;
-	@Autowired
+	@Resource
+//	@Autowired
 	private JobEntityService jobEntityService;
 
 	/*
