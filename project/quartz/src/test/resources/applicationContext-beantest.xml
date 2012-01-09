@@ -10,10 +10,20 @@
 	default-lazy-init="true">
 
 	<bean id="FactoryBeanTest" name="myfactoryBeanTest"
-		class="com.xia.quartz.spring.FactoryBeanTest" />
+		class="com.xia.quartz.spring.FactoryBeanTest">
+		<property name="nopService" ref="nopService" />
+	</bean>
 
 	<bean id="demoSpringJob" class="com.xia.quartz.job.DemoSpringJob">
 		<property name="jobEntityService" ref="jobEntityService"></property>
 	</bean>
+	
+	<context:component-scan base-package="com.xia.**.spring" />
 
+	<bean class="com.xia.quartz.spring.DomainClass" scope="prototype"
+		id="domainClass">
+		<property name="nopService" ref="nopService" />
+	</bean>
+
+	<context:annotation-config />
 </beans>

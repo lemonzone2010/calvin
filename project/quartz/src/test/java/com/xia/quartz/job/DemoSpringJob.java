@@ -17,4 +17,5 @@ public class DemoSpringJob  extends AbstractJob {
 		this.jobEntityService = jobEntityService;
 	}
 
+
 }
