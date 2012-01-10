@@ -14,7 +14,6 @@ import com.xia.quartz.job.DemoSpringJob;
 import com.xia.quartz.service.JobEntityService;
 
 public class FactoryBeanTest implements FactoryBean<MyBean>, BeanNameAware, MyAware, InitializingBean,BeanFactoryAware {
-
 	String name;
 	DemoSpringJob demoSpringJob;
 	BeanFactory beanFactory;
