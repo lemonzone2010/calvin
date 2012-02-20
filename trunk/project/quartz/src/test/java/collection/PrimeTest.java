@@ -16,7 +16,7 @@ public class PrimeTest {
 	}
 
 	private static boolean isPrime(final int i) {
-		for (int j = 2; j < i; j++) {
+		for (int j = 2; j < i; j++) {//非1及自己
 			if (i % j == 0) {
 				return false;
 			}
