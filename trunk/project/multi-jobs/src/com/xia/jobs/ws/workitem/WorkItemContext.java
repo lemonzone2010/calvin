@@ -1,4 +1,4 @@
-package com.xia.jobs.workitem;
+package com.xia.jobs.ws.workitem;
 
 import com.xia.jobs.WorkItem;
 
@@ -10,7 +10,7 @@ public class WorkItemContext {
 	}
 
 	public WorkItem covert(Object responseOneData) {
-		return workItem.covert(responseOneData);
+		return workItem.convert(responseOneData);
 	}
 
 }

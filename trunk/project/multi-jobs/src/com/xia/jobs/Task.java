@@ -1,5 +1,11 @@
 package com.xia.jobs;
 
-public interface Task extends Runnable {
-	public Response getResult();
+/**
+ * 每个子任务
+ * @author xiayong
+ *
+ * @param <E>
+ */
+public interface Task<E extends WorkItem> extends Runnable {
+	public Response<E> getResult();
 }

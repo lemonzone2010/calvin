@@ -6,14 +6,15 @@ import com.xia.jobs.Query;
 import com.xia.jobs.Response;
 import com.xia.jobs.ServiceProvider;
 import com.xia.jobs.Task;
+import com.xia.jobs.WorkItem;
 
-public class WsTask implements Task {
+public class WsTask implements Task<WorkItem> {
 	private CountDownLatch jobsSignal;
-	private ServiceProvider serviceProvider;
+	private ServiceProvider<WorkItem> serviceProvider;
 	private Query query;
-	private Response result;
+	private Response<WorkItem> result;
 
-	public WsTask(CountDownLatch jobsSignal, ServiceProvider serviceProvider, Query query) {
+	public WsTask(CountDownLatch jobsSignal, ServiceProvider<WorkItem> serviceProvider, Query query) {
 		super();
 		this.jobsSignal = jobsSignal;
 		this.serviceProvider = serviceProvider;
@@ -31,7 +32,7 @@ public class WsTask implements Task {
 		jobsSignal.countDown();
 	}
 
-	public Response getResult() {
+	public Response<WorkItem> getResult() {
 		return result;
 	}
 
