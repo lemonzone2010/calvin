@@ -2,10 +2,13 @@ package com.xia.jobs.ws;
 
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.xia.jobs.Query;
 import com.xia.jobs.ws.workitem.CategoryEnum;
 
 public class WsQuery implements Query {
+	private final Logger logger=Logger.getLogger(getClass());
 	private CategoryEnum categoryEnum;
 	private String category;
 	public int getStart() {

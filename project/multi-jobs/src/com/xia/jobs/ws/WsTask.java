@@ -2,6 +2,8 @@ package com.xia.jobs.ws;
 
 import java.util.concurrent.CountDownLatch;
 
+import org.apache.log4j.Logger;
+
 import com.xia.jobs.Query;
 import com.xia.jobs.Response;
 import com.xia.jobs.ServiceProvider;
@@ -9,6 +11,7 @@ import com.xia.jobs.Task;
 import com.xia.jobs.WorkItem;
 
 public class WsTask implements Task<WorkItem> {
+	private final Logger logger=Logger.getLogger(getClass());
 	private CountDownLatch jobsSignal;
 	private ServiceProvider<WorkItem> serviceProvider;
 	private Query query;
