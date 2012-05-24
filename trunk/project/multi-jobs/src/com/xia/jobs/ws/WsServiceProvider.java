@@ -31,8 +31,8 @@ public class WsServiceProvider implements ServiceProvider<WorkItem>{
 		logger.info("Trying get result from:"+providerConfig.getWsdlUrl());
 		try {
 			CategoryEnum category = wsQuery.getCategoryEnum();
-			Object submitParams = category.reverse2Params();
-			logger.info(submitParams);
+			//Object submitParams = category.reverse2Params();
+			//logger.info(submitParams);
 			URL url = new URL(providerConfig.getWsdlUrl());
 			InputStream input = url.openStream();
 			String msg = Util.toString(input, "UTF-8");
