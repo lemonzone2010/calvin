@@ -8,7 +8,7 @@ public interface Query {
 
 	int getLimit();
 
-	CategoryEnum getCategory();
+	String getCategory();
 
 	String getUserId();
 

@@ -1,5 +1,11 @@
 package com.xia.jobs;
 
-public interface ServiceProvider {
-	public Response getResult(Query query);
+/**
+ * 服务提供者
+ * @author xiayong
+ *
+ * @param <E>
+ */
+public interface ServiceProvider<E extends WorkItem> {
+	public Response<E> getResult(Query query);
 }

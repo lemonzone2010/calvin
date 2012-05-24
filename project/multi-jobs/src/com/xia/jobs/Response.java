@@ -2,7 +2,13 @@ package com.xia.jobs;
 
 import java.util.List;
 
-public interface Response  {
+/**
+ * 返回结果定义
+ * @author xiayong
+ *
+ * @param <E>
+ */
+public interface Response<E extends WorkItem>  {
 
 	public String getRequestUrl();
 
@@ -15,13 +21,13 @@ public interface Response  {
 	public String getOwerId();
 
 	/**
-	 * 工作项的类型，其中之一：{@link com.apusic.eac.umc.Category}
+	 * 工作项的类型
 	 * 
 	 * @return
 	 */
 	public String getCategory();
 	
-	public <E> List<E> getData();
+	public List<E> getData();
 
 
 	public void validate();

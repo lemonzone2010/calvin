@@ -1,6 +1,6 @@
-package com.xia.jobs;
+package com.xia.jobs.ws.workitem;
 
-import com.xia.jobs.workitem.Todo;
+import com.xia.jobs.WorkItem;
 
 public enum CategoryEnum {
 	TODO(	"todo",
@@ -17,18 +17,26 @@ public enum CategoryEnum {
 			null);
 
 	private String name;
-	//private String desc;
 
 	private CategoryEnum(String name, String desc, Class<? extends WorkItem> responseParseClass) {
 		this.name = name;
-		//this.desc = desc;
 		this.responseParseClass = responseParseClass;
 	}
 
 	private Class<? extends WorkItem> responseParseClass;
 
-	public CategoryEnum getByName(String name) {
-		
+	/**
+	 * @param name 通过名称得到category,如todo,done
+	 * @return
+	 */
+	public static CategoryEnum getByName(String name) {
+		CategoryEnum[] values = values();
+		for (CategoryEnum categoryEnum : values) {
+			if(categoryEnum.name.equals(name)) {
+				return categoryEnum;
+			}
+		}
+		return null;
 	}
 
 	public WorkItem covert(Object responseOneData) {
@@ -37,7 +45,7 @@ public enum CategoryEnum {
 		}
 		try {
 			WorkItem newInstance = responseParseClass.newInstance();
-			return newInstance.covert(responseOneData);
+			return newInstance.convert(responseOneData);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

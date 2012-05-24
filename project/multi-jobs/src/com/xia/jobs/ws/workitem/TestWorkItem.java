@@ -1,6 +1,5 @@
-package com.xia.jobs.workitem;
+package com.xia.jobs.ws.workitem;
 
-import com.xia.jobs.CategoryEnum;
 import com.xia.jobs.WorkItem;
 
 public class TestWorkItem {

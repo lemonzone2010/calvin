@@ -9,6 +9,14 @@ public class ResponseStatus {
 	public ResponseStatus() {
 	}
 
+	public static ResponseStatus getSuccessStatus() {
+		return new ResponseStatus(OK, null);
+	}
+
+	public static ResponseStatus getFailStatus(String info) {
+		return new ResponseStatus(FAILED, info);
+	}
+
 	public ResponseStatus(int status, String info) {
 		this.status = status;
 		this.info = info;
@@ -52,4 +60,3 @@ public class ResponseStatus {
 		return "Result[status=" + status + ",info=" + info + "]";
 	}
 }
-
