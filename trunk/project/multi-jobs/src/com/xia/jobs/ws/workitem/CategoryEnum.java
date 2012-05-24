@@ -39,13 +39,28 @@ public enum CategoryEnum {
 		return null;
 	}
 
-	public WorkItem covert(Object responseOneData) {
+	public WorkItem covertFromResponse(Object responseOneData) {
+		WorkItem newWorkItem = getNewWorkItem();
+		if(null==newWorkItem) {
+			throw new IllegalAccessError(name()+"没有配置可执行的class");
+		}
+		return newWorkItem.convert(responseOneData);
+	}
+	
+	public Object reverse2Params() {
+		WorkItem newWorkItem = getNewWorkItem();
+		if(null==newWorkItem) {
+			throw new IllegalAccessError(name()+"没有配置可执行的class");
+		}
+		return newWorkItem.reverse2Params();
+	}
+	
+	public WorkItem getNewWorkItem() {
 		if(null==responseParseClass) {
 			throw new IllegalAccessError(name()+"没有配置可执行的class");
 		}
 		try {
-			WorkItem newInstance = responseParseClass.newInstance();
-			return newInstance.convert(responseOneData);
+			return responseParseClass.newInstance();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,4 +70,6 @@ public enum CategoryEnum {
 		}
 		return null;
 	}
+	
+	
 }
