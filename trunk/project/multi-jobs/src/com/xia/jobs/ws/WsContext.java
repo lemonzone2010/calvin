@@ -21,13 +21,12 @@ public class WsContext implements Context<WorkItem> {
 		readConfigFile();
 	}
 
-	public void readConfigFile() {
-	//	private java.util.ResourceBundle rs = java.util.ResourceBundle.getBundle("com.xia.jobs.ws.ws");
+	private void readConfigFile() {
 		Properties pro = new Properties();
 		try {
 			pro.load(this.getClass().getClassLoader().getResourceAsStream("ws.properties"));
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("∂¡≈‰÷√Œƒº˛≥ˆ¥Ì¿≤£∫"+e);
 		}
 		Set<Entry<Object, Object>> entrySet = pro.entrySet();
 		for (Entry<Object, Object> entry : entrySet) {
