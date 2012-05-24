@@ -11,9 +11,10 @@ import com.xia.jobs.ws.WsTaskFactory;
 
 public class TestTask {
 	public static void main(String[] args) {
-		Query query = new WsQuery();
 		Context<WorkItem> context = new WsContext();
 		
+		Query query = new WsQuery();
+		query.parse(null);//从request里解析参数
 		
 		TaskFactory<WorkItem> taskFactory = new WsTaskFactory();
 		

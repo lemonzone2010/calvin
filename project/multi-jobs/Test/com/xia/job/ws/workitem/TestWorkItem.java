@@ -5,7 +5,7 @@ import com.xia.jobs.ws.workitem.CategoryEnum;
 
 public class TestWorkItem {
 	public static void main(String[] args) {
-		WorkItem covert = CategoryEnum.TODO.covert("xxx");
+		WorkItem covert = CategoryEnum.TODO.covertFromResponse("xxx");
 		System.out.println(covert);
 	}
 

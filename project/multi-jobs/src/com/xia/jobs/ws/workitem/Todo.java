@@ -10,4 +10,9 @@ public class Todo implements WorkItem{
 		return this;
 	}
 
+	public Object reverse2Params() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
