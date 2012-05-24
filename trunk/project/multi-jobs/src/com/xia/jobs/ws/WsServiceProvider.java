@@ -20,6 +20,7 @@ public class WsServiceProvider implements ServiceProvider<WorkItem>{
 		WsQuery wsQuery=(WsQuery) query;
 		WorkResponse response=new WorkResponse();
 		response.setStatus(ResponseStatus.getSuccessStatus());
+		response.setRequestUrl(providerConfig.getWsdlUrl());
 		System.out.println("Trying get result from:"+providerConfig.getWsdlUrl());
 		try {
 			CategoryEnum category = wsQuery.getCategoryEnum();
