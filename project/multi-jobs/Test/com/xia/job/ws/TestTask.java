@@ -22,8 +22,10 @@ public class TestTask {
 		taskFactory.exceute(context, query);
 
 		Response<WorkItem> result = taskFactory.getResult();
-		System.out.println(result+","+result.getQueryTime());
-		
+		System.out.println(result+","+result.getQueryTime()+",size:"+result.getSize());
+		for (WorkItem item : result.getData()) {
+			System.out.println(item);
+		}
 		
 		TaskFactory.executor.shutdown();
 	}

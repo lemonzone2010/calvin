@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://work.eac.cn/MyAttentionService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="MyAttentionService" targetNamespace="http://work.eac.cn/MyAttentionService/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://work.eac.cn/MyAttentionService/">
+			<xsd:element name="getMyAttentionsRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<!-- EAC鐢ㄦ埛ID -->
+						<xsd:element name="userId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+						<!-- 鐢ㄦ埛韬唤璇佸彿鐮�-->
+						<xsd:element name="idcardNo" type="xsd:string"></xsd:element>
+						<!-- 鐢ㄦ埛鍚�-->
+						<xsd:element name="username" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+						<!-- 鐢ㄦ埛EMAIL -->
+						<xsd:element name="emailAddress" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="getMyAttentionsResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<!-- 缁撴灉鐘舵�鏍囪瘑,0: 姝ｅ父锛�锛氭壘涓嶅埌鐢ㄦ埛ID锛�锛氱敤鎴锋棤鏉冮檺锛�锛氱郴缁熷紓甯�-->
+						<xsd:element name="result" type="xsd:int" minOccurs="1" maxOccurs="1" />
+						<!-- 鎴戠殑鍏虫敞鍒楄〃 -->
+						<xsd:element name="myAttention" type="tns:MyAttentionType" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="MyAttentionType">
+				<xsd:sequence>
+					<!-- 鎴戠殑鍏虫敞鐨勬爣棰�-->
+					<xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+					<!-- 鎴戠殑鍏虫敞姝ｅ父鏄剧ず鏃跺祵鍏frame鐨勫湴鍧�涓嶅寘鎷崗璁�鍩熷悕銆佺鍙ｉ儴鍒嗭紝浠�寮�ご) -->
+					<xsd:element name="smallViewUrl" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+					<!-- 鎴戠殑鍏虫敞缂栬緫鏃跺祵鍏frame鐨勫湴鍧�涓嶅寘鎷崗璁�鍩熷悕銆佺鍙ｉ儴鍒嗭紝浠�寮�ご) -->
+					<xsd:element name="editViewUrl" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+					<!-- 鎴戠殑鍏虫敞鏀惧ぇ鏄剧ず鏃跺祵鍏frame鐨勫湴鍧�涓嶅寘鎷崗璁�鍩熷悕銆佺鍙ｉ儴鍒嗭紝浠�寮�ご) -->
+					<xsd:element name="bigViewUrl" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+					<!-- 鎴戠殑鍏虫敞dock涓婄殑鍥炬爣鍦板潃(涓嶅寘鎷崗璁�鍩熷悕銆佺鍙ｉ儴鍒嗭紝浠�寮�ご)锛屽ぇ灏忥細128px*128px png鏍煎紡锛屽彲鍙傝�闄勪欢 -->
+					<xsd:element name="dockIconUrl" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="getMyAttentionsRequest">
+		<wsdl:part element="tns:getMyAttentionsRequest" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="getMyAttentionsResponse">
+		<wsdl:part element="tns:getMyAttentionsResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:portType name="MyAttentionServicePortType">
+		<wsdl:operation name="getMyAttentions">
+			<wsdl:input message="tns:getMyAttentionsRequest" />
+			<wsdl:output message="tns:getMyAttentionsResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="MyAttentionServiceSOAP" type="tns:MyAttentionServicePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getMyAttentions">
+			<soap:operation soapAction="http://work.eac.cn/MyAttentionService/getMyAttentions" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="MyAttentionService">
+		<wsdl:port binding="tns:MyAttentionServiceSOAP" name="MyAttentionServiceSOAP">
+			<soap:address location="http://localhost:7888/MyAttention/srvs/MyAttentionService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

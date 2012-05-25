@@ -23,12 +23,12 @@ public class WsQuery implements Query {
 
 	public String getUserId() {
 		// TODO Auto-generated method stub
-		return null;
+		return "00";
 	}
 
 	public String getIdCardNo() {
 		// TODO Auto-generated method stub
-		return null;
+		return "111";
 	}
 
 	public void parse(Map<String, String[]> requestParams) {
