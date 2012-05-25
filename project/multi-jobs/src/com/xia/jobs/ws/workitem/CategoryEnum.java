@@ -48,10 +48,6 @@ public enum CategoryEnum {
 		return null;
 	}
 
-	public WorkItem covertFromResponse(Object responseOneData) {
-		return getNewWorkItem().convert(responseOneData);
-	}
-
 	public Object reverse2Params(Query query) {
 		return getNewWorkItem().reverse2Params(query);
 	}

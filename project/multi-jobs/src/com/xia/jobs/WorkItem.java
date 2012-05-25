@@ -12,8 +12,8 @@ public interface WorkItem {
 	 */
 	WorkItem convert(Object responseOneData);
 	/**
-	 * 将自己转换成可以使用的参数
-	 * @return
+	 * 将自己转换成可以使用的request参数
+	 * @return 可以提交的request参数
 	 */
 	Object reverse2Params(Query query);
 	
