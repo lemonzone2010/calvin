@@ -69,7 +69,7 @@ public enum CategoryEnum {
 	}
 	
 	public List<WorkItem> processRequest(URL wsdlURL,Object request){
-		return getNewWorkItem().request(wsdlURL, request);
+		return ((WsWorkItem)getNewWorkItem()).request(wsdlURL, request);
 	}
 
 }

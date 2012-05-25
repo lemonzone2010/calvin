@@ -4,9 +4,9 @@ import java.util.Map;
 
 public interface Query {
 	//public enum Category{};
-	int getStart();
+	Integer getStart();
 
-	int getLimit();
+	Integer getLimit();
 
 	String getCategory();
 

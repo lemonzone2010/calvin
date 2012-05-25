@@ -55,7 +55,7 @@ public class Todo extends WorkItemImpl{
 			int result = wsResponse.getResult();
 			if (result == 0) {
 				for (PendingTask myAttention : wsResponse.getTask()) {
-					items.add(convert(myAttention));
+					items.add(new Todo().convert(myAttention));
 				}
 			} else if (result == 1) {
 				logger.error("Retrieve MyAttention Items from :" + wsdlURL + " fails, no such a user: " + "");
@@ -69,6 +69,11 @@ public class Todo extends WorkItemImpl{
 			logger.error("Retrieve MyAttention Items from :" + wsdlURL + " fails : ", e);
 		}
 		return items;
+	}
+
+	@Override
+	public String toString() {
+		return "Todo [url=" + url + ", owerId=" + owerId + ", workId=" + workId + "]";
 	}
 
 }
