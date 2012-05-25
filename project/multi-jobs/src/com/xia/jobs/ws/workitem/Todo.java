@@ -40,8 +40,8 @@ public class Todo extends WorkItemImpl{
 		GetPendingTaskRequest request=new GetPendingTaskRequest();
 		request.setIdcardNo(query.getIdCardNo());
 		request.setUserId(query.getUserId());
-		request.setPageSize(100);
-		request.setPageNo(1);
+		request.setPageSize(query.getLimit());
+		request.setPageNo(query.getStart());
 		return request;
 	}
 

@@ -18,6 +18,8 @@ public class TestTask {
 		requestMap.put("category", new String[] {"todo"});
 		requestMap.put("category", new String[] {"attention"});
 		requestMap.put("owerId", new String[] {"xia"});
+		requestMap.put("start", new String[] {"0"});
+		requestMap.put("limit", new String[] {"10"});
 		
 		Context<WorkItem> context = new WsContext();//得到环境变量配置
 		
