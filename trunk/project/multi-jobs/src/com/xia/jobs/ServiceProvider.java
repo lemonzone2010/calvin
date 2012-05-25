@@ -1,5 +1,7 @@
 package com.xia.jobs;
 
+import com.xia.jobs.ws.WsContext.ServiceProviderConfig;
+
 /**
  * 服务提供者
  * @author xiayong
@@ -8,4 +10,5 @@ package com.xia.jobs;
  */
 public interface ServiceProvider<E extends WorkItem> {
 	public Response<E> getResult(Query query);
+	public ServiceProviderConfig getServiceProviderConfig();
 }

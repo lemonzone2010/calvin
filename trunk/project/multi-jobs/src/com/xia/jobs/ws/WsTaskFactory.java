@@ -21,14 +21,14 @@ public class WsTaskFactory implements TaskFactory<WorkItem> {
 	private List<WsTask> tasks;
 
 	private void init(Context<WorkItem> context, Query query) {
-		jobsSignal = new CountDownLatch(context.getServiceProviders().size());
+		jobsSignal = new CountDownLatch(context.getServiceProviders(query).size());
 		tasks = generateTasks(context, query);
 		startTime = System.currentTimeMillis();
 	}
 
 	private List<WsTask> generateTasks(Context<WorkItem> context, Query query) {
 		List<WsTask> ret = new ArrayList<WsTask>();
-		List<ServiceProvider<WorkItem>> serviceProviders = context.getServiceProviders();
+		List<ServiceProvider<WorkItem>> serviceProviders = context.getServiceProviders(query);
 		for (ServiceProvider<WorkItem> serviceProvider : serviceProviders) {
 			WsTask task = new WsTask(jobsSignal, serviceProvider, query);
 			ret.add(task);
