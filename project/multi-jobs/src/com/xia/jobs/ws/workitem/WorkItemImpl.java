@@ -4,9 +4,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import com.xia.jobs.WorkItem;
-
-public abstract class WorkItemImpl implements WorkItem {
+public abstract class WorkItemImpl implements WsWorkItem {
 	protected final Logger logger = Logger.getLogger(getClass());
 	protected String url;
 	protected String owerId;

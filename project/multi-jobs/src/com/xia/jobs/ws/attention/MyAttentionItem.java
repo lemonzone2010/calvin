@@ -13,8 +13,9 @@ import com.xia.jobs.ws.autogen.attention.GetMyAttentionsResponse;
 import com.xia.jobs.ws.autogen.attention.MyAttentionService;
 import com.xia.jobs.ws.autogen.attention.MyAttentionServicePortType;
 import com.xia.jobs.ws.autogen.attention.MyAttentionType;
+import com.xia.jobs.ws.workitem.WsWorkItem;
 
-public class MyAttentionItem implements WorkItem{
+public class MyAttentionItem implements WsWorkItem{
 	private final static Logger logger = Logger.getLogger(MyAttentionItem.class);
 	private String id;
 	private MyAttentionItemType type;
@@ -110,6 +111,8 @@ public class MyAttentionItem implements WorkItem{
 	public WorkItem convert(Object responseOneData) {
 		MyAttentionType response=(MyAttentionType) responseOneData;
 		displayName=response.getTitle();
+		dockIconUrl=response.getDockIconUrl();
+		bigViewUrl=response.getBigViewUrl();
 		return this;
 	}
 	public GetMyAttentionsRequest reverse2Params(Query query) {
@@ -134,7 +137,7 @@ public class MyAttentionItem implements WorkItem{
 			int result = wsResponse.getResult();
 			if (result == 0) {
 				for (MyAttentionType myAttention : wsResponse.getMyAttention()) {
-					items.add(convert(myAttention));
+					items.add(new MyAttentionItem().convert(myAttention));
 				}
 			} else if (result == 1) {
 				logger.error("Retrieve MyAttention Items from :" + wsdlURL + " fails, no such a user: " + "");

@@ -1,7 +1,5 @@
 package com.xia.jobs;
 
-import java.net.URL;
-import java.util.List;
 
 
 public interface WorkItem {
@@ -17,11 +15,5 @@ public interface WorkItem {
 	 */
 	Object reverse2Params(Query query);
 	
-	/**
-	 * 处理请求的过程
-	 * @param wsdlURL
-	 * @param request
-	 * @return
-	 */
-	List<WorkItem> request(URL wsdlURL,Object request);
+	
 }
