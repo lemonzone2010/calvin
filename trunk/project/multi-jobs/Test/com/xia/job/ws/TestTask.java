@@ -11,17 +11,18 @@ import com.xia.jobs.ws.WsTaskFactory;
 
 public class TestTask {
 	public static void main(String[] args) {
-		Context<WorkItem> context = new WsContext();
+		Context<WorkItem> context = new WsContext();//得到环境变量配置
 		
-		Query query = new WsQuery();
+		Query query = new WsQuery();//查询结构体
 		query.parse(null);//从request里解析参数
 		
-		TaskFactory<WorkItem> taskFactory = new WsTaskFactory();
+		TaskFactory<WorkItem> taskFactory = new WsTaskFactory();//得到任务工厂
 		
-		System.out.println("OK.");
-		taskFactory.exceute(context, query);
+		taskFactory.exceute(context, query);//执行任务
 
-		Response<WorkItem> result = taskFactory.getResult();
+		Response<WorkItem> result = taskFactory.getResult();//得到任务结果
+		
+		
 		System.out.println(result+","+result.getQueryTime()+",size:"+result.getSize());
 		for (WorkItem item : result.getData()) {
 			System.out.println(item);
