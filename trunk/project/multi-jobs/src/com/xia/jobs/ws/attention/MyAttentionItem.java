@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 
 import com.xia.jobs.Query;
 import com.xia.jobs.WorkItem;
-import com.xia.jobs.ws.ServiceProviderHelper;
 import com.xia.jobs.ws.autogen.attention.GetMyAttentionsRequest;
 import com.xia.jobs.ws.autogen.attention.GetMyAttentionsResponse;
 import com.xia.jobs.ws.autogen.attention.MyAttentionService;
@@ -16,7 +15,7 @@ import com.xia.jobs.ws.autogen.attention.MyAttentionServicePortType;
 import com.xia.jobs.ws.autogen.attention.MyAttentionType;
 
 public class MyAttentionItem implements WorkItem{
-	private final static Logger logger = Logger.getLogger(ServiceProviderHelper.class);
+	private final static Logger logger = Logger.getLogger(MyAttentionItem.class);
 	private String id;
 	private MyAttentionItemType type;
 	private String displayName;
