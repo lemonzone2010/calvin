@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_SMARTORG_RESOURCE" name="com.apusic.ebiz.model.user.Resource">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_smartorg_resource</param>
+      </generator>
+    </id>
+    <property name="resName" length="50" column="F_RES_NAME" access="field" type="string"/>
+    <property name="resValue" length="100" column="F_RES_VALUES" access="field" type="string"/>
+    <property name="resContext" length="25" column="F_RES_CONTEXT" access="field" type="string"/>
+    <property name="resType" column="F_RES_TYPE" access="field" type="string"/>
+    <property name="priority" length="5" column="F_PRIORITY" access="field" type="int"/>
+    <property name="desc" column="F_RES_DESC" access="field" type="string"/>
+    <set cascade="none" access="field" lazy="true" table="T_SMARTORG_ROLE_RESOURCE" name="roles">
+      <key column="F_RESOURCE_ID"/>
+      <many-to-many class="com.apusic.ebiz.model.user.Role" column="F_ROLE_ID"/>
+    </set>
+  </class>
+</hibernate-mapping>
