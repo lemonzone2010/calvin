@@ -1,7 +1,7 @@
-TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
-
+TODO:jaråŒ…çš„ç®¡ç†æ›´æ”¹ï¼šå¦‚ï¼š
+https://svn.java.net/svn/osworkflow~svn
 <properties>
-		<!-- Ö÷ÒªÒÀÀµ¿âµÄ°æ±¾¶¨Òå -->
+		<!-- ä¸»è¦ä¾èµ–åº“çš„ç‰ˆæœ¬å®šä¹‰ -->
 		<springside.version>4.0.0-SNAPSHOT</springside.version>
 		<spring.version>3.0.6.RELEASE</spring.version>
 		<hibernate.version>3.6.8.Final</hibernate.version>
@@ -17,13 +17,13 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 		<slf4j.version>1.6.4</slf4j.version>
 		<selenium.version>2.12.0</selenium.version>
 
-		<!-- PluginµÄÊôĞÔ¶¨Òå -->
+		<!-- Pluginçš„å±æ€§å®šä¹‰ -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<!-- Éè¶¨³ıÖĞÑë²Ö¿â(repo1.maven.org/maven2/)ÍâµÄÆäËû²Ö¿â,°´Éè¶¨Ë³Ğò½øĞĞ²éÕÒ. -->
+	<!-- è®¾å®šé™¤ä¸­å¤®ä»“åº“(repo1.maven.org/maven2/)å¤–çš„å…¶ä»–ä»“åº“,æŒ‰è®¾å®šé¡ºåºè¿›è¡ŒæŸ¥æ‰¾. -->
 	<repositories>
-		<!-- ÈçÓĞNexusË½·ş, È¡Ïû×¢ÊÍ²¢Ö¸ÏòÕıÈ·µÄ·şÎñÆ÷µØÖ·. <repository> <id>nexus</id> <name>Team 
+		<!-- å¦‚æœ‰Nexusç§æœ, å–æ¶ˆæ³¨é‡Šå¹¶æŒ‡å‘æ­£ç¡®çš„æœåŠ¡å™¨åœ°å€. <repository> <id>nexus</id> <name>Team 
 			Nexus Repository</name> <url>http://localhost:8081/nexus/content/groups/public</url> 
 			</repository> -->
 		<repository>
@@ -72,17 +72,17 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 		</repository>
 	</repositories>
 
-	<!-- Éè¶¨²å¼ş²Ö¿â ÈçÓĞNexusË½·ş, È¡Ïû×¢ÊÍ²¢Ö¸ÏòÕıÈ·µÄ·şÎñÆ÷µØÖ·. <pluginRepositories> <pluginRepository> 
+	<!-- è®¾å®šæ’ä»¶ä»“åº“ å¦‚æœ‰Nexusç§æœ, å–æ¶ˆæ³¨é‡Šå¹¶æŒ‡å‘æ­£ç¡®çš„æœåŠ¡å™¨åœ°å€. <pluginRepositories> <pluginRepository> 
 		<id>nexus</id> <name>Team Nexus Repository</name> <url>http://localhost:8081/nexus/content/groups/public</url> 
 		<snapshots> <enabled>false</enabled> </snapshots> </pluginRepository> </pluginRepositories> -->
 
-	<!-- Éè¶¨Ê¹ÓÃRelease²å¼ş·¢²¼µÄ²Ö¿â·şÎñÆ÷ ÈçÓĞNexusË½·ş, È¡Ïû×¢ÊÍ²¢Ö¸ÏòÕıÈ·µÄ·şÎñÆ÷µØÖ·. <distributionManagement> 
+	<!-- è®¾å®šä½¿ç”¨Releaseæ’ä»¶å‘å¸ƒçš„ä»“åº“æœåŠ¡å™¨ å¦‚æœ‰Nexusç§æœ, å–æ¶ˆæ³¨é‡Šå¹¶æŒ‡å‘æ­£ç¡®çš„æœåŠ¡å™¨åœ°å€. <distributionManagement> 
 		<repository> <id>nexus</id> <name>Team Nexus Release Repository</name> <url>http://localhost:8081/nexus/content/repositories/releases</url> 
 		</repository> <snapshotRepository> <id>nexus-snapshot</id> <name>Team Nexus 
 		Snapshot Repository</name> <url>http://localhost:8081/nexus/content/repositories/snapshots</url> 
 		<uniqueVersion>false</uniqueVersion> </snapshotRepository> </distributionManagement> -->
 
-	<!-- Ô¤¶¨ÒåÒÀÀµÏîµÄversion,scopeÓëexclusions,×ÓÏîÄ¿ÖĞÖ»Ğè¶¨ÒågroupId ºÍ artifactId ¼´¿É -->
+	<!-- é¢„å®šä¹‰ä¾èµ–é¡¹çš„version,scopeä¸exclusions,å­é¡¹ç›®ä¸­åªéœ€å®šä¹‰groupId å’Œ artifactId å³å¯ -->
 	<dependencyManagement>
 		<dependencies>
 			<!-- springside modules begin -->
@@ -434,14 +434,14 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 				<version>${slf4j.version}</version>
 			</dependency>
 
-			<!-- slf4j-log4j°ó¶¨ -->
+			<!-- slf4j-log4jç»‘å®š -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
 				<version>${slf4j.version}</version>
 			</dependency>
 
-			<!-- slf4jÃ»ÓĞlog4jµÄÇéĞÎ -->
+			<!-- slf4jæ²¡æœ‰log4jçš„æƒ…å½¢ -->
 			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
@@ -487,7 +487,7 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 				</exclusions>
 			</dependency>
 
-			<!-- ÖØĞÂ¶¨ÒåJava XPath Engine, exclude²»±ØÒªµÄÒÀÀµ -->
+			<!-- é‡æ–°å®šä¹‰Java XPath Engine, excludeä¸å¿…è¦çš„ä¾èµ– -->
 			<dependency>
 				<groupId>jaxen</groupId>
 				<artifactId>jaxen</artifactId>
@@ -781,11 +781,11 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 		</dependencies>
 	</dependencyManagement>
 
-	<!-- ²å¼şÅäÖÃ -->
+	<!-- æ’ä»¶é…ç½® -->
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!-- compiler²å¼ş, Éè¶¨JDK°æ±¾ -->
+				<!-- compileræ’ä»¶, è®¾å®šJDKç‰ˆæœ¬ -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -797,7 +797,7 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 					</configuration>
 				</plugin>
 
-				<!-- test²å¼ş, Ôö´óÄÚ´æÇÒ½ö²âÊÔÃû³ÆÎª*TestµÄÀà -->
+				<!-- testæ’ä»¶, å¢å¤§å†…å­˜ä¸”ä»…æµ‹è¯•åç§°ä¸º*Testçš„ç±» -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
@@ -810,14 +810,14 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 					</configuration>
 				</plugin>
 
-				<!-- cobertura²å¼ş -->
+				<!-- coberturaæ’ä»¶ -->
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>cobertura-maven-plugin</artifactId>
 					<version>2.5.1</version>
 				</plugin>
 
-				<!-- war²å¼ş, Éè¶¨warÃû³Æ²»´ø°æ±¾ºÅ -->
+				<!-- waræ’ä»¶, è®¾å®šwaråç§°ä¸å¸¦ç‰ˆæœ¬å· -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
@@ -827,7 +827,7 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 					</configuration>
 				</plugin>
 
-				<!-- resource²å¼ş, Éè¶¨±àÂë -->
+				<!-- resourceæ’ä»¶, è®¾å®šç¼–ç  -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
@@ -837,7 +837,7 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 					</configuration>
 				</plugin>
 
-				<!-- jarÏà¹Ø²å¼ş -->
+				<!-- jarç›¸å…³æ’ä»¶ -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -857,28 +857,28 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 					<version>2.1.2</version>
 				</plugin>
 
-				<!-- clean²å¼ş -->
+				<!-- cleanæ’ä»¶ -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
 					<version>2.4.1</version>
 				</plugin>
 
-				<!-- install²å¼ş -->
+				<!-- installæ’ä»¶ -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
 					<version>2.3.1</version>
 				</plugin>
 
-				<!-- deploy²å¼ş -->
+				<!-- deployæ’ä»¶ -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>2.7</version>
 				</plugin>
 
-				<!-- eclipse²å¼ş,Éè¶¨ÏÂÔØSource²¢ÆÁ±Î.svnÎÄ¼ş -->
+				<!-- eclipseæ’ä»¶,è®¾å®šä¸‹è½½Sourceå¹¶å±è”½.svnæ–‡ä»¶ -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
@@ -892,7 +892,7 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 					</configuration>
 				</plugin>
 
-				<!-- jetty²å¼ş,Éè¶¨ÖØÔØÄ£Ê½ -->
+				<!-- jettyæ’ä»¶,è®¾å®šé‡è½½æ¨¡å¼ -->
 				<plugin>
 					<groupId>org.mortbay.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
@@ -902,35 +902,35 @@ TODO:jar°üµÄ¹ÜÀí¸ü¸Ä£ºÈç£º
 					</configuration>
 				</plugin>
 
-				<!-- dependency²å¼ş -->
+				<!-- dependencyæ’ä»¶ -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
 					<version>2.3</version>
 				</plugin>
 
-				<!-- ant²å¼ş -->
+				<!-- antæ’ä»¶ -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-antrun-plugin</artifactId>
 					<version>1.6</version>
 				</plugin>
 
-				<!-- assembly²å¼ş -->
+				<!-- assemblyæ’ä»¶ -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.2.1</version>
 				</plugin>
 
-				<!-- sonar²å¼ş -->
+				<!-- sonaræ’ä»¶ -->
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>sonar-maven-plugin</artifactId>
 					<version>2.0-beta-2</version>
 				</plugin>
 
-				<!-- releaseÏà¹Ø²å¼ş -->
+				<!-- releaseç›¸å…³æ’ä»¶ -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
