@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-lazy-init="true">
+
+	<bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributes">
+		<props>
+			<prop key="*">PROPAGATION_REQUIRED</prop>
+		</props>
+		</property>
+	</bean>
+
+	<bean id="workflowFactory" class=" com.opensymphony.workflow.spi.hibernate.SpringWorkflowFactory" init-method="init">
+		<property name="resource">
+			<value>workflows.xml</value>
+		</property>
+		<property name="reload">
+			<value>false</value>
+		</property>
+	</bean>
+
+	<bean id="workflowStore" class="com.opensymphony.workflow.spi.hibernate3.SpringHibernateWorkflowStore">
+
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+
+		<property name="propertySetDelegate">
+			<bean id="propertySetDelegate" class="com.opensymphony.workflow.util.PropertySetDelegateImpl"/>
+		</property>
+
+		<property name="cacheable"><value>true</value></property>
+	</bean>
+
+	<bean id="osworkflowConfiguration" class="com.opensymphony.workflow.config.SpringConfiguration">
+		<property name="store">
+			<ref local="workflowStore"/>
+		</property>
+		<property name="factory">
+			<ref local="workflowFactory"/>
+		</property>
+	</bean>
+
+	<bean id="workflowTypeResolver" class="com.opensymphony.workflow.util.SpringTypeResolver"/>
+
+	<bean id="workflowProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="singleton">
+			<value>false</value>
+		</property>
+
+		<property name="proxyInterfaces">
+			<value>com.opensymphony.workflow.Workflow</value>
+		</property>
+
+		<property name="interceptorNames">
+			<list>
+			<value>transactionInterceptor</value>
+			</list>
+		</property>
+
+		<property name="targetName">
+			<value>workflowTarget</value>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE workflow PUBLIC "-//OpenSymphony Group//DTD OSWorkflow 2.8//EN" "http://www.opensymphony.com/osworkflow/workflow_2_8.dtd">
+<workflow>
+
+	<global-conditions>
+		<conditions>
+			<!-- The user must have logged in before using invoke the workflow engine -->
+			<condition type="spring">
+				<arg name="bean.name">userIsAuthenticatedCondition</arg>
+			</condition>
+		</conditions>
+	</global-conditions>
+
+	<initial-actions>
+		<action id="0" name="initialise">
+			<results>
+				<unconditional-result old-status="Finished"	status="Initilised" step="1" />
+			</results>
+		</action>
+	</initial-actions>
+
+	<steps>
+		<step id="1" name="Draft">
+			<actions>
+				<action id="1" name="edit">
+					<restrict-to>
+						<conditions type="AND">
+							<condition type="spring">
+								<!-- Only submitter can edit the order -->
+								<arg name="bean.name">userIsSubmitterCondition</arg>
+							</condition>
+						</conditions>
+					</restrict-to>
+
+					<pre-functions>
+						<function type="class">
+							<arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+						</function>
+					</pre-functions>
+
+					<results>
+						<unconditional-result old-status="Finished"	status="Underway" step="1" owner="${caller}" />
+					</results>
+
+				</action>
+
+				<action id="2" name="confirm">
+					<restrict-to>
+						<conditions type="AND">
+							<condition type="spring">
+								<arg name="bean.name">userIsSubmitterCondition</arg>
+							</condition>
+						</conditions>
+					</restrict-to>
+
+					<!-- The functions defined in this area will be invoked before action -->
+					<pre-functions>
+						<function type="class">
+							<arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+						</function>
+					</pre-functions>
+
+					<results>
+						<unconditional-result old-status="Finished"	status="Approved" step="2" owner="${caller}" />
+					</results>
+				</action>
+
+				<action id="3" name="cancel">
+					<restrict-to>
+						<conditions type="AND">
+							<condition type="spring">
+								<arg name="bean.name">userIsSubmitterCondition</arg>
+							</condition>
+						</conditions>
+					</restrict-to>
+
+					<pre-functions>
+						<function type="class">
+							<arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+						</function>
+					</pre-functions>
+
+					<results>
+						<unconditional-result old-status="Finished"	status="Underway" step="3" owner="${caller}" />
+					</results>
+
+				</action>
+			</actions>
+		</step>
+
+		<step id="2" name="Placed" >
+			<actions>
+				<action id="4" name="accept">
+					<restrict-to>
+						<conditions type="AND">
+							<!-- Only product owner can accept the order-->
+							<condition type="spring">
+								<arg name="bean.name">userIsProductOwnerCondition</arg>
+							</condition>
+						</conditions>
+					</restrict-to>
+
+					<pre-functions>
+						<function type="class">
+							<arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+						</function>
+					</pre-functions>
+
+					<results>
+						<unconditional-result old-status="Finished"	status="Underway" step="4" owner="${caller}" >
+							<post-functions>
+								<function type="spring">
+									<arg name="bean.name">emailNotificationFunction</arg>
+								</function>
+							</post-functions>
+						</unconditional-result>
+					</results>
+
+				</action>
+			</actions>
+		</step>
+
+		<step id="3" name="Cancelled" >
+			<actions>
+				<action id="5" name="confirm">
+					<restrict-to>
+						<conditions type="AND">
+							<condition type="spring">
+								<arg name="bean.name">userIsSubmitterCondition</arg>
+							</condition>
+						</conditions>
+					</restrict-to>
+
+					<!-- The functions defined in this area will be invoked before action -->
+					<pre-functions>
+						<function type="class">
+							<arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+						</function>
+					</pre-functions>
+
+					<results>
+						<unconditional-result old-status="Finished"	status="Approved" step="2" owner="${caller}" />
+					</results>
+				</action>
+
+				<action id="6" name="cancel">
+					<restrict-to>
+						<conditions type="AND">
+							<condition type="spring">
+								<arg name="bean.name">userRoleCondition</arg>
+								<arg name="in.roles">ROLE_ADMIN,ROLE_OPERATOR</arg>
+							</condition>
+						</conditions>
+					</restrict-to>
+
+					<pre-functions>
+						<function type="class">
+							<arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+						</function>
+					</pre-functions>
+
+					<results>
+						<unconditional-result old-status="Finished"	status="Underway" step="2" owner="${caller}" />
+					</results>
+
+				</action>
+			</actions>
+		</step>
+
+		<step id="4" name="In Processing" >
+			<actions>
+				<action id="7" name="deliver">
+					<restrict-to>
+						<conditions type="AND">
+							<condition type="spring">
+								<arg name="bean.name">userIsProductOwnerCondition</arg>
+							</condition>
+						</conditions>
+					</restrict-to>
+
+					<!-- The functions defined in this area will be invoked before action -->
+					<pre-functions>
+						<function type="class">
+							<arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+						</function>
+					</pre-functions>
+
+					<results>
+						<unconditional-result old-status="Finished"	status="Approved" step="5" owner="${caller}" />
+					</results>
+				</action>
+			</actions>
+		</step>
+
+		<step id="5" name="Awaiting Buyer Confirmation" >
+			<actions>
+				<action id="8" name="confirm">
+					<restrict-to>
+						<conditions type="AND">
+							<condition type="spring">
+								<arg name="bean.name">userIsSubmitterCondition</arg>
+							</condition>
+						</conditions>
+					</restrict-to>
+
+					<!-- The functions defined in this area will be invoked before action -->
+					<pre-functions>
+						<function type="class">
+							<arg name="class.name">com.opensymphony.workflow.util.Caller</arg>
+						</function>
+					</pre-functions>
+
+					<results>
+						<unconditional-result old-status="Finished"	status="Approved" step="6" owner="${caller}" />
+					</results>
+
+				</action>
+
+			</actions>
+		</step>
+
+		<step id="6" name="Closed" >
+		</step>
+
+	</steps>
+</workflow>

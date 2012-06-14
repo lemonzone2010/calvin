@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" package="com.apusic.ebiz.framework.core">
+  <class table="t_role" name="DummyRole">
+    <id name="id">
+      <column name="ID"/>
+      <generator class="native">
+        <param name="sequence">seq_md_role</param>
+      </generator>
+    </id>
+    <property name="roleName" length="50" column="roleName" type="string"/>
+  </class>
+</hibernate-mapping>

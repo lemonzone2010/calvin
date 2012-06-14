@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-lazy-init="true">
+
+
+	<!-- The user of this bean should define a mail server definition in his class loader -->
+	<context:property-placeholder location="classpath:framework-core-config.properties,classpath:framework-core-config-new.properties" />
+
+	<bean id="md_SimpleMailBuilderTest" class="com.apusic.ebiz.framework.core.mail.SimpleMailBuilderImpl">
+		<property name="from" value="mingdatest@126.com"/>
+		<property name="to" value="hsia@163.com"/>
+		<property name="subject" value="Greetings from Alex Chen"/>
+		<property name="templateLocation" value="test-template.vm"/>
+    </bean>
+    
+    <bean id="md_test_templateResourceBean" class="com.apusic.ebiz.framework.core.template.TemplateResourceBean">
+		<property name="beanName" value="test_DataBean"/>
+		<property name="methodName" value="getValue"/>
+		<property name="args">  
+		    <list> 
+		        <value type="java.lang.String">mail</value>  
+		    </list>  
+		</property>  
+	</bean>
+	
+	<bean id="md_SimpleMailBuilderTest2" class="com.apusic.ebiz.framework.core.mail.SimpleMailBuilderImpl">
+		<property name="from" value="mingdatest@126.com"/>
+		<property name="to" value="hsia@163.com"/>
+		<property name="subject" value="Greetings from Alex Chen"/>
+		<property name="templateResourceBeanName" value="md_test_templateResourceBean"/>
+    </bean>
+    
+
+    <bean id="md_MimeMailBuilderTest" class="com.apusic.ebiz.framework.core.mail.MimeMailBuilderImpl">
+		<property name="from" value="hsia@163.com"/>
+		<property name="to" value="hsia@163.com"/>
+		<property name="subject" value="Greetings from Alex Chen"/>
+		<property name="templateLocation" value="test-template.vm"/>
+		<property name="attachements">
+			<ref bean="md_AttachmentTest" />
+		</property>
+    </bean>
+
+
+      <bean id="md_InlineMimeMailBuilderTest" class="com.apusic.ebiz.framework.core.mail.MimeMailBuilderImpl">
+		<property name="from" value="hsia@163.com"/>
+		<property name="to" value="hsia@163.com"/>
+		<property name="subject" value="Greetings from Alex Chen"/>
+		<property name="templateLocation" value="test-template.vm"/>
+		<property name="attachements">
+			<ref bean="md_InlineAttachmentTest" />
+		</property>
+    </bean>
+
+	<bean id="md_AttachmentTest" class="com.apusic.ebiz.framework.core.mail.Attachment">
+		<property name="attachmentFilename" value="attachment.html"/>
+		<property name="attachementFile" ref="attachmentFile"/>
+		<property name="inline" value="false"/>
+    </bean>
+
+    <bean id="attachmentFile" class="java.io.File">
+    	<constructor-arg value="test.html"/>
+	</bean>
+
+	<bean id="md_InlineAttachmentTest" class="com.apusic.ebiz.framework.core.mail.Attachment">
+		<property name="attachmentFilename" value="identifier12345"/>
+		<property name="attachementFile" ref="inlineAttachmentFile"/>
+		<property name="inline" value="true"/>
+    </bean>
+
+      <bean id="inlineAttachmentFile" class="java.io.File">
+    	<constructor-arg value="test.html"/>
+	</bean>
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      	<!-- <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/> -->
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+
+        <!-- <property name="url" value="jdbc:derby:target/testdb;create=true"/> -->
+
+        <property name="url" value="jdbc:hsqldb:file:target/testdb"/>
+
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+        <!--
+        <property name="initialSize" value="2" />
+        <property name="maxActive" value="8" />
+        <property name="maxIdle" value="2" />
+        <property name="minIdle" value="2" />
+        <property name="maxWait" value="-1" />
+        <property name="testWhileIdle" value="true"/>
+        <property name="defaultAutoCommit" value="false" /> -->
+
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+
+        <property name="mappingResources">
+	      <list>
+	        <value>DummyUser.hbm.xml</value>
+	        <value>DummyRole.hbm.xml</value>
+	        <value>DummyAuthor.hbm.xml</value>
+	        <value>DummyBook.hbm.xml</value>
+	        <value>com/opensymphony/workflow/spi/hibernate3/HibernateCurrentStep.hbm.xml</value>
+			<value>com/opensymphony/workflow/spi/hibernate3/HibernateHistoryStep.hbm.xml</value>
+			<value>com/opensymphony/workflow/spi/hibernate3/HibernateWorkflowEntry.hbm.xml</value>
+	      </list>
+    	</property>
+
+    	<!-- <property name="eventListeners">
+           <map>
+               <entry key="post-insert">
+                   <ref local="fullTextSearchListener"/>
+               </entry>
+               <entry key="post-update">
+                 <ref local="fullTextSearchListener"/>
+               </entry>
+               <entry key="post-delete">
+                   <ref local="fullTextSearchListener"/>
+               </entry>
+           </map>
+       </property> -->
+
+        <property name="hibernateProperties">
+            <value>
+	            hibernate.dialect=org.hibernate.dialect.HSQLDialect
+	            hibernate.show_sql=true
+	            hibernate.format_sql=true
+	            hibernate.hbm2ddl.auto=create-drop
+	            hibernate.search.default.indexBase=target
+	            <!-- optional -->
+	            hibernate.search.default.directory_provider=org.hibernate.search.store.impl.FSDirectoryProvider
+	            <!-- hibernate.search.analyzer=org.apache.lucene.analysis.standard.StandardAnalyzer -->
+	            hibernate.search.analyzer=org.apache.lucene.analysis.cjk.CJKAnalyzer
+            </value>
+        </property>
+        <!-- hibernate.hbm2ddl.auto=create-drop update org.hibernate.dialect.DerbyDialect org.apache.commons.dbcp.BasicDataSource  hibernate.connection.username=mdtest
+            hibernate.connection.password=111111-->
+    </bean>
+<bean class="com.apusic.ebiz.framework.core.dao.HibernateEventWiring" lazy-init="false"></bean>
+
+	<bean id="fullTextSearchListener" class="org.hibernate.search.event.impl.FullTextIndexEventListener">
+		<constructor-arg type="org.hibernate.search.event.impl.FullTextIndexEventListener$Installation" value="SINGLE_INSTANCE"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory">
+            <ref local="sessionFactory" />
+        </property>
+    </bean>
+
+	<bean id="ebiz_userNameValidator" class="com.apusic.ebiz.framework.core.validation.MockUserValidator">
+    </bean>
+
+    <bean id="ebiz_userValidationService" class="com.apusic.ebiz.framework.core.validation.ValidationServiceImpl">
+        <property name="validatorConfigs">
+            <list>
+             	<value>mockUserNameValidator,name</value>
+             	<value>mockUserValidator</value>
+            </list>
+        </property>
+    </bean>
+
+   <bean id="ebiz_testOrderBookWorkflowService" class="com.apusic.ebiz.framework.core.workflow.osworklfow.OSWorkflowServiceImpl">
+        <property name="workflowName">
+        	<value>orderbook</value>
+        </property>
+    </bean>
+
+     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>org.springframework.security.messages</value>
+				<value>messages</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+</beans>
