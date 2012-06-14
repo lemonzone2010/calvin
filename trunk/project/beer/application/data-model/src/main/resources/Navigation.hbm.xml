@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_NAVIGATION_DATA" name="com.apusic.ebiz.model.navigation.Navigation">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_navigation_data</param>
+      </generator>
+    </id>
+    <property name="status" length="10" column="F_STATUS" type="string"/>
+    <property name="name" length="30" column="F_NAME" type="string"/>
+    <property name="url" length="200" column="F_URL" type="string"/>
+    <property name="roles" length="500" column="F_ROLES" type="string"/>
+    <property name="level" length="3" column="F_LEVEL" type="integer"/>
+    <property name="sequence" length="3" column="F_SEQUENCE" type="integer"/>
+    <property name="applicationId" column="F_APPLICATION_ID" type="integer"/>
+    <many-to-one name="parent" column="F_PARENT_ID" class="com.apusic.ebiz.model.navigation.Navigation" />
+    <set name="childrens" lazy="false" inverse="true" cascade="all" order-by="F_SEQUENCE asc,F_ID asc">
+      <key column="F_PARENT_ID"/>
+      <one-to-many class="com.apusic.ebiz.model.navigation.Navigation"/>
+    </set>
+  </class>
+</hibernate-mapping>

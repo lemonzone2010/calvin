@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_DATAMANAGEMENT_DATA" name="com.apusic.ebiz.model.datamanagement.ConfigurationData">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_datamanagement_data</param>
+      </generator>
+    </id>
+    <property name="name" length="100" not-null="true" column="F_DATA_NAME" access="field" type="string"/>
+    <property name="key" length="50" unique-key="true" not-null="true" column="F_DATA_KEY" access="field" type="string"/>
+    <property name="value" length="4500" not-null="true" column="F_DATA_VALUE" access="field" type="string"/>
+    <property name="type" length="20" column="F_DATA_TYPE" access="field" type="com.apusic.ebiz.model.datamanagement.DataEnumType" not-null="true"></property>
+    <many-to-one  name="category" class="com.apusic.ebiz.model.datamanagement.Category"  column="F_DATA_CATEGORY"/>
+  </class>
+</hibernate-mapping>
