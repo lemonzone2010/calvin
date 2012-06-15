@@ -103,6 +103,20 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.1</version>
             </plugin>
+            
+            <!-- eclipse插件,设定下载Source并屏蔽.svn文件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>2.9</version>
+					<configuration>
+						<sourceExcludes>
+							<sourceExclude>**/.svn/</sourceExclude>
+						</sourceExcludes>
+						<downloadSources>true</downloadSources>
+						<downloadJavadocs>false</downloadJavadocs>
+					</configuration>
+				</plugin>
 		</plugins>
 	</build>
 
