@@ -15,10 +15,10 @@ import org.springmodules.workflow.osworkflow.OsWorkflowContextHolder;
 
 import com.apusic.ebiz.framework.core.exception.BaseBussinessException;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:apusic-ebiz-framework-core.xml",
-		"classpath:apusic-ebiz-framework-core-osworkflow.xml",
-		"classpath:apusic-ebiz-framework-core-user.xml"})
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = { "classpath:apusic-ebiz-framework-core.xml",
+//		"classpath:apusic-ebiz-framework-core-osworkflow.xml",
+//		"classpath:apusic-ebiz-framework-core-user.xml"})
 public class WorkflowServiceTest {
 
 	@Autowired
