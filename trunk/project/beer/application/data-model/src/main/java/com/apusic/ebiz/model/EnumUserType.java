@@ -5,13 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.EnumSet;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.UserType;
 
 public class EnumUserType<E extends Enum<E>> implements UserType {
-
+	private static Logger log = Logger.getLogger(EnumUserType.class);
+	
 	private Class<E> clazz = null;
 
 	private static final int[] SQL_TYPES = { Types.VARCHAR };
@@ -87,15 +90,33 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
 	}
 
 	@Override
-	public Object nullSafeGet(ResultSet arg0, String[] arg1,
+	public Object nullSafeGet(ResultSet resultSet, String[] strings,
 			SessionImplementor arg2, Object arg3) throws HibernateException,
 			SQLException {
-		return null;
+		  final int val = resultSet.getInt(strings[0]);
+	        Object obj = null;
+	        if (!resultSet.wasNull()) {
+	            EnumSet enumSet = EnumSet.allOf(clazz);
+	            for (Object object : enumSet) {
+	                if (object instanceof Enum) {
+	                    Enum e = (Enum) object;
+	                    if (e.ordinal() == val) {
+	                        obj = e;
+	                    }
+	                }
+	            }
+	        }
+	        return obj;
 	}
 
 	@Override
-	public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2,
+	public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index,
 			SessionImplementor arg3) throws HibernateException, SQLException {
+		  if (null == value) {
+	            preparedStatement.setNull(index, Types.INTEGER);
+	        } else {
+	            preparedStatement.setInt(index, ((Enum) value).ordinal());
+	        }
 		
 	}
 }
