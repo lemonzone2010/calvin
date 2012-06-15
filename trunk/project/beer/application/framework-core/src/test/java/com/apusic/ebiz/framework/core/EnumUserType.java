@@ -71,7 +71,7 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
 		} else {
 			prepareStatement.setString(index, ((Enum) value).name());
 		}
-	}
+	}	
 
 	public Object replace(Object original, Object target, Object owner)
 			throws HibernateException {
@@ -89,12 +89,14 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
 	@Override
 	public Object nullSafeGet(ResultSet arg0, String[] arg1, SessionImplementor arg2, Object arg3)
 			throws HibernateException, SQLException {
-		return null;
+		return nullSafeGet(arg0, arg1, arg3);
 	}
 
 	@Override
-	public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2, SessionImplementor arg3)
+	public void nullSafeSet(PreparedStatement prepareStatement, Object value, int index, SessionImplementor arg3)
 			throws HibernateException, SQLException {
+		
+		nullSafeSet(prepareStatement, value, index);
 		
 	}
 }

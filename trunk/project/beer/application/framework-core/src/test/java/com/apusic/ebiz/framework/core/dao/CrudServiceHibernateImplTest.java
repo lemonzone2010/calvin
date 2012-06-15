@@ -92,7 +92,7 @@ public class CrudServiceHibernateImplTest {
 		// Cannot be found
 		assertNull(p);
 
-		Long id = 0l;
+		Long id = detachedPermission.getId();
 		Permission atachedPermission = crudService.retrieve(Permission.class,
 				id);
 
@@ -175,7 +175,7 @@ public class CrudServiceHibernateImplTest {
 
 		user.setName("Alex Chen");
 		user.setRole(role);
-		//user.setUserType(UserType.INTERNAL);
+		user.setUserType(UserType.INTERNAL);
 
 		// Once the transient object being saved, it will become managed
 		DummyUser attachedUser = crudService.create(user);
