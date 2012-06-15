@@ -16,7 +16,13 @@
 	    <property name="password" length="50" column="password" not-null="true" type="string"/>
 	    <property name="createTime" column="createTime" type="timestamp"/>
 	    <many-to-one column="roleid" class="DummyRole" name="role" cascade="persist"/>
-	    <property name="userType" length="40" column="F_USER_TYPE" access="field" type="com.apusic.ebiz.framework.core.UserEnumType"></property>
+	    <property name="userType" length="40" column="F_USER_TYPE" access="field" type="com.apusic.ebiz.framework.core.UserEnumType" >
+	    <type name="com.apusic.ebiz.framework.core.UserEnumType">
+                <param name="enumClass">
+                    com.apusic.ebiz.framework.core.UserType
+                </param>
+            </type>
+	    </property>
   	</class>
 
 	<class name="Permission" table="T_PERMISSION_TEST">
