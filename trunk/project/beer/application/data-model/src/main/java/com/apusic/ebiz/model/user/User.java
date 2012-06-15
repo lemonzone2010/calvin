@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
@@ -40,6 +41,7 @@ public class User extends BaseModel {
 	@Fetch(FetchMode.SELECT)
 	@OrderBy("id")
 	@BatchSize(size = 20)
+    @Transient
     private Set<Role> roles;
     @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "user")
 	@Fetch(FetchMode.SELECT)

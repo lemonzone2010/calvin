@@ -37,16 +37,16 @@
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">create-drop</property>
-		<mapping  package="com.apusic.ebiz.model.user"/>
+		<!-- <mapping  package="com.apusic.ebiz.model.user"/>
 		<mapping class="com.apusic.ebiz.model.user.Group"/>
-		<mapping class="com.apusic.ebiz.model.user.Resource"/>
 		<mapping class="com.apusic.ebiz.model.user.User"/>
-		<mapping class="com.apusic.ebiz.model.user.Role"/>
-		<!-- <mapping resource="Group.hbm.xml" />
+		<mapping class="com.apusic.ebiz.model.user.Resource"/>
+		<mapping class="com.apusic.ebiz.model.user.Role"/> -->
+		<mapping resource="Group.hbm.xml" />
 		<mapping resource="User.hbm.xml" />
 		<mapping resource="UserRole.hbm.xml" />
 		<mapping resource="UserResource.hbm.xml" />
 		<mapping resource="Category.hbm.xml" />
-		<mapping resource="ConfigurationData.hbm.xml" /> -->
+		<mapping resource="ConfigurationData.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>
