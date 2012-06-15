@@ -82,12 +82,12 @@
 	</bean>
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      	<!-- <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/> -->
-        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+      	<!-- <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/> org.hsqldb.jdbcDrive-->
+        <property name="driverClassName" value="org.h2.Driver"/>
 
-        <!-- <property name="url" value="jdbc:derby:target/testdb;create=true"/> -->
+        <!-- <property name="url" value="jdbc:derby:target/testdb;create=true"/> jdbc:hsqldb:file:target/testdb-->
 
-        <property name="url" value="jdbc:hsqldb:file:target/testdb"/>
+        <property name="url" value="jdbc:h2:target/testdb"/>
 
         <property name="username" value="sa"/>
         <property name="password" value=""/>
@@ -133,7 +133,10 @@
 
         <property name="hibernateProperties">
             <value>
-	            hibernate.dialect=org.hibernate.dialect.HSQLDialect
+            <!-- 
+            org.hibernate.dialect.HSQLDialect
+             -->
+	            hibernate.dialect=org.hibernate.dialect.H2Dialect
 	            hibernate.show_sql=true
 	            hibernate.format_sql=true
 	            hibernate.hbm2ddl.auto=create-drop
@@ -142,6 +145,7 @@
 	            hibernate.search.default.directory_provider=org.hibernate.search.store.impl.FSDirectoryProvider
 	            <!-- hibernate.search.analyzer=org.apache.lucene.analysis.standard.StandardAnalyzer -->
 	            hibernate.search.analyzer=org.apache.lucene.analysis.cjk.CJKAnalyzer
+	           <!--  hibernate.current_session_context_class=thread -->
             </value>
         </property>
         <!-- hibernate.hbm2ddl.auto=create-drop update org.hibernate.dialect.DerbyDialect org.apache.commons.dbcp.BasicDataSource  hibernate.connection.username=mdtest

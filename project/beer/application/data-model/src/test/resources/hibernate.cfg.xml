@@ -13,12 +13,12 @@
 
 
 		<!-- HSQL Database connection settings -->
-		<property name="connection.driver_class">org.hsqldb.jdbcDriver</property>
-		<property name="connection.url">jdbc:hsqldb:file:target/testdb</property>
+		<property name="connection.driver_class">org.h2.Driver</property>
+		<property name="connection.url">jdbc:h2:target/testdb</property>
 		<property name="connection.username">sa</property>
 		<property name="connection.password"></property>
 
-		<property name="dialect">org.hibernate.dialect.HSQLDialect</property>
+		<property name="dialect">org.hibernate.dialect.H2Dialect</property>
 
 
 
