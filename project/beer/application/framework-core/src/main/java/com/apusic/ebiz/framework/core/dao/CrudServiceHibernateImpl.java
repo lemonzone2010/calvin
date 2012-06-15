@@ -48,7 +48,7 @@ public class CrudServiceHibernateImpl implements CrudService{
 
 	public void deleteAll(Collection entities) {
 		for (Object object : entities) {
-			delete(entities);
+			delete(object);
 		}
 	}
 
