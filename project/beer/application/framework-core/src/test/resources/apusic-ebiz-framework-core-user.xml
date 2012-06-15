@@ -16,7 +16,7 @@
 	<context:property-placeholder location="classpath:framework-core-config.properties,classpath:framework-core-config-new.properties" />
 
 	<bean id="md_SimpleMailBuilderTest" class="com.apusic.ebiz.framework.core.mail.SimpleMailBuilderImpl">
-		<property name="from" value="mingdatest@126.com"/>
+		<property name="from" value="hsiayong@163.com"/>
 		<property name="to" value="hsia@163.com"/>
 		<property name="subject" value="Greetings from Alex Chen"/>
 		<property name="templateLocation" value="test-template.vm"/>
@@ -33,7 +33,7 @@
 	</bean>
 	
 	<bean id="md_SimpleMailBuilderTest2" class="com.apusic.ebiz.framework.core.mail.SimpleMailBuilderImpl">
-		<property name="from" value="mingdatest@126.com"/>
+		<property name="from" value="hsiayong@163.com"/>
 		<property name="to" value="hsia@163.com"/>
 		<property name="subject" value="Greetings from Alex Chen"/>
 		<property name="templateResourceBeanName" value="md_test_templateResourceBean"/>
@@ -41,7 +41,7 @@
     
 
     <bean id="md_MimeMailBuilderTest" class="com.apusic.ebiz.framework.core.mail.MimeMailBuilderImpl">
-		<property name="from" value="hsia@163.com"/>
+		<property name="from" value="hsiayong@163.com"/>
 		<property name="to" value="hsia@163.com"/>
 		<property name="subject" value="Greetings from Alex Chen"/>
 		<property name="templateLocation" value="test-template.vm"/>
@@ -52,7 +52,7 @@
 
 
       <bean id="md_InlineMimeMailBuilderTest" class="com.apusic.ebiz.framework.core.mail.MimeMailBuilderImpl">
-		<property name="from" value="hsia@163.com"/>
+		<property name="from" value="hsiayong@163.com"/>
 		<property name="to" value="hsia@163.com"/>
 		<property name="subject" value="Greetings from Alex Chen"/>
 		<property name="templateLocation" value="test-template.vm"/>
