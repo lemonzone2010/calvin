@@ -31,18 +31,18 @@ public class MimeMailBuilderImplTest {
 
 	@Test
 	public void build(){
-		mailBuilder.setFrom("chenmingdong@apusic.net");
-		mailBuilder.setTo("chenmingdong@apusic.net");
-		mailBuilder.setBcc("chenmingdong@apusic.net", "huangtanqian@apusic.net");
-		mailBuilder.setCc("chenmingdong@apusic.net", "huangtanqian@apusic.net");
+		mailBuilder.setFrom("hsiayong@163.com");
+		mailBuilder.setTo("hsiayong@163.com");
+		mailBuilder.setBcc("hsiayong@163.com", "hsia@163.com");
+		mailBuilder.setCc("hsiayong@163.com", "hsia@163.com");
 		mailBuilder.setSentDate(new Date());
 		mailBuilder.setSubject("hell world!");
 		mailBuilder.setTemplateLocation("email-template.vm");
-		mailBuilder.setReplyTo("huangtanqin@apusic.net");
+		mailBuilder.setReplyTo("hsia@163.com");
 
 		DummyUser user = new DummyUser();
-		user.setUserName("Alex Chen");
-		user.setEmailAddress("chenmingdong@apusic.net");
+		user.setUserName("Xia Yong");
+		user.setEmailAddress("hsiayong@163.com");
 		Map context = new HashMap();
         context.put("user", user);
         MailMessage mailMessage = ((AbstractMailBuilder)mailBuilder).build(context);

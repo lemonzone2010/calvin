@@ -33,18 +33,18 @@ public class SimpleMailBuilderImplTest {
 
 	@Test
 	public void build(){
-		mailBuilder.setFrom("chenmingdong@apusic.net");
-		mailBuilder.setTo("chenmingdong@apusic.net");
-		mailBuilder.setBcc("chenmingdong@apusic.net", "huangtanqian@apusic.net");
-		mailBuilder.setCc("chenmingdong@apusic.net", "huangtanqian@apusic.net");
+		mailBuilder.setFrom("hsiayong@163.com");
+		mailBuilder.setTo("hsiayong@163.com");
+		mailBuilder.setBcc("hsiayong@163.com", "hsia@163.com");
+		mailBuilder.setCc("hsiayong@163.com", "hsia@163.com");
 		mailBuilder.setSentDate(new Date());
 		mailBuilder.setSubject("hell world!");
 		mailBuilder.setTemplateLocation("email-template.vm");
-		mailBuilder.setReplyTo("huangtanqin@apusic.net");
+		mailBuilder.setReplyTo("hsia@163.com");
 
 		DummyUser user = new DummyUser();
 		user.setUserName("Alex Chen");
-		user.setEmailAddress("chenmingdong@apusic.net");
+		user.setEmailAddress("hsiayong@163.com");
 		Map context = new HashMap();
         context.put("user", user);
         MailMessage mailMessage = ((AbstractMailBuilder)mailBuilder).build(context);
@@ -56,11 +56,11 @@ public class SimpleMailBuilderImplTest {
 
         //Exepcted result
         StringBuffer expectedResult = new StringBuffer("SimpleMailMessage: ");
-		expectedResult.append("from=").append("chenmingdong@apusic.net").append("; ");
-		expectedResult.append("replyTo=").append("huangtanqin@apusic.net").append("; ");
-		expectedResult.append("to=").append(StringUtils.arrayToCommaDelimitedString(new String[]{"chenmingdong@apusic.net"})).append("; ");
-		expectedResult.append("cc=").append(StringUtils.arrayToCommaDelimitedString(new String[]{"chenmingdong@apusic.net", "huangtanqian@apusic.net"})).append("; ");
-		expectedResult.append("bcc=").append(StringUtils.arrayToCommaDelimitedString(new String[]{"chenmingdong@apusic.net", "huangtanqian@apusic.net"})).append("; ");
+		expectedResult.append("from=").append("hsiayong@163.com").append("; ");
+		expectedResult.append("replyTo=").append("hsia@163.com").append("; ");
+		expectedResult.append("to=").append(StringUtils.arrayToCommaDelimitedString(new String[]{"hsiayong@163.com"})).append("; ");
+		expectedResult.append("cc=").append(StringUtils.arrayToCommaDelimitedString(new String[]{"hsiayong@163.com", "hsia@163.com"})).append("; ");
+		expectedResult.append("bcc=").append(StringUtils.arrayToCommaDelimitedString(new String[]{"hsiayong@163.com", "hsia@163.com"})).append("; ");
 		expectedResult.append("sentDate=").append(new Date()).append("; ");
 		expectedResult.append("subject=").append("hell world!").append("; ");
 		expectedResult.append("text=").append(text);
