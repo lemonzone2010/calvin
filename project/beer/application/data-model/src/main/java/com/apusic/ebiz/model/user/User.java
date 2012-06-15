@@ -3,24 +3,48 @@ package com.apusic.ebiz.model.user;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.apusic.ebiz.model.BaseModel;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.apusic.ebiz.model.BaseModel;
+@Entity
+@Table(name = "T_SMARTORG_USER")
 public class User extends BaseModel {
 
     private static final long serialVersionUID = 184659046811923584L;
-
+    @Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "F_ID")
     private int id;
-
+    @Column(name = "F_NAME")
     private String name;
-
+    @Column(name = "F_PASSWORD")
     private String password;
-
+    @Column(name = "F_DISABLED")
     private boolean disbled;
-
+    @Column(name = "F_TYPE")
     private String userType;
-
+    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "user")
+	@Fetch(FetchMode.SELECT)
+	@OrderBy("id")
+	@BatchSize(size = 20)
     private Set<Role> roles;
-
+    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "user")
+	@Fetch(FetchMode.SELECT)
+	@OrderBy("id")
+	@BatchSize(size = 20)
     private Set<Group> groups;
 
     public int getId() {

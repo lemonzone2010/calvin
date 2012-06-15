@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.apusic.ebiz.framework.core.DummyRole;
 import com.apusic.ebiz.framework.core.DummyUser;
 import com.apusic.ebiz.framework.core.Permission;
+import com.apusic.ebiz.framework.core.UserType;
 
 /**
  * Test the CRUD service with Derby database see
@@ -174,6 +175,7 @@ public class CrudServiceHibernateImplTest {
 
 		user.setName("Alex Chen");
 		user.setRole(role);
+		//user.setUserType(UserType.INTERNAL);
 
 		// Once the transient object being saved, it will become managed
 		DummyUser attachedUser = crudService.create(user);

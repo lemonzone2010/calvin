@@ -82,12 +82,12 @@
 	</bean>
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      	<!-- <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/> org.hsqldb.jdbcDrive-->
-        <property name="driverClassName" value="org.h2.Driver"/>
+      	<!-- <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/> org.hsqldb.jdbcDriver  org.h2.Driver-->
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
 
-        <!-- <property name="url" value="jdbc:derby:target/testdb;create=true"/> jdbc:hsqldb:file:target/testdb-->
+        <!-- <property name="url" value="jdbc:derby:target/testdb;create=true"/> jdbc:hsqldb:file:target/testdb  jdbc:h2:target/testdb-->
 
-        <property name="url" value="jdbc:h2:target/testdb"/>
+        <property name="url" value="jdbc:hsqldb:file:target/testdb"/>
 
         <property name="username" value="sa"/>
         <property name="password" value=""/>
@@ -135,8 +135,9 @@
             <value>
             <!-- 
             org.hibernate.dialect.HSQLDialect
+            org.hibernate.dialect.H2Dialect
              -->
-	            hibernate.dialect=org.hibernate.dialect.H2Dialect
+	            hibernate.dialect=org.hibernate.dialect.HSQLDialect
 	            hibernate.show_sql=true
 	            hibernate.format_sql=true
 	            hibernate.hbm2ddl.auto=create-drop

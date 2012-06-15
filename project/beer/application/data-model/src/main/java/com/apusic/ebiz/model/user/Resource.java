@@ -6,31 +6,48 @@ package com.apusic.ebiz.model.user;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.apusic.ebiz.model.BaseModel;
 
-/**
- * @author xuzhengping
- * @2011-7-15 create
- *
- */
+@Entity
+@Table(name = "T_SMARTORG_RESOURCE")
 public class Resource extends BaseModel {
 
     private static final long serialVersionUID = 1L;
-
+    @Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "F_ID")
     private int id;
-
+    @Column(name = "F_resName")
     private String resName;
-
+    @Column(name = "F_resType")
     private String resType;
-
+    @Column(name = "F_resValue")
     private String resValue;
-
+    @Column(name = "F_resContext")
     private String resContext;
-
+    @Column(name = "F_priority")
     private Integer priority;
-
+    @Column(name = "F_desc")
     private String desc;
-
+    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "resources")
+	@Fetch(FetchMode.SELECT)
+	@OrderBy("id")
+	@BatchSize(size = 20)
     private Set<Role> roles;
 
     public Set<Role> getRoles() {

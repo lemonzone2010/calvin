@@ -6,13 +6,10 @@ import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.apusic.ebiz.model.datamanagement.Category;
-import com.apusic.ebiz.model.datamanagement.ConfigurationData;
-import com.apusic.ebiz.model.datamanagement.DataType;
+import com.apusic.ebiz.model.user.Group;
 import com.apusic.ebiz.model.user.ResType;
 import com.apusic.ebiz.model.user.Resource;
 import com.apusic.ebiz.model.user.Role;
@@ -37,11 +34,12 @@ public class HibernateMappingTest {
 	@Test
 	public void groupCurd(){
 
-		/*//添加根部门
+		//添加根部门
 		Group g = new Group();
 		g.setName("root");
 		g.setDesc("根部门");
 		g.setAlias("根");
+		g.setDesc(null);
 		g.setParent(g);
 		session.beginTransaction();
 		session.save(g);
@@ -82,7 +80,7 @@ public class HibernateMappingTest {
 			}
 		}
 		//session.delete(parent1);
-		session.getTransaction().commit();*/
+		session.getTransaction().commit();
 	}
 
 	@Test
