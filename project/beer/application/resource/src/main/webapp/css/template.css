@@ -1,0 +1,62 @@
+
+/*右下脚提示框样式
+------------------------------------------------------------------------------------------------*/
+.clear{
+	clear: both;
+	display: block;
+	font-size: 0;
+	height: 0;
+	line-height: 0;
+	overflow: hidden;
+}
+.ebiz_message{
+	color: #3366cc;
+}
+
+.ebiz_message_content a{
+	color: #3366cc;
+}
+
+.ebiz_message_content a:hover{
+	color: #ff6600;
+	text-decoration: underline;
+}
+.ebiz_message {
+	background-color: #feeddd;
+}
+
+.ebiz_message_tit {
+	height: 28px;
+	background: url(/ebiz-resource/image/common/message/tips_tit.gif) repeat-x left
+		top;
+	line-height: 28px;
+	padding: 0 8px;
+}
+
+.ebiz_message_tit h1 {
+	color: #333;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0px;
+}
+
+.ebiz_message_tit span {
+	margin-top: 5px;
+}
+
+.ebiz_message_content {
+	border: 1px solid #f8c08f;
+	border-top: 0px solid #f8c08f;
+	background-color: #feeddc;
+	padding: 20px;
+	padding: 3px;
+}
+
+.ebiz_message_content p {
+	background-color: #fff;
+	height: 70px;
+	padding: 5px;
+	border: 1px solid #e5a976;
+	font-size: 12px;
+	margin: 0px;
+}

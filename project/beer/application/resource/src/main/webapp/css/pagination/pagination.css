@@ -1,0 +1,148 @@
+	/*分页样式*/
+.ebiz-paginglink {
+	height: 22px;
+	font-size: 12px;
+	margin-right: 5px;
+	float: right;
+	color: #8A8A8A;
+	margin: 15px 0;
+}
+
+.ebiz-paginglink li {
+	text-align: center;
+	margin-right: 5px;
+	display: inline;
+	float: left;
+}
+
+.ebiz-paginglink li a {
+	text-decoration: none;
+}
+
+.ebiz-paginglink li a:hover {
+	text-decoration: none;
+}
+
+.ebiz-page-number {
+	float: left;
+}
+
+.ebiz-page-number a {
+	border: 1px #f9f9f9 solid;
+	cursor: pointer;
+	padding: 0px 6px;
+	display: block;
+	line-height: 18px;
+	color: #0066cc;
+	background: #FFFFFF;
+}
+
+.ebiz-page-number a:hover {
+	border: 1px #FB9A60 solid;
+	cursor: pointer;
+	padding: 0px 6px;
+	display: block;
+	line-height: 18px;
+	color: #000000;
+	background: #FFEEDB;
+}
+
+.ebiz-next-page {
+	background: url(/ebiz-resource/image/common/pagination/paginglink.gif) no-repeat 0 0;
+	width: 59px;
+	line-height: 20px;
+	color: #A9A9A9;
+	cursor: pointer;
+}
+
+.ebiz-next-page a {
+	background: url(/ebiz-resource/image/common/pagination/paginglink.gif) no-repeat left
+		-20px;
+	color: #0066cc;
+	display: block;
+}
+
+.ebiz-next-page a:hover {
+	background: url(/ebiz-resource/image/common/pagination/paginglink.gif) no-repeat left
+		-80px;
+	color: #000000;
+	display: block;
+}
+
+.ebiz-prev-page-disabled {
+	background: url(/ebiz-resource/image/common/pagination/paginglink.gif) no-repeat left
+		-40px;
+	width: 59px;
+	line-height: 20px;
+	color: #A9A9A9;
+	padding-left: 6px;
+	cursor: pointer;
+}
+
+.ebiz-prev-page {
+	background: url(/ebiz-resource/image/common/pagination/paginglink.gif) no-repeat left
+		-40px;
+	width: 59px;
+	line-height: 20px;
+	color: #A9A9A9;
+	cursor: pointer;
+}
+
+.ebiz-prev-page a {
+	background: url(/ebiz-resource/image/common/pagination/paginglink.gif) no-repeat left
+		-60px;
+	color: #0066cc;
+	padding-left: 6px;
+	display: block;
+}
+
+.ebiz-prev-page a:hover {
+	background: url(/ebiz-resource/image/common/pagination/paginglink.gif) no-repeat left
+		-100px;
+	line-height: 20px;
+	color: #000000;
+	padding-left: 6px;
+	display: block;
+}
+
+.ebiz-paginglink-input {
+	border: #c9d5e1 1px solid;
+	text-align: center;
+	height: 16px;
+	color: #444444;
+}
+
+.ebiz-search-btn a {
+	background: url(/ebiz-resource/image/common/pagination/paginglink.gif) no-repeat left
+		-120px;
+	cursor: pointer;
+	width: 42px;
+	line-height: 20px;
+	color: #444444;
+	text-align: center;
+	margin-left: 4px;
+	display: block;
+}
+
+.ebiz-search-btn a:hover {
+	background: url(/ebiz-resource/image/common/pagination/paginglink.gif) no-repeat left
+		-140px;
+	cursor: pointer;
+	width: 42px;
+	line-height: 20px;
+	color: #000000;
+	text-align: center;
+	margin-left: 4px;
+	display: block;
+}
+
+.ebiz-page-selected {
+	border: 1px #ED6C00 solid;
+	background: #ED6C00;
+	padding: 0px 6px;
+	display: block;
+	line-height: 18px;
+	color: #FFFFFF;
+	font-weight: bold;
+	cursor: pointer;
+}

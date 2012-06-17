@@ -1,0 +1,20 @@
+/* add by xiaojunnuo */
+.division label {
+    width: 130px;
+}
+/* datamanagement by xiaojunnuo*/
+.main_content70 {
+width:auto;
+float: none;
+}
+.foot_content {
+	position: inherit;
+}
+
+/* 分词页面 add by xiaojunnuo */
+.float_block{float:left;display: block;margin: 5px;}
+.width_100{width:100px;}
+.block_clear{clear:both;}
+.block_title{font-weight: bold;text-align: center;}
+margin_5{margin: 5px;}
+padding_5{padding: 5px;}

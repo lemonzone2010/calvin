@@ -1,0 +1,83 @@
+.back_div_default {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 98;
+	background-color: #000;
+	filter: alpha (   enabled =   true, style =   0, opacity =   60,
+		finishOpacity =   100 );
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+}
+.back_div_default1{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1000;
+	background-color: #000;
+	filter: alpha (   enabled =   true, style =   0, opacity =   60,
+		finishOpacity =   100 );
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+}
+
+.frame_default {
+	filter: alpha ( enabled =   true, style =   0, opacity = 	 0,
+		finishOpacity =   100 );
+	-moz-opacity: 0;
+	opacity: 0;
+}
+.win_default {
+	height: auto;
+	border: 1px solid #fff6e6;
+	background-color: #ffe9c5;
+}
+
+.win_tit {
+	height: 30px;
+	line-height: 30px;
+	padding: 0 8px;
+}
+
+.win_tit_h {
+	color: #333;
+	font-size: 14px;
+	font-weight: bold;
+	float: left;
+}
+
+.win_tit_span {
+	margin-top: 5px;
+	cursor: pointer;
+	float: right;
+}
+
+.win_body {
+	margin: 5px;
+	margin-top: 0;
+	border: 1px solid #f4ddb7;
+	background-color: #fff;
+	padding: 20px;
+}
+
+.win_tit_theme1 {
+	background: url(/resource/image/common/ctl/pro_catalog_bg.gif) repeat-x;
+	height: 29px;
+	line-height: 29px;
+}
+
+.win_body_theme1 {
+	margin: 0px 0px;
+	background-color: #fff;
+	overflow: hidden;
+}
+
+.win_tit_span_theme1 {
+	float: right;
+	cursor: pointer;
+	margin-right: 10px;
+}
