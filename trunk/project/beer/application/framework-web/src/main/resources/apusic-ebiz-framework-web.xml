@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-lazy-init="false">
+
+	<context:component-scan  base-package="com.apusic.ebiz.framework.web" />
+	
+	<bean id="ebiz_openSessionInViewFilter" class="org.springframework.orm.hibernate4.support.OpenSessionInViewFilter"/>
+	
+	<bean id="ebiz_ExceptionFilter" class="com.apusic.ebiz.framework.web.filter.ExceptionFilter">
+		<property name="handlers">
+			<beans:list>
+				<ref bean="handler_ExceptionLoggingHandler"></ref>
+				<ref bean="handler_ExceptionNotificationHandler"></ref>
+			</beans:list>
+		</property>
+	</bean>
+
+	<bean id="cookieGeneratorHelper" class="org.springframework.web.util.CookieGenerator">
+		<property name="cookieSecure" value="${cookieSecure}"/>
+		<property name="cookieMaxAge" value="${cookieMaxAge}"/>
+		<property name="cookieName" value="${cookieName}"/>
+		<property name="cookiePath" value="${cookiePath}"/>
+	</bean>
+	
+	<bean id="exceptionSendMailBuild" class="com.apusic.ebiz.framework.core.mail.MimeMailBuilderImpl">
+		<property name="to" value="hufeng@apusic.com"/>
+		<property name="from" value="guguoqing@apusic.com"/>
+		<property name="subject" value="系统运行异常通知"/>
+		<property name="templateLocation" value="ebiz-exception-mail-template.vm"/>
+	</bean>
+</beans>
