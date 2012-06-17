@@ -1,0 +1,108 @@
+.om-slider {
+    border: 1px solid #B6D1E6;
+    height: 346px;
+    overflow: hidden;
+    position: relative;
+    width: 740px;
+}
+.om-slider img {
+    border: 0 none;
+}
+.om-slider ul.om-slider-content {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    height: 100%;
+}
+.om-slider ul.om-slider-effect-slide-v li.om-slider-item {
+    display: list-item;
+    position: relative;
+}
+.om-slider ul.om-slider-effect-slide-h {
+    width: 10000px;
+}
+.om-slider ul.om-slider-effect-slide-h li.om-slider-item {
+    display: list-item;
+    float: left;
+    position: relative;
+}
+.om-slider ul.om-slider-content .om-slider-item {
+    display: none;
+    height: 100%;
+}
+.om-slider-directionNav {
+    display: none;
+}
+.om-slider-directionNav a {
+    background: url("images/slider/arrows.png") no-repeat scroll 0 0 transparent;
+    border: 0 none;
+    cursor: pointer;
+    display: block;
+    height: 42px;
+    position: absolute;
+    text-indent: -9999px;
+    top: 45%;
+    width: 30px;
+    z-index: 9;
+}
+.om-slider-directionNav a.om-slider-prevNav {
+    left: 15px;
+}
+.om-slider-directionNav a.om-slider-nextNav {
+    background-position: -70px 0;
+    right: 15px;
+}
+.om-slider-nav-classical {
+    bottom: 2px;
+    height: 18px;
+    list-style: none outside none;
+    margin: 12px 0;
+    position: absolute;
+    right: 10px;
+}
+.om-slider-nav-classical li {
+    background-color: #FFFFFF;
+    border-radius: 20px 20px 20px 20px;
+    color: #0092D2;
+    cursor: pointer;
+    float: left;
+    font-size: 13px;
+    height: 20px;
+    line-height: 20px;
+    margin-left: 3px;
+    margin-top: -2px;
+    opacity: 0.7;
+    overflow: visible;
+    position: relative;
+    text-align: center;
+    width: 20px;
+}
+.om-slider-nav-classical li.nav-selected {
+    background-color: #0092D2;
+    color: #FFFFFF;
+    font-weight: bold;
+    opacity: 1;
+}
+.om-slider-nav-dot {
+    bottom: 5px;
+    left: 50%;
+    position: absolute;
+}
+.om-slider-nav-dot a {
+    background: url("images/slider/bullets.png") no-repeat scroll 0 0 transparent;
+    border: 0 none;
+    display: block;
+    float: left;
+    height: 22px;
+    margin-right: 3px;
+    outline: 0 none;
+    text-indent: -9999px;
+    width: 22px;
+}
+.om-slider-nav-dot a.nav-selected {
+    background-position: 0 -22px;
+}
+.om-slider-hidden {
+    display: none;
+}

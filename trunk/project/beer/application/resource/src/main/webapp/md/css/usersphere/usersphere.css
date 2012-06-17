@@ -1,0 +1,124 @@
+/*增加修改发货地址*/
+.my_address_info{ margin:10px; line-height:30px;}
+.my_address_hint{ margin:5px 10px;}
+.my_address_btn{ float:right;}
+
+/*编辑个人档案*/
+.choice_city{
+	border: 1px solid #A1A1A1;
+    height: 30px;
+    margin-top: 5px;
+    padding: 3px 0 0 10px;
+    width: 430px;}
+.choice_city ul li{
+	float: left;
+    margin-left: 5px;
+    padding: 0 2px;
+	}
+.edit_message{
+	border: 2px solid #EEEEEE;
+    margin: 6px 0 0;
+    padding-bottom: 15px;
+    width: 787px;
+	}
+.edit_photo{ padding:20px 0 0 85px;}
+.photo_prev{
+	float: left;
+    height: 260px;
+    padding-right: 17px;
+	}
+.photo_prev_head{
+	border: 1px solid #A1A1A1;
+    height: 102px;
+    width: 102px;
+	}
+.photo_prev_head IMG{
+	height: 96px;
+    margin: 3px 0 0 3px;
+    width: 96px;
+}
+.photo_browse{
+	float: left;
+    padding-top: 0;
+    width: 500px;
+	}
+.go_choice2{
+	float: left;
+    padding: 0 0 3px;
+    width: 243px;
+	}
+.all_photo_title{
+	margin: 9px 0 0;
+    position: relative;
+    width: 447px;
+    z-index: 1;
+	}
+.all_photo_title_mo{
+	background-image: url("../../image/main/people_title_mo.gif");
+    color: #853200;
+    float: left;
+    height: 20px;
+    line-height: 21px;
+    overflow: hidden;
+    text-align: center;
+    width: 111px;
+}
+.all_photo_title_other{
+	background-image: url("../../image/main/people_title_mo.gif");
+    float: left;
+    height: 19px;
+    line-height: 21px;
+    overflow: hidden;
+    text-align: center;
+    width: 111px;
+}
+.all_photo{
+	background-color: #F4FEFF;
+    border: 1px solid #AEC7CB;
+    height: 162px;
+    padding: 10px 8px 0 15px;
+    position: relative;
+    top: -1px;
+    width: 419px;
+    z-index: 0;
+	}
+.all_photo DIV{
+	border: 1px solid #CACACA;
+    display: inline;
+    float: left;
+    height: 50px;
+    margin: 10px 7px 14px 20px;
+    padding-top: 2px;
+    text-align: center;
+    width: 52px;}
+.all_photo DIV img{
+	height: 48px;
+    width: 48px;
+	}
+/*.save_photo{ margin:10px 0px 0px; width:90px; float:left; height:22px; padding-top:1px;}*/
+.total_ok_pic_green{
+	border: 1px solid #A8C49B;
+    color: #406931;
+    float: left;
+    height: 13px;
+    margin: 13px 0 0 8px;
+    padding-left: 20px;
+	}
+.go_choice{
+	border-top: 1px dashed #D1D1D1;
+    margin: 18px 0 0;
+    padding: 8px 0 3px;
+    width: 446px;
+	}
+.browse_mypic{
+	height: 22px;
+    margin-bottom: 5px;
+	}
+.focus{
+	visibility: hidden;
+}
+.browse_mypic .browse_button{ width:50px; float:left; height:21px; margin-left:2px; padding-top:1px;}
+.loading{ padding:3px 0 0 9px; width:90px; float:left; height:18px; margin-bottom:15px; color:#1a66b3;}
+.total_ok_pic_green2{ border:#a8c49b 1px solid; padding:1px 0 0 20px; margin:3px 0 0 8px; background:url(../images/icon_14x15_ok.gif) #eefddc no-repeat 2px 0px; float:left; height:13px; color:#406931;}
+.notice_write1{ border:#cc3300 1px solid; padding:3px 5px 0 25px; background:url(../images/label1.gif) #ffeddd no-repeat 4px 2px; float:left; height:15px; color:#cc3300;}
+.sexRadio  td{ border-top: 0px solid #CCCCCC;}

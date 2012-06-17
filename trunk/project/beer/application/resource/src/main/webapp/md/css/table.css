@@ -1,0 +1,26 @@
+/*css*/
+table{border-collapse:collapse;border-spacing:0; width:100%;}
+th,td,caption{font-weight:normal;vertical-align:top; line-height:20px;}
+table th{ 
+	background: url("../image/common/tablethbg.gif") repeat-x scroll 0 0 transparent;
+	border-bottom: 1px solid #CCCCCC;
+    border-top: 1px solid #FFFFFF;
+    color: #000000;
+    font-weight: bold;
+    height: 24px;
+    line-height: 24px;
+    overflow: hidden;
+    text-align: center;}
+
+table td{
+	border-top: 1px solid #CCCCCC;
+    margin: 2px;
+    padding-left: 2px;
+	line-height:28px;}
+.table_alt{
+	background-color:#FEF3E9;
+}
+.order_notice table { border:1px solid #CCCCCC; width:100%;}
+.order_notice table td{ border-top:0; margin:2px; line-height:30px;}
+.order_search{border:1px solid #E0E0E0; margin-top:10px;}
+.order_search table td{ padding:2px; line-height:30px; border-top:0px;}
