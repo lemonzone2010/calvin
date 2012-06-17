@@ -1,3 +1,5 @@
+http://static.springsource.org/spring-data/data-jpa/docs/current/reference/html/
+
 TODO:jar包的管理更改：如：
 https://svn.java.net/svn/osworkflow~svn
 <properties>
