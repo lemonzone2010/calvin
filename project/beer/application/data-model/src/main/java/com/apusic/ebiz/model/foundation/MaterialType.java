@@ -2,11 +2,10 @@ package com.apusic.ebiz.model.foundation;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.apusic.ebiz.model.IdEntity;
+import com.apusic.ebiz.framework.core.model.IdEntity;
 
 @Entity
 public class MaterialType extends IdEntity{

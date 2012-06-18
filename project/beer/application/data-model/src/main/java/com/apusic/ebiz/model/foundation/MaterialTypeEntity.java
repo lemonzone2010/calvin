@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.apusic.ebiz.model.IdEntity;
+import com.apusic.ebiz.framework.core.model.IdEntity;
 
 @Entity
 @Table(name = "t_material_type")
