@@ -7,11 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Validator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,42 +19,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.apusic.ebiz.framework.core.dao.Page;
+import com.apusic.ebiz.framework.core.model.IdEntity;
 import com.apusic.ebiz.framework.core.service.AjaxRestService;
 import com.apusic.ebiz.framework.web.util.Reflections;
 
-public abstract class AbstractAjaxRestfulController<T> implements InitializingBean{
+
+public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//implements InitializingBean
 	//TODO:test case
 	protected final static Log logger = LogFactory.getLog(AbstractAjaxRestfulController.class);
 	protected final static String RESULT = "result";
 
-	protected Validator validator;
+	//@Autowired protected Validator validator;//注入spring的JSR validator,貌似对{}的解析不成功，
 	protected Class<T> entityClass;
 	
 	@Autowired
 	protected AjaxRestService<T> ajaxRestService;
 
 	public AbstractAjaxRestfulController() {
+		generateEntityClass();
+	}
+	protected void generateEntityClass() {
 		this.entityClass = Reflections.getSuperClassGenricType(getClass());
-	}
-	public void afterPropertiesSet() throws Exception{
-		ajaxRestService.setEntityClass(entityClass);
-	}
-
-	@Autowired
-	public void setValidator(Validator validator) {
-		this.validator = validator;
+		logger.warn("generateEntityClass:"+entityClass);
 	}
 
 	protected T getModel(Long id) throws InstantiationException, IllegalAccessException {
 		if (id == null) {
 			return entityClass.newInstance();
 		}
-		return ajaxRestService.retrieve(id);
+		return ajaxRestService.retrieve(entityClass,id);
 	}
 
 	/**
 	 * 主页的JSP文件，如demo/index,它存在配置好的web-inf/views/demo/index.jsp,
-	 * 依赖于spring对前缀后缀的配置
+	 * 依赖于spring对前配置
 	 * 
 	 * @return
 	 */
@@ -74,7 +70,7 @@ public abstract class AbstractAjaxRestfulController<T> implements InitializingBe
 	}
 
 	/**
-	 * 检查存在性
+	 * 存在检查
 	 * 
 	 * @param value
 	 * @return
@@ -83,7 +79,7 @@ public abstract class AbstractAjaxRestfulController<T> implements InitializingBe
 	@ResponseBody
 	public Map<String, Result> check(@RequestParam String value, @PathVariable String property) {
 		logger.debug("request check(GET):" + value);
-		T result = ajaxRestService.findBy(property, value);
+		T result = ajaxRestService.findBy(entityClass,property, value);
 		logger.debug("get entity:" + result);
 		return (null != result) ? getSuccessResult() : getFailResult("");
 	}
@@ -91,12 +87,12 @@ public abstract class AbstractAjaxRestfulController<T> implements InitializingBe
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "grid", method = RequestMethod.POST)
 	@ResponseBody
-	public Page gridQuery(HttpServletRequest request) {
+	public Page<T> gridQuery(HttpServletRequest request) {
 		logger.debug("request gridQuery(POST)");
 		Page<T> p = new Page<T>().setRequestMap(request.getParameterMap());
 		logger.debug("need query:" + p);
 		try {
-			p = ajaxRestService.findPage(p);
+			p = ajaxRestService.findPage(entityClass,p);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 		}
@@ -104,7 +100,7 @@ public abstract class AbstractAjaxRestfulController<T> implements InitializingBe
 		return p;
 	}
 	/**
-	 * 显示单条记录,更新记录时可能要用，或者别的地方请求时可用
+	 * 显示单条记录,更新记录时可能要用
 	 * 
 	 * @param id
 	 * @return
@@ -134,14 +130,21 @@ public abstract class AbstractAjaxRestfulController<T> implements InitializingBe
 	public Map<String, Result> create(@RequestBody T model) {
 		logger.debug("request create one(POST),model:" + model);
 		try {
-			model.getClass().getMethod("validate", Validator.class).invoke(model,validator);
-			//model.validate(validator);
+			prepareModelInsert(model);
+			validate(model);
 			ajaxRestService.create(model);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 			return getFailResult(e.getMessage());
 		}
 		return getSuccessResult();
+	}
+	
+	protected void prepareModelInsert(T model)throws Exception {
+		
+	}
+	private void validate(T model) {
+		model.validate();
 	}
 
 	protected Map<String, Result> getSuccessResult(Object extend) {
@@ -185,7 +188,7 @@ public abstract class AbstractAjaxRestfulController<T> implements InitializingBe
 		try {
 			List<T> list=new ArrayList<T>();
 			for (Long id : items) {
-				list.add(ajaxRestService.retrieve(id));
+				list.add(ajaxRestService.retrieve(entityClass,id));
 			}
 			ajaxRestService.deleteAll(list);
 		} catch (Exception e) {
@@ -206,7 +209,7 @@ public abstract class AbstractAjaxRestfulController<T> implements InitializingBe
 	public Map<String, ? extends Object> update(@RequestBody T model) {
 		logger.debug("request delete one(PUT),model:" + model);
 		try {
-			model.getClass().getMethod("validate", Validator.class).invoke(model,validator);
+			validate(model);
 			ajaxRestService.update(model);// 更新方式
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
