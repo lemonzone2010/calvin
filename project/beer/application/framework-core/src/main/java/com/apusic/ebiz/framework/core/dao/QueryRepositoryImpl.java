@@ -15,8 +15,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
 @Component(value = "queryRepository")
@@ -107,14 +105,7 @@ public class QueryRepositoryImpl implements QueryRepository {// TODO:Test case
 			throw new IllegalArgumentException("起始行号不能小于 0 或最多记录数不能小于 1");
 		}
 		final String hql = String.format("SELECT a FROM %s a ", entity.getSimpleName());
-		return hibernateTemplate.executeFind(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(hql);
-				query.setFirstResult(start);
-				query.setMaxResults(size);
-				return query.list();
-			}
-		});
+		return hibernateTemplate.find(hql, start, size);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,8 @@ public class RepositoryFacadeImpl implements RepositoryFacade {
 	@Autowired
 	private QueryRepository queryRepository;
 	@Autowired
-	private CrudRepository crudRepository;
+	@Qualifier("ebiz_CrudService")
+	private CrudService crudRepository;
 	/* (non-Javadoc)
 	 * @see furniture.core.dao.RepositoryFacade#findBy(java.lang.Class, java.lang.String, java.lang.String)
 	 */

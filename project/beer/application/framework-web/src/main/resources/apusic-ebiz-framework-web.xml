@@ -32,10 +32,10 @@
 		<property name="cookiePath" value="${cookiePath}"/>
 	</bean>
 	
-	<bean id="exceptionSendMailBuild" class="com.apusic.ebiz.framework.core.mail.MimeMailBuilderImpl">
-		<property name="to" value="hufeng@apusic.com"/>
-		<property name="from" value="guguoqing@apusic.com"/>
-		<property name="subject" value="系统运行异常通知"/>
+	<bean id="ebiz_ExceptionSendMailBuild" class="com.apusic.ebiz.framework.core.mail.MimeMailBuilderImpl">
+		<property name="to" value="hsia@163.com"/>
+		<property name="from" value="hsiayong@163.com"/>
+		<property name="subject" value="XX系统运行异常通知"/>
 		<property name="templateLocation" value="ebiz-exception-mail-template.vm"/>
 	</bean>
 </beans>

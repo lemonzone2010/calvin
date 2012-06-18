@@ -1,7 +1,9 @@
 package com.apusic.ebiz.framework.core;
 
+import com.apusic.ebiz.framework.core.model.IdEntity;
 
-public class Permission {
+
+public class Permission extends IdEntity{
 	private Long id;
 	private String name;
 	private DummyUser user;

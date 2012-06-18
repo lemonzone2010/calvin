@@ -1,14 +1,15 @@
 package com.apusic.ebiz.framework.core;
 
+import com.apusic.ebiz.framework.core.model.IdEntity;
+
 /**
  * @hibernate.mapping default-lazy="false"
  * @hibernate.class table="t_role"
  */
-public class DummyRole {
+public class DummyRole  extends IdEntity{
 
     private static final long serialVersionUID = 7197134222421547656L;
 
-    private int id;
 
     private String roleName;
 
@@ -24,22 +25,9 @@ public class DummyRole {
         this.roleName = roleName;
     }
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public boolean equals(Object r) {
 		return (id == ((DummyRole) r).getId());
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		return (this.getClass().hashCode() * id) * prime;
 	}
 
 }

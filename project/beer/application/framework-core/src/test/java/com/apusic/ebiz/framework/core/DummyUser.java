@@ -3,7 +3,9 @@ package com.apusic.ebiz.framework.core;
 import java.util.Date;
 import java.util.Set;
 
-public class DummyUser {
+import com.apusic.ebiz.framework.core.model.IdEntity;
+
+public class DummyUser extends IdEntity{
 
 	private Long id;
 

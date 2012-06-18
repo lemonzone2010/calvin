@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.apusic.ebiz.framework.web.controller.AbstractAjaxRestfulController;
 import com.apusic.ebiz.model.foundation.MaterialType;
+import com.apusic.ebiz.model.foundation.MaterialTypeEntity;
 import com.home.ebiz.foundation.service.MaterialTypeService;
 @Controller
 @RequestMapping(value="/materialType")
