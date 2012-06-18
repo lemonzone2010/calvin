@@ -94,6 +94,8 @@
 					</connectors>
 				</configuration>
 			</plugin>
+			<!-- http://maven.apache.org/plugins/maven-eclipse-plugin/eclipse-mojo.html
+			http://maven.apache.org/plugins/maven-eclipse-plugin/wtp.html -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -134,6 +136,9 @@
 				</configuration>
 			</plugin>
 
+<!-- http://tomcat.apache.org/maven-plugin-2/
+http://tomcat.apache.org/maven-plugin-2/run-mojo-features.html
+http://mojo.codehaus.org/tomcat-maven-plugin/usage.html -->
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
