@@ -1,5 +1,6 @@
 package com.apusic.ebiz.framework.core.dao;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 /**
- * 与具体ORM实现无关的分页查询结果封装.
+ * 与具体ORM实现无关的分页查询结果封
  * 
  * @param <T>
  *            Page中记录的类型.
@@ -21,7 +22,7 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 
 	protected List<T> rows = null;
 	protected long total = 0;
-	private String q;// property:value,后期可能为value,可设置默认查询条件,查询条件可为ALL？？？
+	private String q;// property:value,后期可能为value,可设置默认查询条�?查询条件可为ALL？？�?
 
 	public Page() {
 	}
@@ -43,7 +44,7 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 	}
 
 	/**
-	 * 根据pageSize与totalItems计算总页数.
+	 * 根据pageSize与totalItems计算总页�?
 	 */
 	public int getTotalPages() {
 		return (int) Math.ceil((double) total / (double) getPageSize());
@@ -51,21 +52,21 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 	}
 
 	/**
-	 * 是否还有下一页.
+	 * 是否还有下一�?
 	 */
 	public boolean hasNextPage() {
 		return (getPageNo() + 1 <= getTotalPages());
 	}
 
 	/**
-	 * 是否最后一页.
+	 * 是否�?���?��.
 	 */
 	public boolean isLastPage() {
 		return !hasNextPage();
 	}
 
 	/**
-	 * 取得下页的页号, 序号从1开始. 当前页为尾页时仍返回尾页序号.
+	 * 取得下页的页�? 序号�?�?��. 当前页为尾页时仍返回尾页序号.
 	 */
 	public int getNextPage() {
 		if (hasNextPage()) {
@@ -76,21 +77,21 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 	}
 
 	/**
-	 * 是否还有上一页.
+	 * 是否还有上一�?
 	 */
 	public boolean hasPrePage() {
 		return (getPageNo() > 1);
 	}
 
 	/**
-	 * 是否第一页.
+	 * 是否第一�?
 	 */
 	public boolean isFirstPage() {
 		return !hasPrePage();
 	}
 
 	/**
-	 * 取得上页的页号, 序号从1开始. 当前页为首页时返回首页序号.
+	 * 取得上页的页�? 序号�?�?��. 当前页为首页时返回首页序�?
 	 */
 	public int getPrePage() {
 		if (hasPrePage()) {
@@ -101,10 +102,10 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 	}
 
 	/**
-	 * 计算以当前页为中心的页面列表,如"首页,23,24,25,26,27,末页"
+	 * 计算以当前页为中心的页面列表,�?首页,23,24,25,26,27,末页"
 	 * 
 	 * @param count
-	 *            需要计算的列表大小
+	 *            �?��计算的列表大�?
 	 * @return pageNo列表
 	 */
 	public List<Integer> getSlider(int count) {
@@ -134,10 +135,16 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 		return this;
 	}
 
+	/**
+	 * @return 总记录条数
+	 */
 	public long getTotal() {
 		return total;
 	}
 
+	/**
+	 * @param total 总记录条数
+	 */
 	public void setTotal(long total) {
 		this.total = total;
 	}
@@ -157,7 +164,14 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 	}
 
 	private String getFirstValue(String[] in) {
-		return null != in && in.length > 0 ? in[0] : "";
+		if(null==in || in.length<1)return "";
+		String tmp = "";
+		try {
+			tmp = isUTF8(in[0].getBytes())?in[0]:new String(in[0].getBytes("ISO-8859-1"),"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return tmp;
 	}
 
 	private Integer getFirstValueInteger(String[] in) {
@@ -171,7 +185,15 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 	public String getQ() {
 		return q;
 	}
-
+	 public static boolean isUTF8(byte[] file){
+	        if(file.length<3)
+	            return false;
+	        if((file[0]&0xFF)==0xEF && 
+	                (file[1]&0xFF)==0xBB &&
+	                (file[2]&0xFF)==0xBF)
+	            return true;
+	        return false;
+	    }
 	public void setQ(String q) {
 		this.q = q;
 	}

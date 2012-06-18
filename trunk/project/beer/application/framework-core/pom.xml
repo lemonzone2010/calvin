@@ -17,89 +17,90 @@
 
 
 	<dependencies>
-		<dependency>  
+
+		<dependency>
 			<groupId>org.springmodules</groupId>
 			<artifactId>spring-modules-osworkflow</artifactId>
 			<version>0.8a</version>
 			<exclusions>
-			   <exclusion>
-			     <groupId>org.springframework</groupId>
-			     <artifactId>spring-beans</artifactId>
-			   </exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
 
-			   <exclusion>
-			     <groupId>org.springframework</groupId>
-			     <artifactId>spring-beans</artifactId>
-			   </exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
 
-			   <exclusion>
-			     <groupId>commons-logging</groupId>
-			     <artifactId>commons-logging</artifactId>
-			   </exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
 
-			   <exclusion>
-			     <groupId>org.springframework</groupId>
-            	 <artifactId>spring-context</artifactId>
-			   </exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
 
-			   <exclusion>
-			    	<groupId>org.springframework</groupId>
-            		<artifactId>spring-core</artifactId>
-            	</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
 
-            	<exclusion>
-             		<groupId>org.springframework</groupId>
-            		<artifactId>spring-dao</artifactId>
-            	</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-dao</artifactId>
+				</exclusion>
 
-            	<exclusion>
-            		<groupId>org.springframework</groupId>
-            		<artifactId>spring-support</artifactId>
-            	</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-support</artifactId>
+				</exclusion>
 
-            	<exclusion>
-            		<groupId>org.springframework</groupId>
-            		<artifactId>spring-webmvc</artifactId>
-            	</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-webmvc</artifactId>
+				</exclusion>
 
-            	<exclusion>
-            		<groupId>org.springframework</groupId>
-            		<artifactId>spring-web</artifactId>
-            	</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+				</exclusion>
 
-            	<exclusion>
-            		<groupId>org.springframework</groupId>
-            		<artifactId>spring-mock</artifactId>
-            	</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-mock</artifactId>
+				</exclusion>
 
-            	<exclusion>
-            		<groupId>org.acegisecurity</groupId>
-            		<artifactId>acegi-security</artifactId>
-            	</exclusion>
+				<exclusion>
+					<groupId>org.acegisecurity</groupId>
+					<artifactId>acegi-security</artifactId>
+				</exclusion>
 
 
 				<exclusion>
 					<groupId>opensymphony</groupId>
-            		<artifactId>osworkflow</artifactId>
+					<artifactId>osworkflow</artifactId>
 				</exclusion>
 
 				<exclusion>
 					<groupId>junit</groupId>
-            		<artifactId>junit</artifactId>
+					<artifactId>junit</artifactId>
 				</exclusion>
 
-            	<exclusion>
-            		<groupId>easymock</groupId>
-            		<artifactId>easymock</artifactId>
-            	</exclusion>
-            	<exclusion>
-            		<artifactId>servlet-api</artifactId>
-            		<groupId>javax.servlet</groupId>
-            	</exclusion>
+				<exclusion>
+					<groupId>easymock</groupId>
+					<artifactId>easymock</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
-		
+
 
 		<dependency>
 			<groupId>opensymphony</groupId>
@@ -113,6 +114,7 @@
 			<artifactId>stax-api</artifactId>
 			<version>1.0-2</version>
 		</dependency>
-	
+
+
 	</dependencies>
 </project>
