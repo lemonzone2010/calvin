@@ -98,16 +98,34 @@
 			</plugin>
 			
 			<!-- eclipse插件, 设定wtp版本并添加springIDE nature -->
-			<!-- <plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
 				<configuration>
+					<addVersionToProjectName>false</addVersionToProjectName>
+					<useProjectReferences>false</useProjectReferences>
+					<encoding>UTF-8</encoding>
+					<wtpmanifest>false</wtpmanifest>
+					<wtpapplicationxml>true</wtpapplicationxml>
 					<wtpversion>2.0</wtpversion>
+					<additionalBuildcommands>
+						<buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
+						<buildcommand>org.eclipse.wst.validation.validationbuilder</buildcommand>
+					</additionalBuildcommands>
+
 					<additionalProjectnatures>
-						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+						<nature>org.springframework.ide.eclipse.core.springnature</nature>
+						<nature>org.eclipse.m2e.core.maven2Nature</nature>
+						<nature>org.eclipse.jdt.core.javanature</nature>
+						<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 					</additionalProjectnatures>
+					<classpathContainers>
+						<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
+						<classpathContainer>org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER</classpathContainer>
+					</classpathContainers>
 				</configuration>
-			</plugin> -->
+			</plugin>
 
 			<!-- assembly插件 -->
 			<plugin>
