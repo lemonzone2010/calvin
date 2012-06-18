@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.home.ebiz</groupId>
+
+	<artifactId>web-run</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>Web Run</name>
+
+
+	<build>
+		<plugins>
+			<!-- jetty插件, 设定context path与spring profile -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.4.v20120524</version>
+				<configuration>
+					<systemProperties>
+						<systemProperty>
+							<name>spring.profiles.active</name>
+							<value>development</value>
+						</systemProperty>
+					</systemProperties>
+					<useTestClasspath>true</useTestClasspath>
+
+					<webAppConfig>
+						<contextPath>/${project.artifactId}</contextPath>
+					</webAppConfig>
+					<stopKey>stop</stopKey>
+					<stopPort>5599</stopPort>
+					<scanIntervalSeconds>0</scanIntervalSeconds>
+					<connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>8080</port>
+							<maxIdleTime>60000</maxIdleTime>
+						</connector>
+					</connectors>
+
+					<baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+						<resources>../foundation-web/src/main/webapp,../resource/src/main/webapp</resources>
+					</baseResource>
+				</configuration>
+			</plugin>
+
+			<!-- http://tomcat.apache.org/maven-plugin-2/ http://tomcat.apache.org/maven-plugin-2/run-mojo-features.html 
+				http://mojo.codehaus.org/tomcat-maven-plugin/usage.html -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0-beta-1</version>
+				<configuration>
+					<!-- http port -->
+					<port>9090</port>
+					<!-- application path always starts with / -->
+					<path>/${project.artifactId}</path>
+					<!-- optionnal path to a context file -->
+					<!-- <contextFile>/Users/olamy/dev/tomcat-context-archiva-gmail.xml</contextFile> -->
+					<!-- optionnal system propoerties you want to add -->
+					<!-- <systemProperties> <appserver.base>/Users/olamy/dev/sources/tomcat/maven-plugin-svn/target/checkout/target/appserver-base</appserver.base> 
+						<appserver.home>/Users/olamy/dev/sources/tomcat/maven-plugin-svn/target/checkout/target/appserver-home</appserver.home> 
+						<derby.system.home>/Users/olamy/dev/sources/tomcat/maven-plugin-svn/target/checkout/target/appserver-base/logs</derby.system.home> 
+						<java.io.tmpdir>/Users/olamy/dev/sources/tomcat/maven-plugin-svn/target/checkout/target</java.io.tmpdir> 
+						</systemProperties> -->
+					<!-- if you want to use test dependencies rather than only runtime -->
+					<useTestClasspath>false</useTestClasspath>
+					<!-- optionnal if you want to add some extra directories in the class 
+						loader -->
+					<!-- <additionalClasspathDirs> <additionalClasspathDir></additionalClasspathDir> 
+						</additionalClasspathDirs> <addContextWarDependencies>true</addContextWarDependencies> 
+						<finalName>${project.artifactId}</finalName> <warFile>${project.artifactId}</warFile> -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+<!-- 	<modules>
+		<module>../foundation-web</module>
+		<module>../resource</module>
+	</modules> -->
+</project>
