@@ -19,6 +19,11 @@
 	<dependencies>
 
 
+	<dependency>
+		<groupId>com.home.ebiz.framework</groupId>
+		<artifactId>framework-core</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</dependency>
 	</dependencies>
 
 </project>

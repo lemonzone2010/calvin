@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.apusic.ebiz.model.IdEntity;
+import com.apusic.ebiz.framework.core.model.IdEntity;
 
 @Entity
 public class TestEntity extends IdEntity {
