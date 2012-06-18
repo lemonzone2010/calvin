@@ -7,64 +7,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.apusic.ebiz.framework.core.dao.CrudService;
 import com.apusic.ebiz.framework.core.dao.Page;
-import com.apusic.ebiz.framework.core.dao.PageQueryService;
-import com.apusic.ebiz.framework.core.util.Reflections;
+import com.apusic.ebiz.framework.core.dao.RepositoryFacade;
+import com.apusic.ebiz.framework.core.model.IdEntity;
 
 @Service
-public class DefaultAjaxRestServiceImpl<T> implements AjaxRestService<T> {
+public class DefaultAjaxRestServiceImpl<T  extends IdEntity> implements AjaxRestService<T> {
 	@Autowired
-	private CrudService crudService;
-	@Autowired
-	private PageQueryService pageQueryService;
-	protected Class<T> entityClass;
-
-	public DefaultAjaxRestServiceImpl() {
-		this.entityClass = Reflections.getSuperClassGenricType(getClass());
-	}
+	private RepositoryFacade repositoryFacade;
 
 	@Override
 	@Transactional
 	public T create(T e) {
-		return crudService.create(e);
+		return repositoryFacade.create(e);
 	}
 
 	@Override
 	@Transactional
 	public void delete(T e) {
-		crudService.delete(e);
+		repositoryFacade.delete(e);
 	}
 
 	@Override
 	@Transactional
 	public void deleteAll(Collection<T> e) {
-		crudService.deleteAll(e);
+		repositoryFacade.deleteAll(e);
 	}
 
 	@Override
-	public T findBy(String property, String value) {
-		return pageQueryService.findBy(entityClass, property, value);
+	public T findBy(Class<T> entityClass,String property, String value) {
+		return repositoryFacade.findBy(entityClass, property, value);
 	}
 
 	@Override
-	public Page<T> findPage(Page<T> p) {
-		return pageQueryService.findPage(entityClass, p);
+	public Page<T> findPage(Class<T> entityClass,Page<T> p) {
+		return repositoryFacade.findPage(entityClass, p);
 	}
 
 	@Override
-	public T retrieve(Serializable id) {
-		return crudService.retrieve(entityClass, id);
+	public T retrieve(Class<T> entityClass,Serializable id) {
+		return repositoryFacade.retrieve(entityClass, id);
 	}
 
 	@Override
 	@Transactional
 	public void update(T e) {
-		crudService.update(e);
-	}
-
-	public void setEntityClass(Class<T> entityClass) {
-		this.entityClass = entityClass;
+		repositoryFacade.update(e);
 	}
 
 }

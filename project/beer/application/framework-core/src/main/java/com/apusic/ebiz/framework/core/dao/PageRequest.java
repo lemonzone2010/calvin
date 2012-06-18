@@ -3,7 +3,7 @@ package com.apusic.ebiz.framework.core.dao;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 分页参数封装类.
+ * 分页参数封装�?
  */
 public class PageRequest {
 	private static final int DEFAULT_PAGE_SIZE=20;
@@ -24,14 +24,14 @@ public class PageRequest {
 	}
 
 	/**
-	 * 获得当前页的页号, 序号从1开始, 默认为1.
+	 * 获得当前页的页号, 序号�?�?��, 默认�?.
 	 */
 	public int getPageNo() {
 		return pageNo;
 	}
 
 	/**
-	 * 设置当前页的页号, 序号从1开始, 低于1时自动调整为1.
+	 * 设置当前页的页号, 序号�?�?��, 低于1时自动调整为1.
 	 */
 	public void setPageNo(final int pageNo) {
 		this.pageNo = pageNo;
@@ -42,14 +42,14 @@ public class PageRequest {
 	}
 
 	/**
-	 * 获得每页的记录数量, 默认为10.
+	 * 获得每页的记录数�? 默认�?0.
 	 */
 	public int getPageSize() {
 		return pageSize;
 	}
 
 	/**
-	 * 设置每页的记录数量, 低于1时自动调整为1.
+	 * 设置每页的记录数�? 低于1时自动调整为1.
 	 */
 	public void setPageSize(final int pageSize) {
 		this.pageSize = pageSize;
@@ -60,14 +60,14 @@ public class PageRequest {
 	}
 
 	/**
-	 * 获得排序字段, 无默认值. 多个排序字段时用','分隔.
+	 * 获得排序字段, 无默认�?. 多个排序字段时用','分隔.
 	 */
 	public String getOrderBy() {
 		return orderBy;
 	}
 
 	/**
-	 * 是否已设置排序字段,无默认值.
+	 * 是否已设置排序字�?无默认�?.
 	 */
 	public boolean isOrderBySetted() {
 		return (StringUtils.isNotBlank(orderBy) && StringUtils.isNotBlank(orderDirect));
@@ -88,7 +88,7 @@ public class PageRequest {
 	}
 
 	/**
-	 * 根据pageNo和pageSize计算当前页第一条记录在总结果集中的位置, 序号从0开始.
+	 * 根据pageNo和pageSize计算当前页第�?��记录在�?结果集中的位�? 序号�?�?��.
 	 */
 	public int getOffset() {
 		return ((pageNo - 1) * pageSize);
