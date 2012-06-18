@@ -79,6 +79,9 @@
 
 					<webAppConfig>
 						<contextPath>/${project.artifactId}</contextPath>
+						 <baseResource implementation="org.mortbay.resource.ResourceCollection">
+              				<resources>src/main/webapp,target/foo,../resource/src/main/webapp</resources>
+            			</baseResource>
 					</webAppConfig>
 					<stopKey>stop</stopKey>
 					<stopPort>5599</stopPort>
