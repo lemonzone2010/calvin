@@ -24,11 +24,7 @@ import com.apusic.ebiz.model.BaseModel;
 @Entity
 @Table(name = "T_SMARTORG_GROUP")
 public class Group extends BaseModel {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "F_ID")
-	private int id;
-	@Column(name = "F_GROUP_NAME")
+	@Column(name = "F_GROUP_NAME") 
 	private String name;
 	@Column(name = "F_GROUP_ALIAS")
 	private String alias;
@@ -52,13 +48,6 @@ public class Group extends BaseModel {
 	@Column(name = "F_DESC", nullable = true)
 	private String desc;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

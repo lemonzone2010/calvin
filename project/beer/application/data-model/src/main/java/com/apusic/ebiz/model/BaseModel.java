@@ -2,44 +2,20 @@ package com.apusic.ebiz.model;
 
 import java.io.Serializable;
 
+import com.apusic.ebiz.framework.core.model.IdEntity;
+
 /**
  * @author guoqing.gu
  *
  */
-public abstract class BaseModel implements Serializable{
+public abstract class BaseModel extends IdEntity implements Serializable{
 
     private static final long serialVersionUID = 2016887044443662579L;
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        return (this.getClass().hashCode() * getId()) * prime;
-    }
 
+   // public abstract int getId();
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (this == obj) {
-            return true;
-        }
-        if (!getClass().isAssignableFrom(obj.getClass())) {
-            return false;
-        }
-        BaseModel other = (BaseModel) obj;
-        if (getId() == 0) {
-            return false;
-        } else if (getId() != other.getId()) {
-            return false;
-        }
-        return true;
-    }
-
-    public abstract int getId();
-
-    public abstract void setId(int id);
+  //  public abstract void setId(int id);
 
     @Override
     public String toString() {

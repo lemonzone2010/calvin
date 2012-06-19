@@ -24,10 +24,10 @@ import com.apusic.ebiz.model.BaseModel;
 public class Role extends BaseModel {
 
     private static final long serialVersionUID = 7197134222421547656L;
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "F_ID")
-    private int id;
+//    @Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Column(name = "F_ID")
+//    private int id;
     @Column(name = "F_NAME")
     private String name;
     @Column(name = "F_ALIAS")
@@ -40,15 +40,6 @@ public class Role extends BaseModel {
 	@BatchSize(size = 20)
     private Set<Resource> resources;
 
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getAlias() {
 		return alias;

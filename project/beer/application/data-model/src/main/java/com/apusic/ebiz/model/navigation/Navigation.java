@@ -12,7 +12,6 @@ import com.apusic.ebiz.model.BaseModel;
 public class Navigation extends BaseModel implements Comparable<Navigation>{
     private static final long serialVersionUID = -7997030155458753497L;
 
-    private int id;
     
     private String status;
     
@@ -42,13 +41,6 @@ public class Navigation extends BaseModel implements Comparable<Navigation>{
     
     private Set<Navigation> childrens;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getStatus() {
         return status;
