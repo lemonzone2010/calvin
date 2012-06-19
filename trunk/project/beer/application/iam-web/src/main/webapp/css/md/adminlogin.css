@@ -1,0 +1,62 @@
+body{
+	background-image: url(../../images/md/Administrator_loginbg1.jpg);
+	background-repeat: repeat-x;
+	background-position: 0px -50px;
+	margin:0;
+	padding:0;
+	min-height:768px;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:12px;
+	color:#666;
+}
+.box{
+	background-image: url("../../images/md/Administrator_loginbg_mid.jpg");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    height: 431px;
+    left: 351px;
+    position: absolute;
+    top: 238px;
+    width: 698px;
+}
+.loginname{
+	 height: 39px;
+    left: 407px;
+    position: absolute;
+    top: 198px;
+    width: 398px;
+}
+.login{
+	height: 231px;
+    left: 100px;
+    position: absolute;
+    top: 80px;
+    width: 398px;
+}
+.login_input{
+	background-image: url(../../images/md/login_input_bg.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	height:36px;
+}
+.input_text {
+   border: 0 none;
+    color: #666;
+    height: 24px;
+    line-height: 24px;
+    margin: 5px;
+    width: 208px;
+
+}
+.copyright{ margin-top:55px;}
+
+.input_btn {
+  background-image: url("../../images/md/login_btn_bg.gif");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    border: 0 none;
+    color: #FFFFFF;
+    height: 28px;
+    width: 75px;
+
+}
