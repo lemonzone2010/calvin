@@ -20,7 +20,8 @@ public class HibernateTemplate {
 	}
 
 	public Session getSession() {
-		return sessionFactory.openSession();
+		return sessionFactory.getCurrentSession();
+		//return sessionFactory.openSession();
 		//TODO 改成mysql试试。
 		/*try {
 			return sessionFactory.getCurrentSession();
