@@ -152,11 +152,6 @@
   		<artifactId>iam-service</artifactId>
   		<version>1.0.0-SNAPSHOT</version>
   	</dependency>
-  	<dependency>
-			<groupId>com.home.ebiz.model</groupId>
-			<artifactId>data-model</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
 	<dependency>
 		<groupId>org.hibernate</groupId>
 		<artifactId>hibernate-validator-annotation-processor</artifactId>

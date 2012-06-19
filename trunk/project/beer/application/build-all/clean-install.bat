@@ -1,3 +1,3 @@
-mvn clean install -e
+start mvn clean install -e
 pause
 exit

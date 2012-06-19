@@ -24,7 +24,7 @@
 	 <context:property-placeholder location="classpath:db-config.properties,classpath:framework-core-config.properties,classpath:framework-web-config.properties,classpath:smartorg-system-config.properties" />
 
 	<import resource="classpath*:apusic-ebiz-iam-security.xml" />
-    <import resource="classpath*:apusic-ebiz-framework-core.xml" />
+    <!-- <import resource="classpath*:apusic-ebiz-framework-core.xml" /> -->
     <import resource="classpath*:apusic-ebiz-framework-web.xml" />
 	<import resource="classpath*:apusic-ebiz-smartorg-service.xml" />
 
