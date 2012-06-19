@@ -3,6 +3,7 @@ package com.apusic.ebiz.framework.core.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,7 +20,13 @@ public class HibernateTemplate {
 	}
 
 	public Session getSession() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
+		/*try {
+			return sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+			e.printStackTrace();//FIXME session get problem
+			return sessionFactory.openSession();
+		}*/
 	}
 
 	List findByCriteria(DetachedCriteria criteria) {
