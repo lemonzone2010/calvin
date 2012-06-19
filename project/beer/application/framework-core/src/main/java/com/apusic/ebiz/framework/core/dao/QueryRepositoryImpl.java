@@ -1,13 +1,9 @@
 package com.apusic.ebiz.framework.core.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
@@ -18,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component(value = "queryRepository")
-public class QueryRepositoryImpl implements QueryRepository {// TODO:Test case
+public class QueryRepositoryImpl implements QueryRepository,QueryService {// TODO:Test case
 	private HibernateTemplate hibernateTemplate;
 
 	@Autowired
