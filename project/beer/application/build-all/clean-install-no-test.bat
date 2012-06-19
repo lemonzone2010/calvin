@@ -1,1 +1,3 @@
-start mvn clean install -Dmaven.test.skip=true -e
+mvn clean install -Dmaven.test.skip=true -e
+pause
+exit
