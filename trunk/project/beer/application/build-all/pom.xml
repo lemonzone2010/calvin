@@ -30,6 +30,11 @@
 		<module>../foundation-service</module>
         <module>../foundation-web</module>
         
+        <module>../smartorg-service</module>
+        <module>../iam-service</module>        
+        <module>../iam-web</module>        
+        <module>../smartorg-web</module>
+        
 		<module>../resource</module>
     </modules>
 </project>
