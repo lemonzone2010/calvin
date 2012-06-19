@@ -1,0 +1,30 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:w="http://www.apusic.com/jsf/widget" xmlns:layout="http://www.apusic.com/jsf/layout"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ajax="http://www.apusic.com/jsf/ajax"
+	xmlns:c="http://java.sun.com/jstl/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:om="http://www.apusic.com/jsf/misc"
+	xmlns:hot="http://www.apusic.com/framework-web"
+	renderKitId="AJAX">
+	<w:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</w:head>
+	<w:page title="Insert title here">
+	<h:form id="uu">
+
+	    <h:inputText id="coolboy" label="用戶名">
+	    	 <hot:ajaxValidator event="onblur" validator="smartOrg_userNameExistValidator"></hot:ajaxValidator>
+	    </h:inputText>
+
+	    <hot:lengthValidator validateFor="coolboy" event="onblur" min="5" max="10" clientValidateAllowed="true"/>
+
+		<h:message for="coolboy">
+	    </h:message>
+
+	    <h:commandButton value="submit"></h:commandButton>
+
+	</h:form>
+		 <ui:debug hotkey="E"></ui:debug>
+	</w:page>
+
+
+</f:view>
