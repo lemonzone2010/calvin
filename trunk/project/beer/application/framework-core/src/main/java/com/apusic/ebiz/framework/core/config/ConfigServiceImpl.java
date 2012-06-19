@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.apusic.ebiz.framework.core.FrameworkRuntimeException;
 
-@Service("configService")
+@Service("ConfigServiceImpl")
 public class ConfigServiceImpl extends PropertiesLoaderSupport implements ConfigService, InitializingBean,
 		ApplicationContextAware {
 	private ApplicationContext applicationContext;
@@ -27,9 +27,9 @@ public class ConfigServiceImpl extends PropertiesLoaderSupport implements Config
 	}
 
 	public void afterPropertiesSet() {
-		PropertySourcesPlaceholderConfigurer propConfigurer = applicationContext
-				.getBean(PropertySourcesPlaceholderConfigurer.class);
 		try {
+			PropertySourcesPlaceholderConfigurer propConfigurer = applicationContext
+					.getBean(PropertySourcesPlaceholderConfigurer.class);
 			Field field = propConfigurer.getClass().getSuperclass().getSuperclass().getSuperclass()
 					.getDeclaredField("locations");
 			field.setAccessible(true);

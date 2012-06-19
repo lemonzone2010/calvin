@@ -66,7 +66,7 @@
         </property>
     </bean>
 
-	<bean id="cnfigService" class="com.apusic.ebiz.framework.core.config.ConfigServiceImpl">
+	<bean id="ebiz_ConfigService" class="com.apusic.ebiz.framework.core.config.ConfigServiceImpl">
     </bean>
     
 </beans>

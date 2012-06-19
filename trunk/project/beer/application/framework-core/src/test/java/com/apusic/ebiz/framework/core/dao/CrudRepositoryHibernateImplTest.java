@@ -104,7 +104,7 @@ public class CrudRepositoryHibernateImplTest {
 	@Transactional
 	public void updatePermission() {
 		Permission p = new Permission();
-		p.setId(1l);
+		p.setId((int) 1l);
 		p.setName("UPDATE");
 
 		crudService.update(p);
@@ -131,7 +131,7 @@ public class CrudRepositoryHibernateImplTest {
 	@Rollback(true)
 	public void deletePermission() {
 		Permission p2 = new Permission();
-		Long id = 20l;
+		Integer id = 20;
 		p2.setId(id);
 		crudService.delete(p2);
 	}
@@ -237,7 +237,7 @@ public class CrudRepositoryHibernateImplTest {
 		DummyUser user = new DummyUser();
 
 		// Exist or not exist
-		user.setId(29l);
+		user.setId(29);
 		user.setPassword("123");
 		crudService.delete(user);
 	}

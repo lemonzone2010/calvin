@@ -7,7 +7,7 @@ import com.apusic.ebiz.framework.core.model.IdEntity;
 
 public class DummyUser extends IdEntity{
 
-	private Long id;
+	private Integer id;
 
 	private String userName;
 
@@ -43,11 +43,11 @@ public class DummyUser extends IdEntity{
 		this.emailAddress = emailAddress;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

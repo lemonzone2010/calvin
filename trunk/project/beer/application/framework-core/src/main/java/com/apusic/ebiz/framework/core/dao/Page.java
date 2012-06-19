@@ -129,6 +129,9 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 	public List<T> getRows() {
 		return rows;
 	}
+	public List<T> getObjects() {
+		return rows;
+	}
 
 	public Page<T> setRows(List<T> rows) {
 		this.rows = rows;
