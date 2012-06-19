@@ -1,0 +1,89 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:w="http://www.apusic.com/jsf/widget" xmlns:layout="http://www.apusic.com/jsf/layout"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ajax="http://www.apusic.com/jsf/ajax"
+	xmlns:c="http://java.sun.com/jstl/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:om="http://www.apusic.com/jsf/misc"
+	xmlns:hot="http://www.apusic.com/framework-web"
+	renderKitId="AJAX">
+	<w:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</w:head>
+	<w:page title="Insert title here">
+	<h:form id="uu">
+
+	  用户名：  <h:inputText id="coolboy" label="用戶名">
+	    	<!-- <hot:ajaxValidator event="onblur" validator="smartOrg_userNameExistValidator"></hot:ajaxValidator> -->
+	    </h:inputText>
+		<hot:lengthValidator validateFor="coolboy" event="onblur" min="5" max="10" clientValidateAllowed="true"/>
+		<h:message for="coolboy"></h:message>
+
+	    <h:commandButton value="submit"></h:commandButton>
+</h:form>
+
+	<h:form id="uu1">
+
+	  邮件：  <h:inputText id="email1" label="邮件">
+	    	<!-- <hot:ajaxValidator event="onblur" validator="smartOrg_userNameExistValidator"></hot:ajaxValidator> -->
+	    </h:inputText>
+	    <hot:emailValidator validateFor="email1" event="onblur"  clientValidateAllowed="true"/>
+	    <hot:rejectEmptyValidator validateFor="email1"  event="onblur"  clientValidateAllowed="true" />
+		<h:message for="email1"></h:message>
+		<h:commandButton value="submit"></h:commandButton>
+</h:form>
+
+
+<h:form id="uu2">
+
+ 	日期范围：	<h:inputText id="date1" label="日期">
+	    	<!-- <hot:ajaxValidator event="onblur" validator="smartOrg_userNameExistValidator"></hot:ajaxValidator> -->
+	    </h:inputText>
+
+		<hot:dateRangeValidator validateFor="date1" pattern="yyyy-MM-dd" min="2000-01-11" max="2011-11-11" event="onblur"  clientValidateAllowed="true"/>
+		<h:message for="date1"></h:message>
+<h:commandButton value="submit"></h:commandButton>
+</h:form>
+
+<h:form id="uu3">
+		关联为空：	<br/>
+		A<h:inputText id="a" label="A"> </h:inputText>被关联控件<br/>
+
+		B<h:inputText id="b" label="B"> </h:inputText>响应控件,依赖A
+		<hot:rejectEmptyValidator validateFor="b"  dependsOn="a" event="onblur"  clientValidateAllowed="true"/>
+		<h:message for="b"></h:message>
+<br/>
+ 		C<h:inputText id="c" label="C"> </h:inputText>响应控件,无客户端验证，依赖A
+		<hot:rejectEmptyValidator validateFor="c"  dependsOn="a" event="onblur"  clientValidateAllowed="false"/>
+		<h:message for="c"></h:message>
+<br/>
+
+		D<h:inputText id="d" label="D"> </h:inputText>响应控件,无依赖，有客户端验证
+		<hot:rejectEmptyValidator validateFor="d"  event="onblur"  clientValidateAllowed="true"/>
+		<h:message for="d"></h:message>
+
+<br/>
+ 		E<h:inputText id="e" label="E" > </h:inputText>响应控件,无依赖，无客户端验证
+		<hot:rejectEmptyValidator validateFor="e"  event="onblur"  clientValidateAllowed="false" />
+		<h:message for="e"></h:message>
+		<br/>
+ 		<h:commandButton value="submit"></h:commandButton>
+</h:form>
+
+
+	<h:form id="uu5">
+
+	  确认密码： <br/>
+	   <h:inputText id="pwd" label="密码">
+	    	<!-- <hot:ajaxValidator event="onblur" validator="smartOrg_userNameExistValidator"></hot:ajaxValidator> -->
+	    </h:inputText>
+	     <h:inputText id="pwd2" label="密码2"> </h:inputText>
+	     <hot:fieldIdenticalValidator clientValidateAllowed="true" sameAs="pwd" validateFor="pwd2" event="onblur"></hot:fieldIdenticalValidator>
+	    <h:message for="pwd2"></h:message>
+		<h:commandButton value="submit"></h:commandButton>
+</h:form>
+
+
+		 <ui:debug hotkey="E"></ui:debug>
+	</w:page>
+
+
+</f:view>
