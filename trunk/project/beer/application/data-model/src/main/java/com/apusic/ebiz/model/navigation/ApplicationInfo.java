@@ -5,7 +5,6 @@ import com.apusic.ebiz.model.BaseModel;
 public class ApplicationInfo extends BaseModel implements Comparable<ApplicationInfo>{
     private static final long serialVersionUID = 2040061905266760072L;
 
-    private int id;
     
     private String status;
     
@@ -15,13 +14,6 @@ public class ApplicationInfo extends BaseModel implements Comparable<Application
     
     private Integer sequence;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getStatus() {
         return status;

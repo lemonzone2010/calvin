@@ -6,7 +6,6 @@ import com.apusic.ebiz.model.BaseModel;
 
 public class Category extends BaseModel {
 
-	private int id;
 
 	private String name;
 	private String intro;
@@ -23,13 +22,6 @@ public class Category extends BaseModel {
 		this.name = name;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getIntro() {
 		return intro;

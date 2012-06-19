@@ -20,74 +20,67 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.apusic.ebiz.model.BaseModel;
+
 @Entity
 @Table(name = "T_SMARTORG_USER")
 public class User extends BaseModel {
 
-    private static final long serialVersionUID = 184659046811923584L;
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "F_ID")
-    private int id;
-    @Column(name = "F_NAME")
-    private String name;
-    @Column(name = "F_PASSWORD")
-    private String password;
-    @Column(name = "F_DISABLED")
-    private boolean disbled;
-    @Column(name = "F_TYPE")
-    private String userType;
-    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "user")
+	private static final long serialVersionUID = 184659046811923584L;
+	// @Id
+	// @GeneratedValue(strategy = GenerationType.AUTO)
+	// @Column(name = "F_ID")
+	// private int id;
+	@Column(name = "F_NAME")
+	private String name;
+	@Column(name = "F_PASSWORD")
+	private String password;
+	@Column(name = "F_DISABLED")
+	private boolean disbled;
+	@Column(name = "F_TYPE")
+	private String userType;
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "user")
 	@Fetch(FetchMode.SELECT)
 	@OrderBy("id")
 	@BatchSize(size = 20)
-    @Transient
-    private Set<Role> roles;
-    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "user")
+	@Transient
+	private Set<Role> roles;
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "user")
 	@Fetch(FetchMode.SELECT)
 	@OrderBy("id")
 	@BatchSize(size = 20)
-    private Set<Group> groups;
+	private Set<Group> groups;
 
-    public int getId() {
-        return id;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setDisbled(boolean disbled) {
+		this.disbled = disbled;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public boolean isDisbled() {
+		return disbled;
+	}
 
-    public void setDisbled(boolean disbled) {
-        this.disbled = disbled;
-    }
+	public Set<Role> getRoles() {
+		return roles;
+	}
 
-    public boolean isDisbled() {
-        return disbled;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 
 	public String getUserType() {
 		return userType;
@@ -97,35 +90,34 @@ public class User extends BaseModel {
 		this.userType = userType;
 	}
 
-
-	public void addRole(Role userRole){
+	public void addRole(Role userRole) {
 		if (roles == null) {
 			roles = new HashSet<Role>();
 		}
 		roles.add(userRole);
 	}
 
-	public void removeRole(Role role){
+	public void removeRole(Role role) {
 		if (roles == null) {
 			roles = new HashSet<Role>();
 		}
 		roles.remove(role);
 	}
 
-	public void addGroup(Group group){
-		if(groups==null){
+	public void addGroup(Group group) {
+		if (groups == null) {
 			groups = new HashSet<Group>();
 		}
 		groups.add(group);
 	}
 
-	public void addRoleById(Class<Role> clazz, int id){
+	public void addRoleById(Class<Role> clazz, int id) {
 		Role userRole = newInstance(clazz);
 		userRole.setId(id);
 		this.addRole(userRole);
 	}
 
-	public void removeRoleById(Class<Role> clazz, int id){
+	public void removeRoleById(Class<Role> clazz, int id) {
 		Role userRole = newInstance(clazz);
 		userRole.setId(id);
 		this.removeRole(userRole);
@@ -140,9 +132,9 @@ public class User extends BaseModel {
 			return false;
 		}
 
-		for (String roleName : roleNames){
-			for (Role userRole : roles){
-				if (roleName!=null && roleName.equals(userRole.getName())){
+		for (String roleName : roleNames) {
+			for (Role userRole : roles) {
+				if (roleName != null && roleName.equals(userRole.getName())) {
 					return true;
 				}
 			}
@@ -150,7 +142,7 @@ public class User extends BaseModel {
 		return false;
 	}
 
-	public boolean hasAllRole(String... roleNames){
+	public boolean hasAllRole(String... roleNames) {
 		if (roleNames == null) {
 			throw new IllegalArgumentException("Role names cannot be null");
 		}
@@ -160,9 +152,9 @@ public class User extends BaseModel {
 		}
 
 		Set<String> allRoles = new HashSet<String>();
-		for (String roleName : roleNames){
-			for (Role userRole : roles){
-				if (roleName!=null && roleName.equals(userRole.getName())){
+		for (String roleName : roleNames) {
+			for (Role userRole : roles) {
+				if (roleName != null && roleName.equals(userRole.getName())) {
 					allRoles.add(userRole.getName());
 				}
 			}
@@ -178,16 +170,16 @@ public class User extends BaseModel {
 		this.groups = groups;
 	}
 
-	  public String getRoleForString(){
-	    	if(roles!=null && roles.size()>0){
-	    		StringBuffer sb = new StringBuffer();
-	    		for(Role r : roles){
-	    			sb.append(r.getAlias());
-	    			sb.append(",");
-	    		}
-	    		String result = sb.toString();
-				return result.substring(0,result.length()-1);
-	    	}
-	    	return null;
-	    }
+	public String getRoleForString() {
+		if (roles != null && roles.size() > 0) {
+			StringBuffer sb = new StringBuffer();
+			for (Role r : roles) {
+				sb.append(r.getAlias());
+				sb.append(",");
+			}
+			String result = sb.toString();
+			return result.substring(0, result.length() - 1);
+		}
+		return null;
+	}
 }

@@ -28,10 +28,10 @@ import com.apusic.ebiz.model.BaseModel;
 public class Resource extends BaseModel {
 
     private static final long serialVersionUID = 1L;
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "F_ID")
-    private int id;
+//    @Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Column(name = "F_ID")
+//    private int id;
     @Column(name = "F_resName")
     private String resName;
     @Column(name = "F_resType")
@@ -74,13 +74,6 @@ public class Resource extends BaseModel {
 		this.resValue = resValue;
 	}
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getResName() {
         return resName;
