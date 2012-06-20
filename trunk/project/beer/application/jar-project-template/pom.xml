@@ -13,6 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework.version>3.1.0.RELEASE</org.springframework.version>
 		<org.springframework.security.version>3.1.0.RELEASE</org.springframework.security.version>
+		<spring.security.cas.version>3.0.7.RELEASE</spring.security.cas.version>
 		<org.slf4j.version>1.6.1</org.slf4j.version>
 		<org.hibernate.version>4.1.1.Final</org.hibernate.version>
 		<org.hibernate.annoation.version>3.3.0.ga</org.hibernate.annoation.version>
@@ -341,7 +342,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-cas-client</artifactId>
-			<version>3.0.7.RELEASE</version>
+			<version>${spring.security.cas.version}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>spring-tx</artifactId>
@@ -760,7 +761,23 @@
 		</dependency>
 	</dependencies>
 	<repositories>
-		<repository>
+	<!-- <repository>
+			<id>jboss maven2</id>
+			<name>jboss maven2 Repository</name>
+			<url>http://repository.jboss.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository> -->
+			<!-- <repository>
+			<id>springsource_milestone</id>
+			<name>SpringSource milestone</name>
+			<url>http://maven.springframework.org/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository> -->
+		<!-- <repository>
 			<id>java</id>
 			<name>java official repository</name>
 			<url>http://download.java.net/maven/2/</url>
@@ -776,6 +793,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+	
 		<repository>
 			<id>org.jboss.repository.release</id>
 			<name>JBoss Maven Release Repository</name>
@@ -784,14 +802,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<!-- <repository>
-			<id>jboss maven2</id>
-			<name>jboss maven2 Repository</name>
-			<url>http://repository.jboss.org/maven2</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository> -->
+		
 		<repository>
 			<id>terracotta-releases</id>
 			<url>http://www.terracotta.org/download/reflector/releases</url>
@@ -810,6 +821,6 @@
 	      <snapshots>
 	        <enabled>false</enabled>
 	      </snapshots>
-	    </repository>
+	    </repository> -->
 	</repositories>
 </project>

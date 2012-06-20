@@ -4,34 +4,6 @@
 	version="2.5">
 	<description>web</description>
 	<display-name>web</display-name>
-	<context-param>
-		<param-name>org.operamasks.faces.IMPLICIT_NAVIGATION</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>client</param-value>
-	</context-param>
-	<context-param>
-		<param-name>org.operamasks.faces.COMPATIBLE_NOT_STRICT</param-name>
-		<param-value>false</param-value>
-	</context-param>
-	<context-param>
-		<param-name>facelets.DEVELOPMENT</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<param-name>facelets.BUFFER_SIZE</param-name>
-		<param-value>8192</param-value>
-	</context-param>
-	<context-param>
-		<param-name>facelets.REFRESH_PERIOD</param-name>
-		<param-value>1</param-value>
-	</context-param>
-	<context-param>
-		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
-		<param-value>.xhtml</param-value>
-	</context-param>
 
 	<!-- Spring configuration -->
 	<context-param>

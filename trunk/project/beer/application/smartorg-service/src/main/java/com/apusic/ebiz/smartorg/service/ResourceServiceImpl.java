@@ -3,6 +3,7 @@ package com.apusic.ebiz.smartorg.service;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,7 @@ import com.apusic.ebiz.model.user.Resource;
 import com.apusic.ebiz.smartorg.dao.ResourceDao;
 
 @Service("smartorg_ResourceService")
-public class ResourceServiceImpl implements ResourceService {
+public class ResourceServiceImpl implements ResourceService ,InitializingBean{
 
 	@Autowired
 	private CrudService curdService;
@@ -25,15 +26,17 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Autowired
 	private ResourceDao resourceDao;
+	
 
+	@Transactional
 	public List<Resource> getAllResources() {
 		return queryService.findAll(Resource.class);
 	}
 
-	public List<Resource> getResourcesByExample(Resource resource){
-	    return queryService.findByExample(resource);
+	public List<Resource> getResourcesByExample(Resource resource) {
+		return queryService.findByExample(resource);
 	}
-	
+
 	public Resource getResourceById(int resourceId) {
 		return curdService.retrieve(Resource.class, resourceId);
 	}
@@ -45,7 +48,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Transactional
 	public void deleteResourceById(int id) {
-		this.curdService.delete(Resource.class,id);
+		this.curdService.delete(Resource.class, id);
 	}
 
 	public Page findResource4Page(GenericQueryObject query) {
@@ -75,5 +78,11 @@ public class ResourceServiceImpl implements ResourceService {
 
 	public List<Resource> findresourceByRoleId(int id) {
 		return resourceDao.findresourceByRoleId(id);
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("go");
 	}
 }

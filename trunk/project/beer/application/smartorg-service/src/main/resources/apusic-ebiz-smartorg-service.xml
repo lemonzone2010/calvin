@@ -11,9 +11,10 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
 	default-lazy-init="true">
 
-	<context:component-scan  base-package="com.apusic.ebiz.smartorg" />
+	<context:component-scan  base-package="com.apusic.ebiz.smartorg.**" />
+	<!-- <bean class="com.apusic.ebiz.smartorg.service.ResourceServiceImpl" lazy-init="false"></bean> -->
 
-	<!-- <import resource="classpath:apusic-ebiz-framework-core.xml" /> -->
+	<import resource="classpath:apusic-ebiz-framework-core.xml" />
 
 	<bean id="smartorg_UserPasswordCredentialPolicyManager" class="com.apusic.ebiz.smartorg.util.UserPasswordCredentialPolicyManagerImpl">
 		<constructor-arg index="0" value="MD5"></constructor-arg>
