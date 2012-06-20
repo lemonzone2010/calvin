@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JacksonAnnotation;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -38,6 +40,7 @@ public class Role extends BaseModel {
 	@Fetch(FetchMode.SELECT)
 	@OrderBy("id")
 	@BatchSize(size = 20)
+    @JsonIgnore
     private Set<Resource> resources;
 
 

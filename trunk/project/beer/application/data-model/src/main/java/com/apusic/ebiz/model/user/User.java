@@ -15,6 +15,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -43,11 +44,13 @@ public class User extends BaseModel {
 	@OrderBy("id")
 	@BatchSize(size = 20)
 	@Transient
+	@JsonIgnore
 	private Set<Role> roles;
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "user")
 	@Fetch(FetchMode.SELECT)
 	@OrderBy("id")
 	@BatchSize(size = 20)
+	@JsonIgnore
 	private Set<Group> groups;
 
 	public String getName() {
