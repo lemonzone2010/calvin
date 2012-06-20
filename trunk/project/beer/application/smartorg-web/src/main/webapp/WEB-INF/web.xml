@@ -31,7 +31,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-	<filter>
+	<!-- <filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
@@ -45,7 +45,7 @@
 		<url-pattern>/j_spring_cas_security_check</url-pattern>
 		<url-pattern>/logout</url-pattern>
 		<url-pattern>/spring_security_login</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 
 
 	<filter>
