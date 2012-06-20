@@ -55,9 +55,7 @@
 
 	<filter-mapping>
 		<filter-name>smartOrgFilterChain</filter-name>
-		<url-pattern>*.faces</url-pattern>
-		<url-pattern>*.xhtml</url-pattern>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
 
