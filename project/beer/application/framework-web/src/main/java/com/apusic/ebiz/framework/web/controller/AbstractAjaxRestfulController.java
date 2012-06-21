@@ -43,7 +43,7 @@ public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//imple
 		logger.warn("generateEntityClass:"+entityClass);
 	}
 
-	protected T getModel(Long id) throws InstantiationException, IllegalAccessException {
+	protected T getModel(Integer id) throws InstantiationException, IllegalAccessException {
 		if (id == null) {
 			return entityClass.newInstance();
 		}
@@ -107,7 +107,7 @@ public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//imple
 	 */
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Result> show(@PathVariable Long id) {
+	public Map<String, Result> show(@PathVariable Integer id) {
 		logger.debug("request show one(GET),id:" + id);
 		T t;
 		try {
@@ -169,7 +169,7 @@ public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//imple
 	 */
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public Map<String, Result> delete(@PathVariable Long id) {
+	public Map<String, Result> delete(@PathVariable Integer id) {
 		logger.debug("request delete one(DELETE),id:" + id);
 		try {
 			ajaxRestService.delete(getModel(id));
