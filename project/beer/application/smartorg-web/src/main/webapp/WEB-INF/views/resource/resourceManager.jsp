@@ -14,12 +14,36 @@ $(document).ready(function() {
 		url : "${ctx}/resource/"
 	});
 	
+	  //设置状态
+	  crudManager.selectedOneStatus=function(){
+		 	 $("#roleAddButton").linkbutton('enable');
+		 	 $("#roleCancelButton").linkbutton('enable');			
+		};
+		
+		crudManager.selectedMoreOneStatus=function(){
+		  	$("#roleAddButton").linkbutton('enable');
+		  	$("#roleCancelButton").linkbutton('enable');	
+		};
+		
+		crudManager.selectedNoneStatus=function(){
+		 	$("#roleAddButton").linkbutton('disable');
+		  	$("#roleCancelButton").linkbutton('disable');	
+		};
+		
+		crudManager.changeToolbarStatus();
+	
 });
 	/**
 	定义搜索用的查询函数
 	*/
 	function search(value, name){
 		crudManager.search(value, name);
+	}
+	function addRole(){
+		$("#ids").val(crudManager.getSelectedIds().join(','));
+		$.post("${ctx}/role/grid",{rows:999}, function(data) {
+			alert(data.rows)
+		});
 	}
 </script>
 </head>
@@ -36,6 +60,8 @@ $(document).ready(function() {
 			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:crudManager.addUser();return false;">新增</a>
 			<a id="editButton" href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="crudManager.editUser();return false;">编辑</a>
  			<a id="deleteButton" href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="crudManager.deleteSelected();return false;">删除所选</a>
+ 			<a id="roleAddButton" href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true" onclick="addRole();return false;">授权</a>
+ 			<a id="roleCancelButton" href="#" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" onclick="crudManager.editUser();return false;">取消授权</a>
  			
 			<input id="ss" class="easyui-searchbox" searcher="search" prompt="请输入搜索条件" menu="#mm" style="width: 300px"></input>
 			<div id="mm" style="width: 140px">
@@ -43,8 +69,6 @@ $(document).ready(function() {
 																<div name="resType" iconCls="icon-ok">资源类型</div>
 																<div name="resValue" iconCls="icon-ok">资源</div>
 																<div name="resContext" iconCls="icon-ok">所属工程</div>
-																<div name="priority" iconCls="icon-ok">级别</div>
-																<div name="desc" iconCls="icon-ok">描述</div>
 											</div>
 
 		</div>
@@ -119,6 +143,23 @@ $(document).ready(function() {
 			onclick="javascript:crudManager.closeDialog()">关闭</a>
 	</div>
 	<!-- end add -->
+	
+	<div id="roleDialog" icon="icon-save" class="easyui-dialog" title="角色授权" style="width: 490px; height: 430px;" buttons="#role-buttons" resizable="true"
+		closed="true">
+		<br /> <br />
+		<form:form modelAttribute="roleForm" action="" method="post">
+			<input type="hidden" name="ids" id="ids" />
+			<table class="form-table">
+								     <tr>
+								     
+								     </tr>
+			 </table>
+	   </form:form>
+	  </div>
+	  <div id="role-buttons">
+		<a href="#" class="easyui-linkbutton" onclick="javascript:crudManager.edit();">保存</a> <a href="#" class="easyui-linkbutton"
+			onclick="javascript:crudManager.closeDialog()">关闭</a>
+	</div>
 
 </body>
 </html>

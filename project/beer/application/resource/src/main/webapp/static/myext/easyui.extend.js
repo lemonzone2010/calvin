@@ -95,7 +95,7 @@ CrudManager.prototype = {
 			if (row) {
 				if (confirm('删除是不可恢复的操作，您确认删除?' + row.name)) {
 					var _self=this;
-					$.post("demo/" + row.id, {
+					$.post(url + row.id, {
 						_method : "delete"
 					}, function(data) {
 						$.messager.show({
@@ -157,21 +157,23 @@ CrudManager.prototype = {
 				$.messager.alert('提示', "请选择一行再继续操作.", 'info');
 			}
 		},
-		/*getSelected:function () {
+		getSelectedId:function () {
 			var row = $(this.dataGrid).datagrid('getSelected');
-			if (row) {
+			return row.id;
+			/*if (row) {
 				alert('Item ID:' + row.id + "\nPrice:" + row.name);
-			}
+			}*/
 		},
 
-		getSelections:function () {
+		getSelectedIds:function () {
 			var ids = [];
 			var rows = $(this.dataGrid).datagrid('getSelections');
 			for ( var i = 0; i < rows.length; i++) {
-				ids.push(rows[i].itemid);
+				ids.push(rows[i].id);
 			}
-			alert(ids.join('\n'));
-		},*/
+			//alert(ids.join('\n'));
+			return ids;
+		},
 		search:function(value, name) {
 			$(this.dataGrid).datagrid({
 				pageNumber : 1,
@@ -202,13 +204,24 @@ CrudManager.prototype = {
 			if (rows.length == 1) {
 				$(this.editButton).linkbutton('enable');
 				$(this.deleteButton).linkbutton('enable');
+				this.selectedOneStatus();
 			} else if (rows.length > 1) {
 				$(this.editButton).linkbutton('disable');
 				$(this.deleteButton).linkbutton('enable');
+				this.selectedMoreOneStatus();
 			} else {
 				$(this.editButton).linkbutton('disable');
 				$(this.deleteButton).linkbutton('disable');
+				this.selectedNoneStatus();
 			}
 		},
-		
+		selectedOneStatus:function(){
+			
+		},
+		selectedMoreOneStatus:function(){
+			
+		},
+		selectedNoneStatus:function(){
+			
+		}
 }
