@@ -60,7 +60,6 @@ public class Resource extends BaseModel {
     private Integer priority;
     
     @FieldView(label="描述")
-    @NotNull
 	@Size( max = 250)
     @Column(name = "F_desc")
     private String desc;
