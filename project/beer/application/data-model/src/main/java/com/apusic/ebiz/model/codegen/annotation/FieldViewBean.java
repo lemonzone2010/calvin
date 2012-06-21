@@ -3,6 +3,7 @@ package com.apusic.ebiz.model.codegen.annotation;
 import java.lang.reflect.Field;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
@@ -42,7 +43,8 @@ public class FieldViewBean {
 	private void processFieldValidatorAnnotation(Field field) {
 		NotBlank notBlank = field.getAnnotation(NotBlank.class);
 		NotEmpty notEmpty = field.getAnnotation(NotEmpty.class);
-		if (notBlank != null || notEmpty != null) {
+		NotNull notNull= field.getAnnotation(NotNull.class);
+		if (notBlank != null || notEmpty != null || notNull != null) {
 			needDisplay = true;
 			require = true;
 		}
