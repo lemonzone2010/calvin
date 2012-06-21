@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -10,7 +11,7 @@ var crudManager
 $(document).ready(function() {
 	
 	  crudManager = new CrudManager({
-		url : "/smartorg-web/role/"
+		url : "${ctx}/role/"
 	});
 	
 });
@@ -47,7 +48,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 
-	<table id="dg" class="easyui-datagrid" style="width: 950px; height: 400px" url="/smartorg-web/role/grid" idField="id" title="角色查看" iconCls="icon-save"
+	<table id="dg" class="easyui-datagrid" style="width: 950px; height: 400px" url="${ctx}/role/grid" idField="id" title="角色查看" iconCls="icon-save"
 		toolbar="#toolbar" singleSelect="false" rownumbers="true" pagination="true">
 		<thead>
 			<tr>
