@@ -183,11 +183,11 @@ public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//imple
 	/** 批量删除 */
 	@RequestMapping(method = RequestMethod.DELETE)
 	@ResponseBody
-	public Map<String, Result> batchDelete(@RequestParam("items[]") Long[] items) {
+	public Map<String, Result> batchDelete(@RequestParam("items[]") Integer[] items) {
 		logger.debug("request delete batch(DELETE),id:" + Arrays.toString(items));
 		try {
 			List<T> list=new ArrayList<T>();
-			for (Long id : items) {
+			for (Integer id : items) {
 				list.add(ajaxRestService.retrieve(entityClass,id));
 			}
 			ajaxRestService.deleteAll(list);
