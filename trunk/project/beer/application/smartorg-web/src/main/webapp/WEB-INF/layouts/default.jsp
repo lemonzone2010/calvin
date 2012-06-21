@@ -24,8 +24,8 @@
 <link href="/resource/static/jquery-jquery-1.8.6/themes/base/jquery.ui.all.css" type="text/css" rel="stylesheet" />
 <link href="/resource/static/jquery-jquery-1.8.6/themes/base/jquery.ui.dialog.css" type="text/css" rel="stylesheet" />
 <link href="/resource/static/jquery-jquery-1.8.6/themes/redmond/jquery.ui.all.css" type="text/css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="/resource/static/jquery-easyui-1.2.5/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="/resource/static/jquery-easyui-1.2.5/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="/resource/static/jquery-easyui-1.2.6/themes/gray/easyui.css">
+<link rel="stylesheet" type="text/css" href="/resource/static/jquery-easyui-1.2.6/themes/icon.css">
 
 <link href="/resource/static/jquery.json-2.3.js" type="text/css" rel="stylesheet" />
 <script src="/resource/static/jquery-jquery-1.8.6/jquery-1.6.2.js" type="text/javascript"></script>
@@ -34,6 +34,7 @@
 <script src="/resource/static/jquery-easyui-1.2.6/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
 <script src="/resource/static/myext/jquery.extend.js" type="text/javascript"></script>
 <script src="/resource/static/myext/easyui.extend.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/resource/css/easy.ui.my.css">
 
 <sitemesh:write property='head' />
 </head>
