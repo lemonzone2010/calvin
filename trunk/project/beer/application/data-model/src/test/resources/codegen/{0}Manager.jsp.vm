@@ -1,0 +1,98 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${bean.chineseName}</title>
+<script type="text/javascript">
+var crudManager
+$(document).ready(function() {
+	
+	  crudManager = new CrudManager({
+		url : "$stringUtils.uncapitalize($bean.className)"
+	});
+	
+});
+	/**
+	定义搜索用的查询函数
+	*/
+	function search(value, name){
+		crudManager.search(value, name);
+	}
+</script>
+</head>
+
+<body>
+	<div class="demo-info" style="margin-bottom: 10px">
+		<div class="demo-tip icon-tip"></div>
+		<div>${bean.chineseName}管理.</div>
+	</div>
+
+	<div id="tb" style="padding: 5px; height: auto">
+		<div id="toolbar">
+
+			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:crudManager.addUser();return false;">新增</a>
+			<a id="editButton" href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="crudManager.editUser();return false;">编辑</a>
+ 			<a id="deleteButton" href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="crudManager.deleteSelected();return false;">删除所选</a>
+ 			
+			<input id="ss" class="easyui-searchbox" searcher="search" prompt="请输入搜索条件" menu="#mm" style="width: 300px"></input>
+			<div id="mm" style="width: 140px">
+				#foreach($field in $bean.viewFields)
+				#if($field.needDisplay)
+				<div name="$field.name" iconCls="icon-ok">$field.label</div>
+				#end
+				#end
+			</div>
+
+		</div>
+	</div>
+
+
+	<table id="dg" class="easyui-datagrid" style="width: 950px; height: 400px" url="$stringUtils.uncapitalize($bean.className)/grid" idField="id" 
+			title="${bean.chineseName}查看" iconCls="icon-save"
+		toolbar="#toolbar" singleSelect="false" rownumbers="true" pagination="true">
+		<thead>
+			<tr>
+				<th field="ck" checkbox="true"></th>
+				#foreach($field in $bean.viewFields)
+				#if($field.needDisplay)
+				<th field="$field.name" width="${field.width}" #if($field.sortable) sortable="true" #end>$field.label</th>
+				 #end
+				#end
+			</tr>
+		</thead>
+	</table>
+
+	<!-- start add -->
+	<div id="addDialog" icon="icon-save" class="easyui-dialog" title="添加记录" style="width: 460px; height: 280px;" buttons="#dlg-buttons" resizable="true"
+		closed="true">
+		<br /> <br />
+		<form:form modelAttribute="addForm" action="" method="post">
+			<input type="hidden" name="id" id="id" />
+			<table class="form-table">
+			#foreach($field in $bean.viewFields)
+			#if($field.needDisplay)
+			     <tr>
+			       <th><label for="$field.name">$field.label #if($field.require) <font color="red">*</font> #end </label></th>
+			       <td>
+			        <input type="text" name="$field.name" id="$field.name" value=""  #if($field.require) required="true" #end 
+			         #if($field.max>0) validtype="length[${field.min},${field.max}]" #end  
+			         #if($field.viewType=='DATE') class="easyui-datebox" #else class="easyui-validatebox text" #end  
+			         />
+			        </td>
+			     </tr>
+			#end
+			#end
+			</table>
+		</form:form>
+	</div>
+
+	<div id="dlg-buttons">
+		<a href="#" class="easyui-linkbutton" onclick="javascript:crudManager.edit();">保存</a> <a href="#" class="easyui-linkbutton"
+			onclick="javascript:crudManager.closeDialog()">关闭</a>
+	</div>
+	<!-- end add -->
+
+</body>
+</html>
