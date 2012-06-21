@@ -1,0 +1,16 @@
+package com.apusic.${bean.subpackage}.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import furniture.core.web.AbstractAjaxRestfulController;
+import ${bean.fullClassName};
+
+@Controller
+@RequestMapping(value = "/$stringUtils.uncapitalize($bean.className)")
+public final class ${bean.className}Controller extends	AbstractAjaxRestfulController<$bean.className> {
+	@Override
+	protected String getShowPage() {
+		return "${bean.subpackage}/${bean.className}Manager";
+	}
+}
