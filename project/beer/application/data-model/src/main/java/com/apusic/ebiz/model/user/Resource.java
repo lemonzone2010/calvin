@@ -55,7 +55,7 @@ public class Resource extends BaseModel {
     @Column(name = "F_resContext")
     private String resContext;
     
-    @FieldView(label = "级别", type = FieldViewType.INT, sortable = true)
+    @FieldView(label = "级别", type = FieldViewType.INT)
     @Column(name = "F_priority")
     private Integer priority;
     

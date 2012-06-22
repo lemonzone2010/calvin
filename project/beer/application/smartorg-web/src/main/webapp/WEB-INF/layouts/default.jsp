@@ -33,7 +33,7 @@
 <script src="/resource/static/jquery-easyui-1.2.6/jquery.easyui.min.js" type="text/javascript"></script>
 <script src="/resource/static/jquery-easyui-1.2.6/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
 <script src="/resource/static/myext/jquery.extend.js" type="text/javascript"></script>
-<script src="/resource/static/myext/easyui.extend.js" type="text/javascript"></script>
+<script src="/resource/xia/js/easyui.extend.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/resource/css/easy.ui.my.css">
 
 <sitemesh:write property='head' />

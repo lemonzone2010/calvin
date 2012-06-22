@@ -36,13 +36,18 @@ CrudManager.prototype = {
 				},
 			});
 		},
-		
+		customEditValidate:function(){
+			return true;
+		},
 		/**
 		 * 添加或者修改表格
 		 */
 		edit:function(){
 
 			if ($(this.editForm).form('validate') == false) {
+				return false;
+			}
+			if (this.customEditValidate() == false) {
 				return false;
 			}
 			var formJson = $(this.editForm).serializeObject();
@@ -191,11 +196,14 @@ CrudManager.prototype = {
 			if (row) {
 				$(this.editDialog).dialog('open').dialog('setTitle', '编辑');
 				$(this.editForm).form('load', row);
+				this.editUserAfter();
 			} else {
 				$.messager.alert('提示', "请选择一行再操作", 'info');
 			}
 		},
-		
+		editUserAfter:function () {
+			
+		},
 		addUser:function () {
 			$(this.editFormId).val('');
 			$(this.editDialog).dialog('open').dialog('setTitle', '新增');

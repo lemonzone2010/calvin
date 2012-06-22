@@ -7,13 +7,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
@@ -21,24 +20,32 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.apusic.ebiz.model.BaseModel;
-
+import com.apusic.ebiz.model.codegen.annotation.FieldView;
+import com.apusic.ebiz.model.codegen.annotation.FieldViewType;
+@FieldView(label = "用户", subpackage = "user")
 @Entity
 @Table(name = "T_SMARTORG_USER")
 public class User extends BaseModel {
 
 	private static final long serialVersionUID = 184659046811923584L;
-	// @Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
-	// @Column(name = "F_ID")
-	// private int id;
+	@FieldView(label = "用户名", type = FieldViewType.STRING, sortable = true)
+	@NotNull
+	@Size(min = 2, max = 50)
 	@Column(name = "F_NAME")
 	private String name;
+	
+	@FieldView(label="密码")
+    @NotNull
+    @Size(max = 250)
 	@Column(name = "F_PASSWORD")
 	private String password;
+	
 	@Column(name = "F_DISABLED")
-	private boolean disbled;
+	private boolean disbled=true;
+	
 	@Column(name = "F_TYPE")
 	private String userType;
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "user")
 	@Fetch(FetchMode.SELECT)
 	@OrderBy("id")
@@ -46,6 +53,7 @@ public class User extends BaseModel {
 	@Transient
 	@JsonIgnore
 	private Set<Role> roles;
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy = "user")
 	@Fetch(FetchMode.SELECT)
 	@OrderBy("id")
