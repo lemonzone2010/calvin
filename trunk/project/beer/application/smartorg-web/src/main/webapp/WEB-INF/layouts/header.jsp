@@ -8,7 +8,7 @@
 	</div>
 	<div id="menu">
 		<ul>
-			<li><a href="${ctx}/group">用户管理</a></li>
+			<li><a href="${ctx}/user">用户管理</a></li>
 			<li><a href="${ctx}/role">角色管理</a></li>
 			<li><a href="${ctx}/resource">资源管理</a></li>
 		</ul>
