@@ -27,7 +27,6 @@
 			<input id="ss" class="easyui-searchbox" searcher="search" prompt="请输入搜索条件" menu="#mm" style="width: 300px"></input>
 			<div id="mm" style="width: 140px">
 												<div name="name" iconCls="icon-ok">用户名</div>
-																<div name="password" iconCls="icon-ok">密码</div>
 											</div>
 
 		</div>
