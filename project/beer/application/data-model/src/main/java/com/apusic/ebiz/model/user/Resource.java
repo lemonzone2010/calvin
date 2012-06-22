@@ -70,6 +70,8 @@ public class Resource extends BaseModel {
     @JsonIgnore
     private Set<Role> roles;
 
+    private String roleForString;
+    
     public Set<Role> getRoles() {
 		return roles;
 	}
@@ -142,15 +144,19 @@ public class Resource extends BaseModel {
     }
 
     public String getRoleForString(){
-    	if(roles!=null && roles.size()>0){
+    	setRoleForString() ;
+    	return roleForString;
+    }
+
+	public void setRoleForString() {
+		if(roles!=null && roles.size()>0){
     		StringBuffer sb = new StringBuffer();
     		for(Role r : roles){
     			sb.append(r.getAlias());
     			sb.append(",");
     		}
     		String result = sb.toString();
-			return result.substring(0,result.length()-1);
+    		roleForString=result.substring(0,result.length()-1);
     	}
-    	return null;
-    }
+	}
 }

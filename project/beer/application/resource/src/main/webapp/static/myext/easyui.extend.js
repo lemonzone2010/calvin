@@ -164,6 +164,9 @@ CrudManager.prototype = {
 				alert('Item ID:' + row.id + "\nPrice:" + row.name);
 			}*/
 		},
+		getSelectedRow:function () {
+			return $(this.dataGrid).datagrid('getSelected');
+		},
 
 		getSelectedIds:function () {
 			var ids = [];
