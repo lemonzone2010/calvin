@@ -14,7 +14,7 @@
 
 	<!-- <beans:bean class="org.operamasks.faces.spring.ManagedBeanConfigurer" /> -->
 
-	<!-- <global-method-security secured-annotations="enabled"
+	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled"
 		access-decision-manager-ref="businessAccessDecisionManager" />
 
 	<beans:bean id="businessAccessDecisionManager"
@@ -29,22 +29,22 @@
 	</beans:bean>
 
 	<beans:bean id="roleVoter"
-		class="org.springframework.security.access.vote.RoleVoter"/> -->
+		class="org.springframework.security.access.vote.RoleVoter"/>
 		
 		
-	<http entry-point-ref="casEntryPoint"
+	<!-- <http entry-point-ref="casEntryPoint"
 		auto-config="true">
 		<intercept-url pattern="/**" access="ROLE_USER"></intercept-url>
 		<custom-filter position="CAS_FILTER" ref="casFilter"></custom-filter>
-	</http>
+	</http> -->
 
-	<!-- <http use-expressions="true" auto-config='true'  entry-point-ref="casEntryPoint" access-denied-page="/unauthorized.xhtml">
+	<http use-expressions="true" auto-config='true' entry-point-ref="casEntryPoint" access-denied-page="/unauthorized.xhtml">
 		<session-management session-fixation-protection="none"></session-management>
 		<custom-filter ref="casFilter" before="FORM_LOGIN_FILTER" />
 		<logout invalidate-session="true" logout-url="/logout"/>
 		<custom-filter ref="casSingleSignOutFilter" position="FIRST"/>
 		<custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
-	</http> -->
+	</http>
 
 	<beans:bean id="casSingleSignOutFilter" class="com.apusic.ebiz.iam.cas.SingleSignOutFilter"/>
 

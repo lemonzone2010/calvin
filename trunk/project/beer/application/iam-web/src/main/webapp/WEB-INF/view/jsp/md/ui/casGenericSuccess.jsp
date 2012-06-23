@@ -4,4 +4,4 @@
 <fmt:message key="server.ip" var="server_ip"  scope="request"/>
 </fmt:bundle>
 
-<c:redirect url="http://${server_ip}/usersphere/navigation.jsp"></c:redirect>
+<c:redirect url="http://${server_ip}/smartorg-web/"></c:redirect>
