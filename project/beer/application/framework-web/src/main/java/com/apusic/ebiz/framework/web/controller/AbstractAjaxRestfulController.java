@@ -65,7 +65,7 @@ public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//imple
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String index() {
-		logger.debug("request index(GET)");
+		logger.debug("request index(GET):"+getShowPage());
 		return getShowPage();
 	}
 

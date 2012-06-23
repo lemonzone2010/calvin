@@ -114,6 +114,7 @@
 						<buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
 						<buildcommand>org.eclipse.wst.common.project.facet.core.builder</buildcommand>
 						<buildcommand>org.eclipse.wst.validation.validationbuilder</buildcommand>
+						<buildcommand>org.eclipse.m2e.core.maven2Builder</buildcommand>
 					</additionalBuildcommands>
 
 					<additionalProjectnatures>
@@ -128,6 +129,9 @@
 						<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
 						<classpathContainer>org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER</classpathContainer>
 					</classpathContainers>
+					<additionalProjectFacets>
+					<resolveWorkspaceProjects>true</resolveWorkspaceProjects>
+					</additionalProjectFacets>
 				</configuration>
 			</plugin>
 			<plugin>
