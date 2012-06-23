@@ -29,7 +29,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
 		upon return from CAS SSO login. -->
 	<bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
 		<property name="service"
-			value="http://localhost:8082/smartorg-web/j_spring_cas_security_check"></property>
+			value="http://localhost:8080/smartorg-web/j_spring_cas_security_check"></property>
 		<property name="sendRenew" value="false"></property>
 	</bean>
 
@@ -44,7 +44,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
 		to the CAS loginUrl for the CAS login page. //SSO登录地址 -->
 	<bean id="casAuthenticationEntryPoint"
 		class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
-		<property name="loginUrl" value="http://localhost:8082/iam-web/login"></property>
+		<property name="loginUrl" value="http://localhost:8080/iam-web/login"></property>
 		<property name="serviceProperties" ref="serviceProperties"></property>
 	</bean>
 
@@ -56,7 +56,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
 		<property name="ticketValidator">
 			<bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
 				<constructor-arg index="0"
-					value="http://localhost:8082/iam-web" />
+					value="http://localhost:8080/iam-web" />
 			</bean>
 		</property>
 		<property name="key" value="cas"></property>

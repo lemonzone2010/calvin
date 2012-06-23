@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +39,31 @@ public final class UserController extends	AbstractAjaxRestfulController<User> {
 	@Override
 	protected String getShowPage() {
 		return "user/userManager";
+	}
+	@RequestMapping(method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Result> create(@RequestBody User model) {
+		logger.debug("request create one(POST),model:" + model);
+		try {
+			userService.addUser(model);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			return getFailResult(e.getMessage());
+		}
+		return getSuccessResult();
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT)
+	@ResponseBody
+	public Map<String, ? extends Object> update(@RequestBody User model) {
+		logger.debug("request delete one(PUT),model:" + model);
+		try {
+			userService.updateUser(model);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			return getFailResult(e.getMessage());
+		}
+		return getSuccessResult();
 	}
 	
 	/** 授权,以及取消授权，资源对角色的授权 */

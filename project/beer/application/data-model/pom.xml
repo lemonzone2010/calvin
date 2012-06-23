@@ -13,7 +13,6 @@
 		<artifactId>jar-project-template</artifactId>
 		<groupId>com.home.ebiz</groupId>
 		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../</relativePath>
 	</parent>
 
 	<dependencies>

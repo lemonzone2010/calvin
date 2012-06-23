@@ -17,7 +17,6 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.util.AntPathRequestMatcher;
 import org.springframework.security.web.util.RequestMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -87,7 +86,7 @@ public class InvocationSecurityMetadataSourceService implements FilterInvocation
 		Iterator<String> ite = resourceMap.keySet().iterator();
 		while (ite.hasNext()) {
 			String resURL = ite.next();
-			RequestMatcher requestMatcher = new AntPathRequestMatcher(resURL);
+			RequestMatcher requestMatcher = new AntPathRequestMatcher(resURL,request.getMethod());
 			if (requestMatcher.matches(request)) {
 				Collection<ConfigAttribute> returnCollection = resourceMap.get(resURL);
 				return returnCollection;
