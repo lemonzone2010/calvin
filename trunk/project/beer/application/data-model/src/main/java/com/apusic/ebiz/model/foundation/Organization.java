@@ -65,7 +65,6 @@ public class Organization extends BaseModel {
 //    @ManyToOne
 //    @JoinColumn(name="parent_ID", nullable=false)
 //    private Organization parent ;
-    
     @OneToMany(targetEntity = Organization.class, cascade = { CascadeType.ALL },fetch=FetchType.EAGER)
     private List<Organization> childs = new ArrayList<Organization>();
 
@@ -184,7 +183,9 @@ public class Organization extends BaseModel {
 		this.parentId = parentId;
 	}
 
-    
+    public List<Organization> getChildren() {
+    	return childs;
+    }
     
 
 }
