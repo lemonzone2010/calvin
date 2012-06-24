@@ -1,7 +1,13 @@
 package com.apusic.ebiz.model.foundation;
 
+import java.io.IOException;
+import java.io.StringWriter;
+
 import junit.framework.Assert;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +36,30 @@ public class OrganizationTest {
 	@Rollback(false)
 	public void insert() {
 		org=new Organization();
-		org.setOrgCode("1111");
+		org.setOrgCode("1114");
 		org.setName("1111");
 		
 		Organization org1=new Organization();
-		org1.setOrgCode("1112");
+		org1.setOrgCode("1115");
 		org1.setName("2222");
 		
 		org.addChild(org1);
+		
+		StringWriter sw=new StringWriter();
+		ObjectMapper mapper = new ObjectMapper(); 
+		try {
+			mapper.writeValue(sw, org);
+			System.out.println(sw.toString());
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		crudService.create(org);
 		
