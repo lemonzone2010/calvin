@@ -7,6 +7,10 @@
     账号验证：<input type="text" validtype="account[8,20]" /><br />
     汉子验证：<input type="text" validtype="CHS" /><br />
     远程验证：<input type="text" validtype="remote['checkname.aspx','name']" invalidMessage="用户名已存在"/>
+    远程验证2：<input type="text" name="orgCode" id="orgCode" value=""   required="true" 
+			        	  validType="check['/foundation-web/organization/check/orgCode','orgCode','该编码号已使用!',2,5]" 
+			        	      missingMessage="编码不能为空"          class="easyui-validatebox text" 
+			        		       />
  */
 //扩展easyui表单的验证
 $.extend($.fn.validatebox.defaults.rules, {
