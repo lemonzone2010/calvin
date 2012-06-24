@@ -13,6 +13,59 @@ $(document).ready(function() {
 	  crudManager = new CrudManager({
 		url : "${ctx}/organization/"
 	});
+	  
+	  crudManager.addUser=function () {
+			$(crudManager.editFormId).val('');
+			$(crudManager.editDialog).dialog('open').dialog('setTitle', '新增');
+			$(crudManager.editForm)[0].reset();
+			var row = $(crudManager.dataGrid).treegrid('getSelected');
+			var id=row.id;
+			if(id!=null){
+				$('#parentId').val(id);
+	  		}
+		},
+	  
+	  $('#test').treegrid({
+			title:'组织管理',
+			iconCls:'icon-save',
+			width:950,
+			height:400,
+			nowrap: false,
+			rownumbers: true,
+			animate:true,
+			collapsible:true,
+			url:'${ctx}/organization/gridtree',
+			idField:'id',
+			treeField:'orgCode',
+			frozenColumns:[[
+              {title:'组织编码',field:'orgCode',width:200,
+	                formatter:function(value){
+	                	return '<span style="color:red">'+value+'</span>';
+	                }
+              }
+			]],
+			columns:[[
+				{field:'name',title:'组织简称',width:150},
+				{field:'fullName',title:'组织全称',width:220,rowspan:2},
+				{field:'description',title:'组织描述',width:150,rowspan:2}
+			]]/*,
+			onBeforeLoad:function(row,param){
+				if (row){
+					$(this).treegrid('options').url = 'treegrid_subdata.json';
+				} else {
+					$(this).treegrid('options').url = 'treegrid_data.json';
+				}
+			} ,
+			onContextMenu: function(e,row){
+				e.preventDefault();
+				$(this).treegrid('unselectAll');
+				$(this).treegrid('select', row.code);
+				$('#mm').menu('show', {
+					left: e.pageX,
+					top: e.pageY
+				});
+			} */
+		});
 	
 });
 	/**
@@ -47,10 +100,24 @@ $(document).ready(function() {
 
 		</div>
 	</div>
+<table id="test1" title="Folder Browser" class="easyui-treegrid" style="width:900px;height:400px"
+			url="${ctx}/organization/gridtree"
+			rownumbers="true"
+			idField="id" treeField="orgCode">
+		<thead>
+			<tr>
+				<th field="orgCode" width="150" >编码</th>
+				<th field="name" width="150" >组织简称</th>
+				<th field="fullName" width="150" >组织全称</th>
+				<th field="description" width="150" >组织描述</th>
+			</tr>
 
+		</thead>
 
-	<table id="dg" class="easyui-datagrid" style="width: 950px; height: 400px" url="${ctx}/organization/grid" idField="id" 
-			title="组织查看" iconCls="icon-save"
+	</table>
+
+	<table id="dg" class="easyui-treegrid" style="width: 950px; height: 400px" url="${ctx}/organization/grid" idField="id" 
+			title="组织查看" iconCls="icon-save"  treeField="orgCode" fitColumns="true"
 		toolbar="#toolbar" singleSelect="false" rownumbers="true" pagination="true">
 		<thead>
 			<tr>
@@ -69,6 +136,7 @@ $(document).ready(function() {
 		<br /> <br />
 		<form:form modelAttribute="addForm" action="" method="post">
 			<input type="hidden" name="id" id="id" />
+			<input type="hidden" name="parentId" id="parentId" />
 			<table class="form-table">
 									     <tr>
 			       <th><label for="orgCode">编码  <font color="red">*</font>  </label></th>
@@ -107,6 +175,6 @@ $(document).ready(function() {
 			onclick="javascript:crudManager.closeDialog()">关闭</a>
 	</div>
 	<!-- end add -->
-
+<table id="test"></table>
 </body>
 </html>

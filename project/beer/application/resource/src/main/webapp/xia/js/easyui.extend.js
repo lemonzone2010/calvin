@@ -161,6 +161,8 @@ CrudManager.prototype = {
 		},
 		getSelectedId:function () {
 			var row = $(this.dataGrid).datagrid('getSelected');
+			if(row==null)
+				return null;
 			return row.id;
 			/*if (row) {
 				alert('Item ID:' + row.id + "\nPrice:" + row.name);

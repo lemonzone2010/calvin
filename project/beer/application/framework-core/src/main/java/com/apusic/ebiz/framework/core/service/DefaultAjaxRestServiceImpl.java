@@ -14,7 +14,7 @@ import com.apusic.ebiz.framework.core.model.IdEntity;
 @Service
 public class DefaultAjaxRestServiceImpl<T  extends IdEntity> implements AjaxRestService<T> {
 	@Autowired
-	private RepositoryFacade repositoryFacade;
+	protected RepositoryFacade repositoryFacade;
 
 	@Override
 	@Transactional
