@@ -48,5 +48,34 @@ $.extend($.fn.validatebox.defaults.rules, {
                 }
             }
         }, message: ''
-    }
+    },
+    check:  
+    {  
+        validator: function(value, param) {  
+        	var len = $.trim(value).length;
+        	  if (len< param[3] ||len > param[4]) {
+                  this.message = '长度必须在' + param[3] + '至' + param[4] + '范围';
+                  return false;
+              }
+        	  var postdata = {};  
+              postdata['value'] = value;  
+        	  var result = $.ajax({  
+                  url: param[0],  
+                  data: postdata,  
+                  async: false,  
+                  type: "get" ,
+                  dataType : 'JSON',
+              }).responseText;  
+        	 var ret= $.parseJSON(result);
+              if (ret.result.status) {  
+            	  this.message = param[2];   
+                  return false;  
+              }  
+              else {  
+                  return true;  
+              }  
+        	  return true;
+        },  
+        message: ''  
+    }  
 })
