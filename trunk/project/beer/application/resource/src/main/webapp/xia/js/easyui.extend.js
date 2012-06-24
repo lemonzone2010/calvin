@@ -77,19 +77,16 @@ CrudManager.prototype = {
 			$(this.dataGrid).datagrid("reload");
 		},
 		
-		checkAvailability:function() {
-			$.getJSON(this.url + "/check/name", {
-				value : $('#name').val()
+		checkAvailability:function(property,value) {
+			$.getJSON(this.url + "/check/"+property, {
+				value : value
 			}, function(result) {
 				if (result.result.status == false) {
-					fieldValidated("name", {
-						valid : true
-					});
+					$.fn.validatebox.defaults.rules.check.message = value + " 可以使用。 "; 
+					return true;
 				} else {
-					fieldValidated("name", {
-						valid : false,
-						message : "Name:" + $('#name').val() + " is not available "
-					});
+					 $.fn.validatebox.defaults.rules.check.message = value + " 已存在。 ";  
+	                    return false; 
 				}
 			});
 		},
