@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -113,6 +114,9 @@ public class Organization extends BaseModel {
     // 是否内置用户，若是，则不可删除
     @Column(name = "F_INTERNAL", updatable = false)
     private boolean internal;*/
+    
+    @Transient
+    private Integer parentId;
 
     public void addChild(Organization child) {
 		childs.add(child);
@@ -172,6 +176,12 @@ public class Organization extends BaseModel {
 
 	public void setChilds(List<Organization> childs) {
 		this.childs = childs;
+	}
+	public Integer getParentId() {
+		return parentId;
+	}
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 
     

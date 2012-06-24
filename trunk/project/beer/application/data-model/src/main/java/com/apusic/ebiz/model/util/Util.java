@@ -1,6 +1,9 @@
 package com.apusic.ebiz.model.util;
 
+import java.io.StringWriter;
 import java.util.List;
+
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class Util {
 	public static <T> T getFirst(List<T> t) {
@@ -97,5 +100,17 @@ public class Util {
 			}
 		}
 		return outBuffer.toString();
+	}
+	
+	public static String toJson(Object obj) {
+		StringWriter sw=new StringWriter();
+		ObjectMapper mapper = new ObjectMapper(); 
+		try {
+			mapper.writeValue(sw, obj);
+			return sw.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return null;
 	}
 }
