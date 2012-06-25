@@ -11,7 +11,8 @@
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<bean class="org.operamasks.faces.spring.ManagedBeanConfigurer"/>
-    <context:property-placeholder location="classpath:framework-core-config.properties,
+    <context:property-placeholder location="classpath:db-config.properties,
+    										classpath:framework-core-config.properties,
     										classpath:framework-web-config.properties,
     										classpath:framework-integration-jms-config.properties,
     										classpath:navigation-system-config.properties" />
