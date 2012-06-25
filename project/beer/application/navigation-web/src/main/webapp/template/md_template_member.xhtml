@@ -5,13 +5,13 @@
 	<f:loadBundle var="resource" basename="navigation-system-config"/>
 	<ebiz:config key="server.ip" el="#{Boolean.TRUE}"/>
 	<w:head>
-		<link rel="stylesheet" type="text/css" href="/ebiz-resource/#{resource['resource.key']}/css/table.css" />
-		<link rel="stylesheet" type="text/css" href="/ebiz-resource/#{resource['resource.key']}/css/form.css" />
-		<link rel="stylesheet" type="text/css" href="/ebiz-resource/#{resource['resource.key']}/css/grid.css" />
-		<link rel="stylesheet" type="text/css" href="/ebiz-resource/#{resource['resource.key']}/css/all.css" />
-		<link rel="stylesheet" type="text/css" href="/ebiz-resource/#{resource['resource.key']}/css/_all.css" />
-		<link rel="stylesheet" type="text/css" href="/ebiz-resource/#{resource['resource.key']}/css/emarket/emarket.css" />
-		<link rel="stylesheet" type="text/css" href="/ebiz-resource/css/template.css" />
+		<link rel="stylesheet" type="text/css" href="/resource/#{resource['resource.key']}/css/table.css" />
+		<link rel="stylesheet" type="text/css" href="/resource/#{resource['resource.key']}/css/form.css" />
+		<link rel="stylesheet" type="text/css" href="/resource/#{resource['resource.key']}/css/grid.css" />
+		<link rel="stylesheet" type="text/css" href="/resource/#{resource['resource.key']}/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="/resource/#{resource['resource.key']}/css/_all.css" />
+		<link rel="stylesheet" type="text/css" href="/resource/#{resource['resource.key']}/css/emarket/emarket.css" />
+		<link rel="stylesheet" type="text/css" href="/resource/css/template.css" />
 		<ui:insert name="css"></ui:insert>
 		<script type="text/javascript">
 		//<![CDATA[
@@ -19,15 +19,15 @@
 				Ext.onReady = function(fn){fn.call();};
 		//]]>
 		</script>
-		<script src="/ebiz-resource/js/jquery/jquery.js" type="text/javascript" />
-		<script src="/ebiz-resource/md/js/template_web.js" type="text/javascript" />
-		<script src="/ebiz-resource/md/js/strength.js" type="text/javascript"></script>
-		<script src="/ebiz-resource/md/js/tipshow.js" type="text/javascript"></script>
-		<script src="/ebiz-resource/md/js/emarket/shoppingcart.js" type="text/javascript"></script>
-		<script src="/ebiz-resource/md/js/emarket/cookiecount.js" type="text/javascript"></script>
-		<script src="/ebiz-resource/md/js/emarket/search.js" type="text/javascript"></script>
-		<script src="/ebiz-resource/md/js/hotkeywords.js" type="text/javascript"></script>
-		<script src="/ebiz-resource/md/js/emarket/topinit.js" type="text/javascript"></script>
+		<script src="/resource/js/jquery/jquery.js" type="text/javascript" />
+		<script src="/resource/md/js/template_web.js" type="text/javascript" />
+		<script src="/resource/md/js/strength.js" type="text/javascript"></script>
+		<script src="/resource/md/js/tipshow.js" type="text/javascript"></script>
+		<script src="/resource/md/js/emarket/shoppingcart.js" type="text/javascript"></script>
+		<script src="/resource/md/js/emarket/cookiecount.js" type="text/javascript"></script>
+		<script src="/resource/md/js/emarket/search.js" type="text/javascript"></script>
+		<script src="/resource/md/js/hotkeywords.js" type="text/javascript"></script>
+		<script src="/resource/md/js/emarket/topinit.js" type="text/javascript"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 					ebiz_topinit('${requestScope['server.ip']}');
@@ -53,7 +53,7 @@
 		    </div>
 		</div>
 		<div class="row margin_top10">
-		  <div class="column grid_4"><a href="/product/index.html"><img src="/ebiz-resource/md/image/common/toplogo.jpg" /></a></div>
+		  <div class="column grid_4"><a href="/product/index.html"><img src="/resource/md/image/common/toplogo.jpg" /></a></div>
 		  <div class="column grid_1"> &#160; </div>
 		   <div class="column grid_11">
 			  <div class="tsearch">
