@@ -6,67 +6,70 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>组织管理</title>
+<!-- <script src="/resource/xia/js/easyui.treegrid.extend.js" type="text/javascript"></script> -->
 <script type="text/javascript">
 var crudManager
 $(document).ready(function() {
 	
 	  crudManager = new CrudManager({
-		url : "${ctx}/organization/"
-	});
-	  
-	  crudManager.addUser=function () {
-			$(crudManager.editFormId).val('');
-			$(crudManager.editDialog).dialog('open').dialog('setTitle', '新增');
-			$(crudManager.editForm)[0].reset();
-			var row = $(crudManager.dataGrid).treegrid('getSelected');
-			var id=row.id;
-			if(id!=null){
-				$('#parentId').val(id);
-	  		}
-		},
-	  
-	  $('#test').treegrid({
-			title:'组织管理',
-			iconCls:'icon-save',
-			width:950,
-			height:400,
-			nowrap: false,
-			rownumbers: true,
-			animate:true,
-			collapsible:true,
-			url:'${ctx}/organization/gridtree',
-			idField:'id',
-			treeField:'orgCode',
-			frozenColumns:[[
-              {title:'组织编码',field:'orgCode',width:200,
-	                formatter:function(value){
-	                	return '<span style="color:red">'+value+'</span>';
-	                }
-              }
-			]],
-			columns:[[
-				{field:'name',title:'组织简称',width:150},
-				{field:'fullName',title:'组织全称',width:220,rowspan:2},
-				{field:'description',title:'组织描述',width:150,rowspan:2}
-			]]/*,
-			onBeforeLoad:function(row,param){
-				if (row){
-					$(this).treegrid('options').url = 'treegrid_subdata.json';
-				} else {
-					$(this).treegrid('options').url = 'treegrid_data.json';
+		url : "${ctx}/organization/",
+			unselectAll : function() {
+				$(this.dataGrid).treegrid('unselectAll');
+			},
+			
+			getSelectedRow : function() {
+				return $(this.dataGrid).treegrid('getSelected');
+			},
+			
+			getSelectedRows : function() {
+				return $(this.dataGrid).treegrid('getSelections');
+			},
+			addUser:function () {
+				var row = this.getSelectedRow();
+				if(!row){
+					$.messager.alert('提示', "请选择一行再操作", 'info');
+					return;
 				}
-			} ,
-			onContextMenu: function(e,row){
-				e.preventDefault();
-				$(this).treegrid('unselectAll');
-				$(this).treegrid('select', row.code);
-				$('#mm').menu('show', {
-					left: e.pageX,
-					top: e.pageY
-				});
-			} */
-		});
-	
+				$(this.editFormId).val('');
+				$(this.editDialog).dialog('open').dialog('setTitle', '新增');
+				$(this.editForm)[0].reset();
+				var id=row.id;
+				if(id!=null){
+					$('#parentId').val(id);
+		  		}else{
+		  			$('#parentId').val('');
+		  		}
+			},
+			changeToolbarStatus:function () {
+				
+			},reloadGridData:function(){
+				$(this.dataGrid).treegrid("reload");
+			},
+			editUser_:function () {
+				var row = this.getSelectedRow();
+				if(!row){
+					$.messager.alert('提示', "请选择一行再操作", 'info');
+					return;
+				}
+				if(row.id==1){
+					$.messager.alert('提示', "此条记录不请允许操作", 'info');
+					return;
+				}
+				this.editUser();
+			},
+			deleteSelected_:function () {
+				var row = this.getSelectedRow();
+				if(!row){
+					$.messager.alert('提示', "请选择一行再操作", 'info');
+					return;
+				}
+				if(row.id==1){
+					$.messager.alert('提示', "此条记录不请允许操作", 'info');
+					return;
+				}
+				this.deleteSelected();
+			}
+	});
 });
 	/**
 	定义搜索用的查询函数
@@ -87,45 +90,21 @@ $(document).ready(function() {
 		<div id="toolbar">
 
 			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:crudManager.addUser();return false;">新增</a>
-			<a id="editButton" href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="crudManager.editUser();return false;">编辑</a>
- 			<a id="deleteButton" href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="crudManager.deleteSelected();return false;">删除所选</a>
+			<a id="editButton" href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="crudManager.editUser_();return false;">编辑</a>
+ 			<a id="deleteButton" href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="crudManager.deleteSelected_();return false;">删除所选</a>
  			
-			<input id="ss" class="easyui-searchbox" searcher="search" prompt="请输入搜索条件" menu="#mm" style="width: 300px"></input>
-			<div id="mm" style="width: 140px">
-												<div name="orgCode" iconCls="icon-ok">编码</div>
-																<div name="name" iconCls="icon-ok">组织简称</div>
-																<div name="fullName" iconCls="icon-ok">组织全称</div>
-																<div name="description" iconCls="icon-ok">组织描述</div>
-											</div>
-
 		</div>
 	</div>
-<table id="test1" title="Folder Browser" class="easyui-treegrid" style="width:900px;height:400px"
-			url="${ctx}/organization/gridtree"
-			rownumbers="true"
-			idField="id" treeField="orgCode">
+
+	<table id="dg" class="easyui-treegrid" style="width: 950px; height: 400px" url="${ctx}/organization/gridtree" idField="id" 
+			title="组织查看" iconCls="icon-save"  treeField="name" fitColumns="true"
+		toolbar="#toolbar" singleSelect="true" rownumbers="true" pagination="false">
 		<thead>
 			<tr>
-				<th field="orgCode" width="150" >编码</th>
 				<th field="name" width="150" >组织简称</th>
+				<th field="orgCode" width="150" >编码</th>
 				<th field="fullName" width="150" >组织全称</th>
 				<th field="description" width="150" >组织描述</th>
-			</tr>
-
-		</thead>
-
-	</table>
-
-	<table id="dg" class="easyui-treegrid" style="width: 950px; height: 400px" url="${ctx}/organization/grid" idField="id" 
-			title="组织查看" iconCls="icon-save"  treeField="orgCode" fitColumns="true"
-		toolbar="#toolbar" singleSelect="false" rownumbers="true" pagination="true">
-		<thead>
-			<tr>
-				<th field="ck" checkbox="true"></th>
-												<th field="orgCode" width="150" >编码</th>
-				 												<th field="name" width="150" >组织简称</th>
-				 												<th field="fullName" width="150" >组织全称</th>
-				 												<th field="description" width="150" >组织描述</th>
 				 							</tr>
 		</thead>
 	</table>
@@ -142,7 +121,7 @@ $(document).ready(function() {
 			       <th><label for="orgCode">编码  <font color="red">*</font>  </label></th>
 			       <td>
 			        <input type="text" name="orgCode" id="orgCode" value=""   required="true" 
-			        	  validType="check['/foundation-web/organization/check/orgCode','orgCode','该编码号已使用!',2,5]" 
+			        	  validType="length[2,5]" 
 			        	    
 			        	      missingMessage="编码不能为空"          class="easyui-validatebox text" 
 			        		       />

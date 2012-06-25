@@ -36,7 +36,7 @@ public class DefaultAjaxRestServiceImpl<T  extends IdEntity> implements AjaxRest
 
 	@Override
 	@Transactional(readOnly=true)
-	public T findBy(Class<T> entityClass,String property, String value) {
+	public T findBy(Class<T> entityClass,String property, Object value) {
 		return repositoryFacade.findBy(entityClass, property, value);
 	}
 

@@ -8,7 +8,7 @@
     汉子验证：<input type="text" validtype="CHS" /><br />
     远程验证：<input type="text" validtype="remote['checkname.aspx','name']" invalidMessage="用户名已存在"/>
     远程验证2：<input type="text" name="orgCode" id="orgCode" value=""   required="true" 
-			        	  validType="check['/foundation-web/organization/check/orgCode','orgCode','该编码号已使用!',2,5]" 
+			        	  validType="check['/foundation-web/organization/check/orgCode','orgCode','该编码号已使用!',2,5,'id']" 
 			        	      missingMessage="编码不能为空"          class="easyui-validatebox text" 
 			        		       />
  */
@@ -61,7 +61,11 @@ $.extend($.fn.validatebox.defaults.rules, {
                   this.message = '长度必须在' + param[3] + '至' + param[4] + '范围';
                   return false;
               }
-        	  var postdata = {};  
+        	  var id=param[5];
+        	  var postdata = {}; 
+        	  if(id){
+        		  postdata={id:$('#'+id)}
+        	  }
               postdata['value'] = value;  
         	  var result = $.ajax({  
                   url: param[0],  

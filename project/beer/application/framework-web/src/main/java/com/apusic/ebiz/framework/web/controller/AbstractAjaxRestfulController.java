@@ -77,11 +77,13 @@ public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//imple
 	 */
 	@RequestMapping(value = "check/{property}", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Result> check(@RequestParam String value, @PathVariable String property) {
+	public Map<String, Result> check(@RequestParam String value, @PathVariable String property,HttpServletRequest request) {
 		logger.debug("request check(GET):" + value);
+		String id = request.getParameter("id");
 		T result = ajaxRestService.findBy(entityClass,property, value);
 		logger.debug("get entity:" + result);
-		return (null != result) ? getSuccessResult() : getFailResult("");
+		boolean success = null != result&&(result.getId()!=Integer.valueOf(id));
+		return success ? getSuccessResult() : getFailResult("");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -141,6 +143,9 @@ public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//imple
 	}
 	
 	protected void prepareModelInsert(T model)throws Exception {
+		
+	}
+	protected void prepareModelUpdate(T model)throws Exception {
 		
 	}
 	private void validate(T model) {
@@ -209,6 +214,7 @@ public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//imple
 	public Map<String, ? extends Object> update(@RequestBody T model) {
 		logger.debug("request delete one(PUT),model:" + model);
 		try {
+			prepareModelUpdate(model);
 			validate(model);
 			ajaxRestService.update(model);// 更新方式
 		} catch (Exception e) {

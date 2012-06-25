@@ -53,28 +53,27 @@ public final class OrganizationController extends AbstractAjaxRestfulController<
 		return p.getRows();
 	}
 	
-	/**
-	 * 保存新增
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	@ResponseBody
 	@Override
-	public Map<String, Result> create(@RequestBody Organization model) {
-		logger.debug("request create one(POST),model:" + model);
-		try {
-			Integer parentId = model.getParentId();
-			if(parentId!=null) {
-				Organization parent = organizationService.retrieve(entityClass, parentId);
-				parent.addChild(model);
-			}
-			ajaxRestService.create(model);
-		} catch (Exception e) {
-			logger.error(e.getMessage(),e);
-			return getFailResult(e.getMessage());
+	protected void prepareModelInsert(Organization model) throws Exception {
+		checkOrgCode(model);
+		Integer parentId = model.getParentId();
+		if(parentId!=null) {
+			Organization parent = organizationService.retrieve(entityClass, parentId);
+			parent.addChild(model);
 		}
-		return getSuccessResult();
 	}
+	private void checkOrgCode(Organization model){
+		Organization result = organizationService.findBy(entityClass,"orgCode", model.getOrgCode());
+		boolean success = null != result;
+		if(null!=model) {
+			success=success&&(result.getId()!=model.getId());
+		}
+		if(success) {
+			throw new RuntimeException(model.getOrgCode()+"已被使用！");
+		}
+	}
+	@Override
+	protected void prepareModelUpdate(Organization model) throws Exception {
+		checkOrgCode(model);
+	};
 }

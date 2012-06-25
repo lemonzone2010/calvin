@@ -5,9 +5,9 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 
 public interface QueryRepository {
-	<T> T findBy(Class<T> clazz, String property, String value);
+	<T> T findBy(Class<T> clazz, String property, Object value);
 
-	<T> List<T> findListBy(Class<T> clazz, String property, String value);
+	<T> List<T> findListBy(Class<T> clazz, String property, Object value);
 
 	<T> Page<T> findPage(Class<T> clazz, Page<T> p);
 

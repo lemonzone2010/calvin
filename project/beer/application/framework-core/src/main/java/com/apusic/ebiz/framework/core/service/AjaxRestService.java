@@ -17,7 +17,7 @@ public interface AjaxRestService<T extends IdEntity> {
 
 	void deleteAll(Collection<T> e);
 
-	T findBy(Class<T> entityClass, String property, String value);
+	T findBy(Class<T> entityClass, String property, Object value);
 
 	Page<T> findPage(Class<T> entityClass, Page<T> p);
 }
