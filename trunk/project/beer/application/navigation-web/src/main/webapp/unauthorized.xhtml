@@ -1,0 +1,33 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:w="http://www.apusic.com/jsf/widget" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ajax="http://www.apusic.com/jsf/ajax" xmlns:om="http://www.apusic.com/jsf/misc"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jstl/core"
+	renderKitId="AJAX" xmlns:ebiz="http://www.apusic.com/framework-web">
+	<ui:decorate template="/template/md_template_member.xhtml">
+	<ui:param name="title" value="锦绣商城-- 权限"></ui:param>
+	<ui:define name="content">
+		<div class="row margin_top10">
+		  <div class="column grid_16">
+		    <div class="mt_form">
+		      <h2>没有权限</h2>
+		      <b></b> </div>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="column grid_16">
+		    <div class="mc_form">
+		      <div class="form w">
+		        <div class="float_left">
+		          <div class="unauthorized_no">没有权限</div>
+		        </div>
+		        <div class="float_right">
+		          <div style="margin-top:13%;color:red;" class="text-5">Sorry,您没有足够权限访问!</div>
+		        </div>
+		        <div class="clear"></div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</ui:define>
+	</ui:decorate>
+</f:view>
