@@ -6,78 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>组织管理</title>
-<!-- <script src="/resource/xia/js/easyui.treegrid.extend.js" type="text/javascript"></script> -->
-<script type="text/javascript">
-var crudManager
-$(document).ready(function() {
-	
-	  crudManager = new CrudManager({
-		url : "${ctx}/organization/",
-			unselectAll : function() {
-				$(this.dataGrid).treegrid('unselectAll');
-			},
-			
-			getSelectedRow : function() {
-				return $(this.dataGrid).treegrid('getSelected');
-			},
-			
-			getSelectedRows : function() {
-				return $(this.dataGrid).treegrid('getSelections');
-			},
-			addUser:function () {
-				var row = this.getSelectedRow();
-				if(!row){
-					$.messager.alert('提示', "请选择一行再操作", 'info');
-					return;
-				}
-				$(this.editFormId).val('');
-				$(this.editDialog).dialog('open').dialog('setTitle', '新增');
-				$(this.editForm)[0].reset();
-				var id=row.id;
-				if(id!=null){
-					$('#parentId').val(id);
-		  		}else{
-		  			$('#parentId').val('');
-		  		}
-			},
-			changeToolbarStatus:function () {
-				
-			},reloadGridData:function(){
-				$(this.dataGrid).treegrid("reload");
-			},
-			editUser_:function () {
-				var row = this.getSelectedRow();
-				if(!row){
-					$.messager.alert('提示', "请选择一行再操作", 'info');
-					return;
-				}
-				if(row.id==1){
-					$.messager.alert('提示', "此条记录不请允许操作", 'info');
-					return;
-				}
-				this.editUser();
-			},
-			deleteSelected_:function () {
-				var row = this.getSelectedRow();
-				if(!row){
-					$.messager.alert('提示', "请选择一行再操作", 'info');
-					return;
-				}
-				if(row.id==1){
-					$.messager.alert('提示', "此条记录不请允许操作", 'info');
-					return;
-				}
-				this.deleteSelected();
-			}
-	});
-});
-	/**
-	定义搜索用的查询函数
-	*/
-	function search(value, name){
-		crudManager.search(value, name);
-	}
-</script>
+<script src="/resource/xia/js/org.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -110,7 +39,7 @@ $(document).ready(function() {
 	</table>
 
 	<!-- start add -->
-	<div id="addDialog" icon="icon-save" class="easyui-dialog" title="添加记录" style="width: 560px; height: 380px;" buttons="#dlg-buttons" resizable="true"
+	<div id="addDialog" icon="icon-save" class="easyui-dialog" title="添加记录" style="width: 600px; height: 350px;" buttons="#dlg-buttons" resizable="true"
 		closed="true">
 		<br /> <br />
 		<form:form modelAttribute="addForm" action="" method="post">
@@ -124,7 +53,7 @@ $(document).ready(function() {
 			        	  validType="length[2,5]" 
 			        	    
 			        	      missingMessage="编码不能为空"          class="easyui-validatebox text" 
-			        		       />
+			        		       />须唯一，不能重复
 			        </td>
 			     </tr>
 												     <tr>

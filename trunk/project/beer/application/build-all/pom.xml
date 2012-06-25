@@ -36,5 +36,7 @@
         <module>../smartorg-web</module>
         
 		<module>../resource</module>
+		<module>../navigation-web</module>
+		<module>../navigation-service</module>
     </modules>
 </project>
