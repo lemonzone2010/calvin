@@ -34,6 +34,9 @@ CrudManager.prototype = {
 				onUnselect : function() {
 					_self.changeToolbarStatus();
 				},
+				onClickRow:function(rowIndex, rowData){
+					_self.changeToolbarStatus();
+				}
 			});
 		},
 		customEditValidate:function(){
@@ -64,7 +67,7 @@ CrudManager.prototype = {
 				} else {
 					$.messager.alert('信息', "数据操作失败，原因:" 	+ data.result.msg, 'info');
 				}
-				$(_self.dataGrid).datagrid('unselectAll');
+				_self.unselectAll();
 			});
 			return false;					
 		},
@@ -92,7 +95,7 @@ CrudManager.prototype = {
 		},
 		
 		deleteOne:function () {
-			var row = $(this.dataGrid).datagrid('getSelected');
+			var row = this.getSelectedRow();
 
 			if (row) {
 				if (confirm('删除是不可恢复的操作，您确认删除?' + row.name)) {
@@ -117,7 +120,7 @@ CrudManager.prototype = {
 		
 		deleteSelected:function () {
 			var ids = [];
-			var rows = $(this.dataGrid).datagrid('getSelections');
+			var rows = this.getSelectedRows();
 			for ( var i = 0; i < rows.length; i++) {
 				ids.push(rows[i].id);
 			}
@@ -142,7 +145,7 @@ CrudManager.prototype = {
 									showType : 'fade'
 								});
 								_self.reloadGridData();
-								$(_self.dataGrid).datagrid('unselectAll');
+								_self.unselectAll();
 							} else {
 								$.messager.show({
 									title : '删除',
@@ -159,22 +162,25 @@ CrudManager.prototype = {
 				$.messager.alert('提示', "请选择一行再继续操作.", 'info');
 			}
 		},
+		unselectAll:function(){
+			$(this.dataGrid).datagrid('unselectAll');
+		},
 		getSelectedId:function () {
-			var row = $(this.dataGrid).datagrid('getSelected');
+			var row = this.getSelectedRow();
 			if(row==null)
 				return null;
 			return row.id;
-			/*if (row) {
-				alert('Item ID:' + row.id + "\nPrice:" + row.name);
-			}*/
 		},
 		getSelectedRow:function () {
 			return $(this.dataGrid).datagrid('getSelected');
 		},
+		getSelectedRows:function () {
+			return $(this.dataGrid).datagrid('getSelections');
+		},
 
 		getSelectedIds:function () {
 			var ids = [];
-			var rows = $(this.dataGrid).datagrid('getSelections');
+			var rows = this.getSelectedRows();
 			for ( var i = 0; i < rows.length; i++) {
 				ids.push(rows[i].id);
 			}
@@ -191,7 +197,7 @@ CrudManager.prototype = {
 		},
 		
 		editUser:function () {
-			var row = $(this.dataGrid).datagrid('getSelected');
+			var row = this.getSelectedRow();
 			if (row) {
 				$(this.editDialog).dialog('open').dialog('setTitle', '编辑');
 				$(this.editForm).form('load', row);
@@ -210,7 +216,7 @@ CrudManager.prototype = {
 		},
 		
 		changeToolbarStatus:function () {
-			var rows = $(this.dataGrid).datagrid('getSelections');
+			var rows = this.getSelectedRows();
 			if (rows.length == 1) {
 				$(this.editButton).linkbutton('enable');
 				$(this.deleteButton).linkbutton('enable');
@@ -235,3 +241,4 @@ CrudManager.prototype = {
 			
 		}
 }
+

@@ -23,7 +23,7 @@ public class QueryRepositoryImpl implements QueryRepository,QueryService {// TOD
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T findBy(Class<T> clazz, String property, String value) {
+	public <T> T findBy(Class<T> clazz, String property, Object value) {
 		List<T> find = hibernateTemplate.find("from " + clazz.getName() + " where " + property + "=?", value);
 		if (find.size() > 0) {
 			return find.get(0);
@@ -90,7 +90,7 @@ public class QueryRepositoryImpl implements QueryRepository,QueryService {// TOD
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> List<T> findListBy(Class<T> clazz, String property, String value) {
+	public <T> List<T> findListBy(Class<T> clazz, String property, Object value) {
 		return hibernateTemplate.find("from " + clazz.getName() + " where " + property + "=?", value);
 	}
 

@@ -23,14 +23,14 @@ public class RepositoryFacadeImpl implements RepositoryFacade {
 	 * @see furniture.core.dao.RepositoryFacade#findBy(java.lang.Class, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public <T> T findBy(Class<T> clazz, String property, String value) {
+	public <T> T findBy(Class<T> clazz, String property, Object value) {
 		return queryRepository.findBy(clazz, property, value);
 	}
 	/* (non-Javadoc)
 	 * @see furniture.core.dao.RepositoryFacade#findListBy(java.lang.Class, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public <T> List<T> findListBy(Class<T> clazz, String property, String value) {
+	public <T> List<T> findListBy(Class<T> clazz, String property, Object value) {
 		return queryRepository.findListBy(clazz, property, value);
 	}
 	/* (non-Javadoc)

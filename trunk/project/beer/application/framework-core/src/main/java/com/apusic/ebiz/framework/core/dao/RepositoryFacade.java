@@ -10,9 +10,9 @@ import com.apusic.ebiz.framework.core.model.IdEntity;
 
 public interface RepositoryFacade {
 
-	public <T> T findBy(Class<T> clazz, String property, String value);
+	public <T> T findBy(Class<T> clazz, String property, Object value);
 
-	public <T> List<T> findListBy(Class<T> clazz, String property, String value);
+	public <T> List<T> findListBy(Class<T> clazz, String property, Object value);
 
 	public <T> Page<T> findPage(Class<T> clazz, Page<T> p);
 
