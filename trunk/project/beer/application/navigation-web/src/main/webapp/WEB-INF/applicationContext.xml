@@ -23,9 +23,9 @@
 	<import resource="classpath*:apusic-ebiz-smartorg-service.xml" />
 	<import resource="classpath*:apusic-ebiz-iam-security.xml" />
 	
-	<import resource="classpath*:apusic-ebiz-framework-integration-jms.xml" />
+	<!-- <import resource="classpath*:apusic-ebiz-framework-integration-jms.xml" />
 	<import resource="classpath*:apusic-ebiz-framework-event.xml" />
-	<import resource="classpath*:apusic-ebiz-framework-cache.xml" />
+	<import resource="classpath*:apusic-ebiz-framework-cache.xml" /> -->
 	
 
 	<bean id="navigationFilterChain" class="com.apusic.ebiz.framework.web.filter.FilterChainFilter">
