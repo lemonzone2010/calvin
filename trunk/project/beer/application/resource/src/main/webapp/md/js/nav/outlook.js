@@ -95,7 +95,7 @@ function getbyitem(item) {
 } 
 function changeframe(item, sortname, src) { 
 	if(item != "" && sortname != "") { 
-		window.top.frames['mainFrame'].getObject('show_text').innerHTML = sortname + "  <img src=/ebiz-resource/md/image/nav/slide.gif broder=0 />  " + item 
+		window.top.frames['mainFrame'].getObject('show_text').innerHTML = sortname + "  <img src=/resource/md/image/nav/slide.gif broder=0 />  " + item 
 	} 
 	if(src != "") { 
 		window.top.frames['manFrame'].location = src 

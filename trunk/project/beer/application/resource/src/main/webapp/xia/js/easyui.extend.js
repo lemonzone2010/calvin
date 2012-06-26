@@ -21,7 +21,6 @@ CrudManager.prototype = {
 			$.extend(this,config);
 			this.initDataGrid();
 			this.changeToolbarStatus();
-			//$("#addForm").submit(this.edit());
 		},
 		
 		initDataGrid:function(){
@@ -37,6 +36,26 @@ CrudManager.prototype = {
 				onClickRow:function(rowIndex, rowData){
 					_self.changeToolbarStatus();
 				}
+			});
+			this.reSizeDataGrid();
+			this.initDataGridEvent();
+		},
+		initDataGridEvent:function(){
+			_self=this;
+			function resizeit(){
+				_self.reSizeDataGrid();
+			}
+			$(window).resize(resizeit);
+		},
+		reSizeDataGrid:function(){
+			_self=this;
+			var height=$(document).height()-45;
+			if(height<450){
+				height=450;
+			}
+			$(_self.dataGrid).datagrid('resize', {
+				height:height,
+				width:$(window).width()-12
 			});
 		},
 		customEditValidate:function(){

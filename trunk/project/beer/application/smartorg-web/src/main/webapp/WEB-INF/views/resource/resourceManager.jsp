@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<div class="demo-info" style="margin-bottom: 10px">
+	<div class="demo-info" style="margin-bottom: -10px">
 		<div class="demo-tip icon-tip"></div>
 		<div>资源管理.</div>
 	</div>
@@ -36,7 +36,7 @@
 	</div>
 
 
-	<table id="dg" class="easyui-datagrid" style="width: 950px; height: 400px" url="${ctx}/resource/grid" idField="id" 
+	<table id="dg" style="height: 100%" class="easyui-datagrid" url="${ctx}/resource/grid" idField="id" 
 			title="资源查看" iconCls="icon-save"
 		toolbar="#toolbar" singleSelect="false" rownumbers="true" pagination="true">
 		<thead>

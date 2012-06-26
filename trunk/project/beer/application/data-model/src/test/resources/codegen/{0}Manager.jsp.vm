@@ -25,7 +25,7 @@ $(document).ready(function() {
 </head>
 
 <body>
-	<div class="demo-info" style="margin-bottom: 10px">
+	<div class="demo-info" style="margin-bottom: -10px">
 		<div class="demo-tip icon-tip"></div>
 		<div>${bean.chineseName}管理.</div>
 	</div>
@@ -50,7 +50,7 @@ $(document).ready(function() {
 	</div>
 
 
-	<table id="dg" class="easyui-datagrid" style="width: 950px; height: 400px" url="${ctx}/$stringUtils.uncapitalize($bean.className)/grid" idField="id" 
+	<table id="dg" class="easyui-datagrid" url="${ctx}/$stringUtils.uncapitalize($bean.className)/grid" idField="id" 
 			title="${bean.chineseName}查看" iconCls="icon-save"
 		toolbar="#toolbar" singleSelect="false" rownumbers="true" pagination="true">
 		<thead>

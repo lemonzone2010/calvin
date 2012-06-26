@@ -40,6 +40,8 @@
 </head>
 
 <body>
+<div class="maindiv">
 				<sitemesh:write property='body' />
+</div>
 </body>
 </html>
