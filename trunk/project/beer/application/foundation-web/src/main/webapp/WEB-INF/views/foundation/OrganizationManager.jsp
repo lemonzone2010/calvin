@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<div class="demo-info" style="margin-bottom: 10px">
+	<div class="demo-info" style="margin-bottom: -10px">
 		<div class="demo-tip icon-tip"></div>
 		<div>组织管理.</div>
 	</div>
@@ -25,7 +25,7 @@
 		</div>
 	</div>
 
-	<table id="dg" class="easyui-treegrid" style="width: 950px; height: 400px" url="${ctx}/organization/gridtree" idField="id" 
+	<table id="dg" class="easyui-treegrid"  url="${ctx}/organization/gridtree" idField="id" 
 			title="组织查看" iconCls="icon-save"  treeField="name" fitColumns="true"
 		toolbar="#toolbar" singleSelect="true" rownumbers="true" pagination="false">
 		<thead>

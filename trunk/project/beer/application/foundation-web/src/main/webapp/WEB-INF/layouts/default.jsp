@@ -41,14 +41,8 @@
 </head>
 
 <body>
-	<div class="container">
-		<%@ include file="/WEB-INF/layouts/header.jsp"%>
-		<div id="content">
-			<div class="span-24 last">
+	<div class="maindiv">
 				<sitemesh:write property='body' />
-			</div>
-			<%@ include file="/WEB-INF/layouts/footer.jsp"%>
-		</div>
 	</div>
 </body>
 </html>
