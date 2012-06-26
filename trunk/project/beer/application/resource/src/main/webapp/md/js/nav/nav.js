@@ -3,7 +3,7 @@ var outlookbar=new outlook();
 var t;
 $(function(){
 	jQuery.ajax({
-		"url":"/navigation/NavigationData.faces",
+		"url":"/navigation-web/NavigationData.faces",
 		"cache":false,
 		"dataType":"json",
 		"success":function(data){
