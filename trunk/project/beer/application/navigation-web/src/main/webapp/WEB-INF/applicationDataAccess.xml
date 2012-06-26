@@ -44,10 +44,10 @@
 
         <property name="hibernateProperties">
             <value>
-            hibernate.dialect=org.hibernate.dialect.OracleDialect
+            hibernate.dialect=${hibernate.dialect}
             hibernate.show_sql=true
             hibernate.format_sql=false
-            hibernate.hbm2ddl.auto=none
+            hibernate.hbm2ddl.auto=update
             </value>
         </property>
         <!-- hibernate.hbm2ddl.auto=create-drop update org.hibernate.dialect.DerbyDialect org.apache.commons.dbcp.BasicDataSource  hibernate.connection.username=mdtest

@@ -61,7 +61,7 @@ public class NavigationData extends HttpServlet {
         //取出登录人角色所拥有的所有资源
         Set<Resource> resourceAll = getAllResource(roles);
         //判断登录人是否是系统超级管理员
-        isAdmin = isAdmin(roles);
+        isAdmin = true;//isAdmin(roles);
         JSONArray navsjson = toJson(navigations, resourceAll);
         ApplicationInfo app = new ApplicationInfo();
         app.setStatus("Y");
@@ -165,16 +165,20 @@ public class NavigationData extends HttpServlet {
      * @return
      */
     private Set<Role> getUserRole() {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Set<Role> roles = new HashSet<Role>();
-        if (StringUtils.isEmpty(name)) {
-            return roles;
-        }
-        User user = userService.getUserByName(name);
-        if (user == null) {
-            return roles;
-        }
-        return roles = user.getRoles();
+        try {
+			String name = SecurityContextHolder.getContext().getAuthentication().getName();
+			if (StringUtils.isEmpty(name)) {
+			    return roles;
+			}
+			User user = userService.getUserByName(name);
+			if (user == null) {
+			    return roles;
+			}
+			return roles = user.getRoles();
+		} catch (Exception e) {
+			return roles;
+		}
     }
 
     /**
@@ -187,9 +191,9 @@ public class NavigationData extends HttpServlet {
             return false;
         }
         for (Role role : roles) {
-            /*if (DataConstants.ROLE_SYSTEM_ADMIN.equals(role.getName())) {
+            if (DataConstants.ROLE_SYSTEM_ADMIN.equals(role.getName())) {
                 return true;
-            }*/
+            }
         }
         return false;
     }
