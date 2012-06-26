@@ -85,6 +85,15 @@
 		<filter-name>navigationFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<servlet>
+    <display-name>NavigationData</display-name>
+    <servlet-name>NavigationData</servlet-name>
+    <servlet-class>com.apusic.ebiz.navigation.servlet.NavigationData</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>NavigationData</servlet-name>
+    <url-pattern>/NavigationData.faces</url-pattern>
+  </servlet-mapping>
 		<!--
 	 -->
   <!-- Spring configuraiton end -->

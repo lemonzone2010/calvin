@@ -20,8 +20,7 @@ public class ApplicationInfoDaoImpl implements ApplicationInfoDao {
 
 	public List<ApplicationInfo> findData(ApplicationInfo app) {
 		DetachedCriteria criteria = DetachedCriteria.forClass(ApplicationInfo.class);
-		if (null != app) {
-			if (app.getId() > 0) {
+			if (null!=app.getId()&&app.getId() > 0) {
 				criteria.add(Restrictions.eq("id", app.getId()));
 			}
 			if (StringUtils.isNotEmpty(app.getApplicationName())) {
@@ -33,7 +32,6 @@ public class ApplicationInfoDaoImpl implements ApplicationInfoDao {
 			if (StringUtils.isNotEmpty(app.getStatus())) {
 				criteria.add(Restrictions.eq("status", app.getStatus()));
 			}
-		}
 		criteria.addOrder(Order.asc("sequence"));
 		criteria.addOrder(Order.asc("id"));
 		return queryService.findBy(criteria);
