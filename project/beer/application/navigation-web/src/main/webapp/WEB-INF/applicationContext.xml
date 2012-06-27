@@ -10,11 +10,17 @@
     					http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <context:property-placeholder location="classpath:db-config.properties,
-    										classpath:framework-core-config.properties,
-    										classpath:framework-web-config.properties,
-    										classpath:framework-integration-jms-config.properties,
-    										classpath:navigation-system-config.properties" />
+    <bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />  
+		<property name="locations">
+			<list>
+				<value>classpath:navigation-system-config.properties</value>
+			</list>
+		</property>
+	</bean>
 	<import resource="applicationDataAccess.xml" />
 
 	<import resource="classpath*:apusic-ebiz-navigation-service.xml" />
