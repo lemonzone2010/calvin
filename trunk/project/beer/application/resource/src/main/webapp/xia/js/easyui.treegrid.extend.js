@@ -6,7 +6,7 @@
 function TreeGridCrudManager(config) {
 	CrudManager.apply(this, arguments);
 }
-$.extend(TreeGridCrudManager, CrudManager, {
+$.extend(TreeGridCrudManager.prototype, CrudManager.prototype, {
 	init : function(config) {
 		CrudManager.prototype["init"].apply(this, arguments);
 	},

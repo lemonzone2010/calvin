@@ -141,6 +141,9 @@
 	}
 	
 	$.fn.form = function(options, param){
+		this.each(function(){
+			console.log(this);
+		})
 		if (typeof options == 'string'){
 			switch(options){
 			case 'submit':

@@ -231,7 +231,23 @@ CrudManager.prototype = {
 		addUser:function () {
 			$(this.editFormId).val('');
 			$(this.editDialog).dialog('open').dialog('setTitle', '新增');
-			$(this.editForm)[0].reset();
+			this.clearForm($(this.editForm)[0]);
+			//$(this.editForm)[0].reset();
+		},
+		/**
+		 * clear the form fields
+		 */
+		 clearForm:function(target){
+			$('input,select,textarea', target).each(function(){
+				var t = this.type, tag = this.tagName.toLowerCase();
+				if (t == 'text' || t == 'password' || tag == 'textarea')
+					this.value = '';
+				else if (t == 'checkbox' || t == 'radio')
+					this.checked = false;
+				else if (tag == 'select')
+					this.selectedIndex = -1;
+				
+			});
 		},
 		
 		changeToolbarStatus:function () {
