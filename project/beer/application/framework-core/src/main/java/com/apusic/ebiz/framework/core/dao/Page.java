@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -129,6 +130,7 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 	public List<T> getRows() {
 		return rows;
 	}
+	@JsonIgnore
 	public List<T> getObjects() {
 		return rows;
 	}
