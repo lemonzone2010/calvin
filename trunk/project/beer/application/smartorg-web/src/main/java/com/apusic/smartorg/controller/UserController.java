@@ -55,7 +55,7 @@ public final class UserController extends	AbstractAjaxRestfulController<User> {
 	
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
-	public Map<String, ? extends Object> update(@RequestBody User model) {
+	public Map<String, Result> update(@RequestBody User model) {
 		logger.debug("request delete one(PUT),model:" + model);
 		try {
 			userService.updateUser(model);
