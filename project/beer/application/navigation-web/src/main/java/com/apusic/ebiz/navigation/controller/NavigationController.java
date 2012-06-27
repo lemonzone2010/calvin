@@ -3,6 +3,7 @@ package com.apusic.ebiz.navigation.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,9 +37,29 @@ public final class NavigationController extends	AbstractAjaxRestfulController<Na
 		request.setAttribute("appId", appId);
 		return getShowPage();
 	}
-	
 	/**
-	 * 保存新增
+	 * 更新
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="updatestatus", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Result> updateNaviStatus(@RequestBody Navigation model) {
+		logger.debug("request update one(POST),model:" + model);
+		try {
+			boolean success = navigationService.updateStatus(model.getId(), model.getStatus());
+			if (success) {
+				return getSuccessResult();
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return getFailResult(e.getMessage());
+		}
+		return getSuccessResult();
+	}
+	/**
+	 * 更新
 	 * 
 	 * @param model
 	 * @return
@@ -47,14 +68,39 @@ public final class NavigationController extends	AbstractAjaxRestfulController<Na
 	@ResponseBody
 	public Map<String, Result> updateNavi(@RequestBody Navigation model) {
 		logger.debug("request update one(POST),model:" + model);
+		Integer hideId=model.getId();
 		try {
-			//prepareModelInsert(model);
-			//ajaxRestService.create(model);
+			 Navigation nav = null;
+		        if(model.getId()!=null&&model.getId()>0){
+		            nav = navigationService.findById(model.getId());
+		        }else{
+		            nav = new Navigation();
+		            hideId=model.getParentId();
+		        }
+
+		        nav.setLevel(model.getLevel());
+		        nav.setName(model.getName());
+		        nav.setUrl(model.getUrl());
+		        nav.setApplicationId(model.getParentId());
+		        nav.setSequence(model.getSequence());
+		        nav.setStatus(model.getStatus());
+		        if(model.getParentId() !=null && model.getParentId()>0){
+		            Navigation parent = navigationService.findById(model.getParentId());
+		            nav.setParent(parent);
+		            Set<Navigation> childrens = parent.getChildrens();
+		            childrens.add(nav);
+		            parent.setChildrens(childrens);
+		        }
+		        if(model.getId()!=null&&model.getId()>0){
+		            navigationService.updateNavigation(nav);
+		        }else{
+		            navigationService.addNavigation(nav);
+		        }
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 			return getFailResult(e.getMessage());
 		}
-		return getSuccessResult();
+		return getSuccessResult(hideId);
 	}
 	/**
 	 * 保存更新

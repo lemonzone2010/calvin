@@ -4,7 +4,6 @@ import java.util.Set;
 
 import com.apusic.ebiz.model.BaseModel;
 import com.apusic.ebiz.model.codegen.annotation.FieldView;
-import com.apusic.ebiz.model.codegen.annotation.FieldViewType;
 
 /**
  * 导航菜单数据
@@ -44,6 +43,8 @@ public class Navigation extends BaseModel implements Comparable<Navigation>{
     private Navigation parent;
     
     private Set<Navigation> childrens;
+    
+    private Integer parentId;
 
 
     public String getStatus() {
@@ -122,5 +123,13 @@ public class Navigation extends BaseModel implements Comparable<Navigation>{
         
         return 0;
     }
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
 
 }
