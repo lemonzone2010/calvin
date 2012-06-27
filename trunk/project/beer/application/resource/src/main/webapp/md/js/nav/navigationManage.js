@@ -151,24 +151,24 @@ function saveOrUpdate(id){
 		status : status,
 		level : level,
 		parentId : parentId,
-		appId : appId,
-		navId : navId,
+		applicationId : appId,
+		id : navId,
 		sequence : sequence
 	};
 	var postURL='/navigation-web/navigation/update';
 	$.postJSON(postURL, data, function(data) {
-		alert('success')
+		if (data.result.status) {
+			var hideId=data.result.extend; 
+			updateCallback(hideId,name,url);	
+			 if(level == '1'){
+	                initSortable();openOrCloseNode(navId);
+	            }else{
+	                initSortable();openOrCloseNode(parentId);
+	            }
+		} else {
+			alert("数据操作失败，原因:" 	+ data.result.msg);
+		}
 	});
-/*	jQuery.ajax({
-        'type': 'POST',
-        'url': postURL,
-        'contentType': 'application/json',
-        'data': data,
-        'dataType': 'json',
-        'success': function(){
-        	alert('succ')
-        }
-    });*/
 }
 function del(id){
 	var childrenLength = $("#child_node_"+id).find("div").length;
@@ -177,8 +177,12 @@ function del(id){
 		msg = "删除该节点，其子节点也会一起删除，确认删除？";
 	}
 	if(confirm(msg)){
-		deleteItem.addParam("navId",id);
-		deleteItem.submit();
+		$.post('/navigation-web/navigation/'+id, {
+			_method : "delete"
+		}, function(data) {
+			deleteCallback(id);
+		});
+
 	}
 }
 function updateItemStatus(id){
@@ -188,9 +192,14 @@ function updateItemStatus(id){
 	}else{
 		status = 'Y';
 	}
-	updaeStatus.addParam("navId",id);
-	updaeStatus.addParam("status",status);
-	updaeStatus.submit();
+	var postURL='/navigation-web/navigation/updatestatus';
+	$.postJSON(postURL, {id:id,status:status}, function(data) {
+		if (data.result.status) {
+			updateStatusCallback(id);		
+		} else {
+			alert("数据操作失败，原因:" 	+ data.result.msg);
+		}
+	});
 }
 function updateCallback(id,name,url){
 	$("#add_node_"+id).prev().find("div[class^='margin-left']").find("a").text(name);
