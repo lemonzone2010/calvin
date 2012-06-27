@@ -17,7 +17,7 @@ $(function(){
 			});
 			if(data.isAdmin) {
 				t=outlookbar.addtitle("应用管理","导航管理",1);
-				outlookbar.additem("系统应用",t,"/navigation/menu/applicationManage.faces");
+				outlookbar.additem("系统应用",t,"/navigation-web/menu/applicationManage.faces");
 				t=outlookbar.addtitle("菜单管理","导航管理",1);
 			}
 			var output = "<ul>";
@@ -37,7 +37,7 @@ $(function(){
 					}
 				}
 				if(data.isAdmin){
-					outlookbar.additem(record.applicationName,t,"/navigation/menu/navigationManage.faces?appId="+record.id);
+					outlookbar.additem(record.applicationName,t,"/navigation-web/menu/navigation/app/"+record.id);
 				}
 			});
 			if(data.isAdmin){

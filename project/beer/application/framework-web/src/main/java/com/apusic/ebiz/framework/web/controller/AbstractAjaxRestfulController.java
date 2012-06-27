@@ -64,7 +64,7 @@ public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//imple
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String index() {
+	public String index(HttpServletRequest request) {
 		logger.debug("request index(GET):"+getShowPage());
 		return getShowPage();
 	}
@@ -211,8 +211,8 @@ public abstract class AbstractAjaxRestfulController<T extends IdEntity> {//imple
 	 */
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
-	public Map<String, ? extends Object> update(@RequestBody T model) {
-		logger.debug("request delete one(PUT),model:" + model);
+	public Map<String, Result> update(@RequestBody T model) {
+		logger.debug("request update one(PUT),model:" + model);
 		try {
 			prepareModelUpdate(model);
 			validate(model);
