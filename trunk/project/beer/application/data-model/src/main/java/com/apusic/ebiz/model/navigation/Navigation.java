@@ -3,26 +3,30 @@ package com.apusic.ebiz.model.navigation;
 import java.util.Set;
 
 import com.apusic.ebiz.model.BaseModel;
+import com.apusic.ebiz.model.codegen.annotation.FieldView;
+import com.apusic.ebiz.model.codegen.annotation.FieldViewType;
 
 /**
  * 导航菜单数据
  * @author guguoqing
  *
  */
+@FieldView(label = "导航菜单数据", subpackage = "navi")
 public class Navigation extends BaseModel implements Comparable<Navigation>{
     private static final long serialVersionUID = -7997030155458753497L;
 
-    
+    @FieldView(label = "状态")
     private String status;
-    
+    @FieldView(label = "名称")
     private String name;
-    
+    @FieldView(label = "URL")
     private String url;
     
     
     /**
      * 角色，表示该资源可以被多少角色访问，多个角色用逗号隔开
      */
+    @FieldView(label = "角色")
     private String roles;
     
     /**

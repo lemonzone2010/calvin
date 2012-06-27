@@ -4,7 +4,7 @@ a {cursor: pointer;}
 	cursor: pointer;
 	background-attachment: scroll;
 	background-color: transparent;
-	background-image: url(/ebiz-resource/image/common/tree/base.gif);
+	background-image: url(/resource/image/common/tree/base.gif);
 	background-repeat: no-repeat;
 }
 .empty_img {

@@ -145,15 +145,30 @@ function saveOrUpdate(id){
 	var appId = $("#appId").val();
 	var navId = $("#add_node_"+id).find("input[name='navId']").val();
 	var sequence = $("#add_node_"+id).find("input[name='sequence']").val();
-	saveItem.addParam("name",name);
-	saveItem.addParam("url",url);
-	saveItem.addParam("status",status);
-	saveItem.addParam("level",level);
-	saveItem.addParam("parentId",parentId);
-	saveItem.addParam("appId",appId);
-	saveItem.addParam("navId",navId);
-	saveItem.addParam("sequence",sequence);
-	saveItem.submit();
+	var data = {
+		name : name,
+		url : url,
+		status : status,
+		level : level,
+		parentId : parentId,
+		appId : appId,
+		navId : navId,
+		sequence : sequence
+	};
+	var postURL='/navigation-web/navigation/update';
+	$.postJSON(postURL, data, function(data) {
+		alert('success')
+	});
+/*	jQuery.ajax({
+        'type': 'POST',
+        'url': postURL,
+        'contentType': 'application/json',
+        'data': data,
+        'dataType': 'json',
+        'success': function(){
+        	alert('succ')
+        }
+    });*/
 }
 function del(id){
 	var childrenLength = $("#child_node_"+id).find("div").length;
