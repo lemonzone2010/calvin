@@ -6,35 +6,7 @@
 	default-lazy-init="true">
 
 	<description>Spring公共配置文件</description>
-
-	<!-- 数据源配置,在测试环境使用单连接 -->
-	<!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.h2.Driver" />
-		<property name="url" value="jdbc:h2:mem:springside-core-test" />
-		<property name="username" value="sa" />
-		<property name="password" value="" />
-	</bean>
-
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="namingStrategy">
-			<bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
-			</props>
-		</property>
-		<property name="packagesToScan" value="com.apusic.ebiz.model.foundation" />
-	</bean>
-
-	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	--><!-- 使用annotation定义事务 -->
+    <!-- 使用annotation定义事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 
 	<!-- JSR303 Validator定义 -->
