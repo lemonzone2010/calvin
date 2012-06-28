@@ -1,5 +1,6 @@
 package com.apusic.ebiz.framework.core.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -10,6 +11,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.orm.hibernate4.HibernateQueryException;
+import org.springframework.orm.hibernate4.SessionFactoryUtils;
 
 public class HibernateTemplate {
 	private SessionFactory sessionFactory;
@@ -81,5 +86,24 @@ public class HibernateTemplate {
 	public List findByExample(Object exampleEntity, int firstResult, int maxResults) throws DataAccessException {
 		return findByExample(null, exampleEntity, firstResult, maxResults);
 	}
+	public <T> T execute(HibernateCallback<T> action) throws DataAccessException {
+		T result;
+		try {
+			result = action.doInHibernate(getSession());
+		} catch (Exception e) {
+			throw new DataAccessResourceFailureException("" + e.getMessage(), e);
+		}
+		return (T) result;
+	}
+	public List executeFind(HibernateCallback<?> action) throws DataAccessException {
+		return (List) execute(action);
+	}
+
+	public void flush() {
+		getSession().flush();
+		
+	}
+
+	
 
 }

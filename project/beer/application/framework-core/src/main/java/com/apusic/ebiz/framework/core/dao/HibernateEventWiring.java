@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.PostConstruct;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.beanvalidation.DuplicationStrategyImpl;
 import org.hibernate.event.service.spi.EventListenerRegistry;
 import org.hibernate.event.spi.EventType;
 import org.hibernate.event.spi.PostDeleteEventListener;
@@ -14,6 +15,8 @@ import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.search.event.impl.FullTextIndexEventListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.apusic.ebiz.framework.core.context.EnversListenerDuplicationStrategy;
 
 @Component
 public class HibernateEventWiring {
@@ -34,6 +37,8 @@ public class HibernateEventWiring {
 		a.set(true);
 		final EventListenerRegistry registry = ((SessionFactoryImpl) sessionFactory).getServiceRegistry().getService(
 				EventListenerRegistry.class);
+		
+//		registry.addDuplicationStrategy( DuplicationStrategyImpl.INSTANCE );
 //		registry.getEventListenerGroup(EventType.POST_INSERT).appendListener(
 //				(PostInsertEventListener) fullTextSearchListener);
 //		registry.getEventListenerGroup(EventType.POST_DELETE).appendListener(
