@@ -30,7 +30,7 @@
 		</property>
 	</bean>
 
-	<bean id="workflowStore" class="com.opensymphony.workflow.spi.hibernate3.SpringHibernateWorkflowStore">
+	<bean id="workflowStore" class="com.apusic.ebiz.framework.core.workflow.spi.hibernate4.SpringHibernateWorkflowStore">
 
 		<property name="sessionFactory">
 			<ref bean="sessionFactory"/>
