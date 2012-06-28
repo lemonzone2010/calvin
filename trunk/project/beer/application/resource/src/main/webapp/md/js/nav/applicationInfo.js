@@ -5,11 +5,19 @@ function cancel() {
 	$("#add_info").hide();
 }
 function save() {
-	saveOrUpdate.submit();
+	postURL="/navigation-web/applicationInfo/update"
+	data=$("#add_info").find("input").serializeObject();
+	$.postJSON(postURL, data, function(data) {
+		if (data.result.status) {
+			document.location.reload(true);
+		} else {
+			alert("数据操作失败，原因:" 	+ data.result.msg);
+		}
+	});
 }
 function addBefore(id) {
 	var name = $("#add_info").find("#new_name").val();
-	$("#add_info").find("input[name='appId']").val(id);
+	$("#add_info").find("input[name='id']").val(id);
 	$("#add_info").find("input[name='applicationName']").val(name);
 	$("#add_info").find("input[name='status']").val('Y');
 	$("#add_info").find("input[name='sequence']").val('999');
@@ -19,7 +27,7 @@ function updateBefore(id) {
 	var status = $("#edit_" + id).find("#status_" + id).val();
 	var sequence = $("#data_info_"+id).find("input[name='appSortSequence']").val();
 
-	$("#add_info").find("input[name='appId']").val(id);
+	$("#add_info").find("input[name='id']").val(id);
 	$("#add_info").find("input[name='applicationName']").val(name);
 	$("#add_info").find("input[name='status']").val(status);
 	$("#add_info").find("input[name='sequence']").val(sequence);
@@ -56,17 +64,26 @@ function edit(id) {
 	$("#edit_" + id).find("input[value='取消']").show();
 }
 function enable(id) {
-	enable_b.addParam("enableId", id);
-	enable_b.submit();
+	$.post('/navigation-web/applicationInfo/updatestatus/'+id, {
+		type:"enable"
+	}, function(data) {
+		document.location.reload(true);
+	});
 }
 function disable(id) {
-	disable_b.addParam("disableId", id);
-	disable_b.submit();
+	$.post('/navigation-web/applicationInfo/updatestatus/'+id, {
+		type:"disable"
+	}, function(data) {
+		document.location.reload(true);
+	});
 }
 function deleteItem(id) {
 	if (confirm("确认删除？")) {
-		delete_b.addParam("deleteId", id);
-		delete_b.submit();
+		$.post('/navigation-web/applicationInfo/'+id, {
+			_method : "delete"
+		}, function(data) {
+			document.location.reload(true);
+		});
 	}
 }
 
@@ -112,8 +129,22 @@ function sortDisable() {
  * @return
  */
 function sortCallback() {
+	var changeItemIds = new Array();
+	var changeItemNumbers = new Array();
+	var i = 0;
 	$("#date_info").find("div[id^='data_info_']").each(function(index) {
 		$(this).find("input[name='appSortSequence']").val(index);
+		 changeItemIds[i] = $(this).find("input[name='appSortId']").val();
+	        changeItemNumbers[i] = index;
+	        i++;
 	});
-	updateSerialNumber.submit();
+	//var parent=$("#date_info").find("div[id^='data_info_']")
+	//changeItemIds=parent.find("input[name='appSortId']").serializeObject();
+	//changeItemNumbers=parent.find("input[name='appSortSequence']").serializeObject();
+	$.post('/navigation-web/applicationInfo/move', {
+		changeIds : changeItemIds,
+		changeNumbers:changeItemNumbers
+	}, function(data) {
+		
+	});
 }

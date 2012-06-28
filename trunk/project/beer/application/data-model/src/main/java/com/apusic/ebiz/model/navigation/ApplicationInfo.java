@@ -1,17 +1,18 @@
 package com.apusic.ebiz.model.navigation;
 
 import com.apusic.ebiz.model.BaseModel;
-
+import com.apusic.ebiz.model.codegen.annotation.FieldView;
+@FieldView(label = "导航菜单数据", subpackage = "menu")
 public class ApplicationInfo extends BaseModel implements Comparable<ApplicationInfo>{
     private static final long serialVersionUID = 2040061905266760072L;
 
-    
+    @FieldView(label = "状态")
     private String status;
     
     private String applicationRoot;
     
     private String applicationName;
-    
+    @FieldView
     private Integer sequence;
 
 
