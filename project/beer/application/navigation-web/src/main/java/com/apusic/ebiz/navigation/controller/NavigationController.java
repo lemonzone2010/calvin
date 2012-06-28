@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.apusic.ebiz.framework.web.controller.AbstractAjaxRestfulController;
@@ -81,7 +82,7 @@ public final class NavigationController extends	AbstractAjaxRestfulController<Na
 		        nav.setLevel(model.getLevel());
 		        nav.setName(model.getName());
 		        nav.setUrl(model.getUrl());
-		        nav.setApplicationId(model.getParentId());
+		        nav.setApplicationId(model.getApplicationId());
 		        nav.setSequence(model.getSequence());
 		        nav.setStatus(model.getStatus());
 		        if(model.getParentId() !=null && model.getParentId()>0){
@@ -102,25 +103,14 @@ public final class NavigationController extends	AbstractAjaxRestfulController<Na
 		}
 		return getSuccessResult(hideId);
 	}
-	/**
-	 * 保存更新
-	 * 
-	 * @param id
-	 * @return
-	 */
-	/*@RequestMapping(value="saveOrUpdate",method = RequestMethod.POST)
+
+	//排序的移动的保存
+	@RequestMapping(value = "move", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Result> saveOrUpdate(@RequestBody Navigation model) {
-		logger.debug("request delete one(PUT),model:" + model);
-		try {
-			//prepareModelUpdate(model);
-			//ajaxRestService.update(model);// 更新方式
-		} catch (Exception e) {
-			logger.error(e.getMessage(),e);
-			return getFailResult(e.getMessage());
-		}
-		return getSuccessResult();
-	}*/
+	public void move(@RequestParam("changeIds[]") int[] changeIds,@RequestParam("changeNumbers[]") int[] changeNumbers) {
+		navigationService.updateSequence(changeIds, changeNumbers);
+	}
+	
 	private List<Navigation> queryData(int appId){
 		Navigation nav = new Navigation();
 		nav.setLevel(1);

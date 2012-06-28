@@ -7,7 +7,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<link rel="stylesheet" href="/resource/md/css/common.css" type="text/css" />
 		<link rel="stylesheet" href="/resource/md/css/nav/navigation.css" type="text/css" />
-		<script src="/resource/js/jquery/jquery.js" type="text/javascript" />
+		<script src="/resource/js/jquery/jquery-1.7.2.js" type="text/javascript" ></script>
 		<script src="/resource/js/jquery/ui/jquery.ui.core.js" type="text/javascript"></script>
 		<script src="/resource/js/jquery/ui/jquery.ui.widget.js" type="text/javascript"></script>
 		<script src="/resource/js/jquery/ui/jquery.ui.mouse.js" type="text/javascript"></script>

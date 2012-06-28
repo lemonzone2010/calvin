@@ -62,9 +62,12 @@ function sortCallback(object){
  * @return
  */
 function sortNewSerialNumber(changeItemIds,changeItemNumbers){
-	updateSerialNumber.addParam("changeIds",changeItemIds);
-	updateSerialNumber.addParam("changeNumbers",changeItemNumbers);
-	updateSerialNumber.submit();
+	$.post('/navigation-web/navigation/move', {
+		changeIds : changeItemIds,
+		changeNumbers:changeItemNumbers
+	}, function(data) {
+		
+	});
 }
 
 
@@ -160,11 +163,13 @@ function saveOrUpdate(id){
 		if (data.result.status) {
 			var hideId=data.result.extend; 
 			updateCallback(hideId,name,url);	
-			 if(level == '1'){
+
+			document.location.reload(true);
+			 /*if(level == '1'){
 	                initSortable();openOrCloseNode(navId);
 	            }else{
 	                initSortable();openOrCloseNode(parentId);
-	            }
+	            }*/
 		} else {
 			alert("数据操作失败，原因:" 	+ data.result.msg);
 		}

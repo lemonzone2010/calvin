@@ -10,7 +10,7 @@ import com.apusic.ebiz.model.codegen.annotation.FieldView;
  * @author guguoqing
  *
  */
-@FieldView(label = "导航菜单数据", subpackage = "navi")
+@FieldView(label = "导航菜单数据", subpackage = "menu")
 public class Navigation extends BaseModel implements Comparable<Navigation>{
     private static final long serialVersionUID = -7997030155458753497L;
 

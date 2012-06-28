@@ -11,6 +11,6 @@ import ${bean.fullClassName};
 public final class ${bean.className}Controller extends	AbstractAjaxRestfulController<$bean.className> {
 	@Override
 	protected String getShowPage() {
-		return "${bean.subpackage}/${bean.className}Manager";
+		return "${bean.subpackage}/$stringUtils.uncapitalize($bean.className)Manager";
 	}
 }
