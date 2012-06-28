@@ -24,7 +24,7 @@
 		<property name="locations">
 			<list>
 				<value>classpath:framework-core-config.properties</value>
-				<value>classpath:db-config.properties</value>
+				<value>classpath:db-confg/dev/dev-config.properties</value>
 			</list>
 		</property>
 	</bean>

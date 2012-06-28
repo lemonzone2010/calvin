@@ -8,6 +8,7 @@
         modify this unless you
         know what you're doing!
     </description>
+    <import resource="classpath*:apusic-ebiz-framework-core.xml" />
 
     <!--
       Including this aspectj-autoproxy element will cause spring to automatically
