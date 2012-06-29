@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_USERSPHERE_DELIVERY_ADDR" name="com.apusic.md.model.usersphere.DeliveryAddr">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_usersphere_delivery_addr</param>
+      </generator>
+    </id>
+    <property name="consignee" not-null="true" length="50" column="F_CONSIGNEE" access="field" type="string"/>
+    <property name="province" not-null="true" column="F_PROVINCE" length="50" access="field" type="string"/>
+    <property name="city" length="50" not-null="true" column="F_CITY" access="field" type="string"/>
+    <property name="area" length="50"  column="F_AREA" access="field" type="string"/>
+    <property name="streetAddr" length="100" not-null="true" column="F_STREET_ADDR" access="field" type="string"/>
+    <property name="postcode" length="10" not-null="true" column="F_POSTCODE" access="field" type="string"/>
+    <property name="mobile" length="20" column="F_MOBILE" access="field" type="string"/>
+    <property name="phone" length="20" column="F_PHONE" access="field" type="string"/>
+    <property name="isDefault" column="F_IS_DEFAULT" access="field" type="integer"/>
+
+    <many-to-one  name="user" class="com.apusic.ebiz.model.user.User"  column="F_USER_ID"/>
+  </class>
+</hibernate-mapping>

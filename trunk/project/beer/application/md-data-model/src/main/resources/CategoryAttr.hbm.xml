@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_EMARKET_CATEGORY_ATTR" name="com.apusic.md.model.emarket.CategoryAttr">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_emarket_category_attr</param>
+      </generator>
+    </id>
+    <property name="name" length="100" column="F_NAME" access="field" type="string"/>
+    <property name="key" length="50" column="F_KEY" access="field" type="string"/>
+    <property name="value" length="2000" column="F_VALUE" access="field" type="string"/>
+    <property name="serialNumber" column="F_SERIAM_NUMBER" access="field" type="integer"/>
+
+    <many-to-one  name="category" class="com.apusic.md.model.emarket.ProductCategory" column="F_CATEGORY_ID"/>
+  </class>
+</hibernate-mapping>

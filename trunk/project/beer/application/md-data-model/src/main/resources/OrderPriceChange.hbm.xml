@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_ORDERBOOK_PRICE_CHANGE" name="com.apusic.md.model.orderbook.OrderPriceChange">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_orderbook_price_change</param>
+      </generator>
+    </id>
+    <property name="orderItemId" column="F_ORDER_ITEM_ID" type="integer"/>
+    <property name="originalPrice" column="F_ORIGINAL_PRICE" type="double"/>
+    <property name="currentPrice" column="F_CURRENT_PRICE"  type="double"/>
+    <property name="action" column="F_ACTION"  type="string"/>
+    <property name="operator" column="F_OPERATOR"  type="string"/>
+    <property name="createTime" column="F_CREATE_TIME"  type="timestamp"/>
+  </class>
+</hibernate-mapping>
