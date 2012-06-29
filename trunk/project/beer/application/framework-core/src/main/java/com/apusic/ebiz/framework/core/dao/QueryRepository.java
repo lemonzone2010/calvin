@@ -16,6 +16,8 @@ public interface QueryRepository {
 	public long getRowCount(DetachedCriteria criteria);
 
 	public <T> List<T> findAll(Class<T> clazz);
+	
+	public <T> List<T> findAll(Class<T> clazz,String property,String order);
 
 	public <T> long getRowCountByExample(T t);
 

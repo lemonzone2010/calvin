@@ -17,6 +17,7 @@ import javax.validation.Validator;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.hibernate.search.annotations.DocumentId;
 
 import com.apusic.ebiz.framework.core.context.ApplicationContextHolder;
 
@@ -180,6 +181,7 @@ public abstract class IdEntity implements Serializable {
 	private static final transient Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@DocumentId
 	protected Integer id;
 
 	public Integer getId() {

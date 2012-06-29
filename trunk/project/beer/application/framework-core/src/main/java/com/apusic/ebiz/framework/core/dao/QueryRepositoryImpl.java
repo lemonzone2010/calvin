@@ -61,6 +61,11 @@ public class QueryRepositoryImpl implements QueryRepository,QueryService {// TOD
 	public <T> List<T> findAll(Class<T> clazz) {
 		return hibernateTemplate.findByCriteria(DetachedCriteria.forClass(clazz));
 	}
+	
+	public <T> List<T> findAll(Class<T> clazz,String property,String order){
+		String hql = String.format("SELECT a FROM %s a ORDER BY %s %s", clazz.getSimpleName(),property,order);
+		return hibernateTemplate.find(hql);
+	}
 
 	@Override
 	public <T> long getRowCount(Class<T> clazz) {
