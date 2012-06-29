@@ -38,5 +38,8 @@
 		<module>../resource</module>
 		<module>../navigation-web</module>
 		<module>../navigation-service</module>
+		<module>../datamanagement-service</module>
+		<module>../md-data-model</module>
+		<module>../usersphere-service</module>
     </modules>
 </project>
