@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-lazy-init="true">
+
+	<context:component-scan  base-package="com.apusic.md.usersphere" />
+
+	<import resource="classpath:apusic-ebiz-framework-core.xml" />
+
+	<bean id="usersphere_sendMailBuild" class="com.apusic.ebiz.framework.core.mail.MimeMailBuilderImpl">
+		<property name="from" value="mingdatest@126.com"/>
+		<property name="subject" value="锦绣商城--重置密码服务"/>
+		<property name="templateResourceBeanName" value="usersphere_emailTemplateResourceBean"/>
+    </bean>
+
+    <bean id="usersphere_approvalFailMailBuilder" class="com.apusic.ebiz.framework.core.mail.MimeMailBuilderImpl">
+		<property name="from" value="mingdatest@126.com"/>
+		<property name="subject" value="锦绣商城--审批失败服务"/>
+		<property name="templateResourceBeanName" value="md_FailRetrieveTemplateResourceBean"/>
+    </bean>
+    
+    <bean id="usersphere_emailTemplateResourceBean" class="com.apusic.ebiz.framework.core.template.TemplateResourceBean">
+		<property name="beanName" value="datamanagement_ConfigurationDataService"/>
+		<property name="methodName" value="getValue"/>
+		<property name="args">  
+		    <list> 
+		        <value type="java.lang.String">mailTemplate</value>  
+		    </list>  
+		</property>  
+	</bean>
+     <bean id="md_FailRetrieveTemplateResourceBean" class="com.apusic.ebiz.framework.core.template.TemplateResourceBean">
+		<property name="beanName" value="datamanagement_ConfigurationDataService"/>
+		<property name="methodName" value="getValue"/>
+		<property name="args">  
+		    <list> 
+		        <value type="java.lang.String">failMailTemplate</value>  
+		    </list>  
+		</property>  
+	</bean>
+   
+</beans>

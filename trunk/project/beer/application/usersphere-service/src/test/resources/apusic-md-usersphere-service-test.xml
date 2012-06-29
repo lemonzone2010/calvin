@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-lazy-init="true">
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      	<!-- <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/> -->
+        <!-- <property name="url" value="jdbc:derby:target/testdb;create=true"/>
+    <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@172.20.1.247:1521:orcl"/>
+        <property name="username" value="xuzhengping"/>
+        <property name="password" value="111111"/>
+
+	-->
+
+	 <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+        <property name="url" value="jdbc:hsqldb:file:target/testdb"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+        <!--
+        	<property name="initialSize" value="2" />
+        	<property name="maxActive" value="8" />
+        	<property name="maxIdle" value="2" />
+        	<property name="minIdle" value="2" />
+        	<property name="maxWait" value="-1" />
+        	<property name="testWhileIdle" value="true"/>
+        	<property name="defaultAutoCommit" value="false" />
+        -->
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+
+         <property name="mappingLocations">
+		      <list>
+		        <value>classpath*:RegisterAgreement.hbm.xml</value>
+		        <value>classpath*:Group.hbm.xml</value>
+		        <value>classpath*:User.hbm.xml</value>
+		        <value>classpath*:UserRole.hbm.xml</value>
+		        <value>classpath*:UserResource.hbm.xml</value>
+		        <value>classpath*:Contact.hbm.xml</value>
+		        <value>classpath*:UserProfile.hbm.xml</value>
+		        <value>classpath*:RetrievePW.hbm.xml</value>
+		        <value>classpath*:DeliveryAddr.hbm.xml</value>
+		      </list>
+    	 </property>
+
+        <property name="hibernateProperties">
+            <value>
+            hibernate.dialect=org.hibernate.dialect.HSQLDialect
+            hibernate.show_sql=true
+            hibernate.format_sql=true
+        	hibernate.hbm2ddl.auto=create-drop
+        	hibernate.jdbc.batch_size=0
+            </value>
+        </property>
+        <!--
+            hibernate.dialect=org.hibernate.dialect.OracleDialect
+        	update org.hibernate.dialect.DerbyDialect
+        	org.apache.commons.dbcp.BasicDataSource  hibernate.connection.username=mdtest
+            hibernate.connection.password=111111
+        -->
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory">
+            <ref local="sessionFactory" />
+        </property>
+    </bean>
+
+    <!--
+  	<bean id="smartorg_UserService" class="com.apusic.ebiz.framework.core.mock.MockFactoryBean">
+		 <property name="type" value="com.apusic.ebiz.smartorg.service.UserService" />
+    </bean>
+     -->
+
+    <tx:annotation-driven/>
+
+</beans>
