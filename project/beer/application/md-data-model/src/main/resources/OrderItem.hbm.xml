@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_ORDERBOOK_ORDER_ITEM" name="com.apusic.md.model.orderbook.OrderItem">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_orderbook_order_item</param>
+      </generator>
+    </id>
+    <property name="price" column="F_PRICE"  type="double"/>
+    <property name="quantity" column="F_QUANTITY" type="int"/>
+    <property name="itemInfo" column="F_ITEM_IFNO" type="string" />
+    <property name="remark" column="F_REMARK"  type="string"/>
+    <many-to-one name="product" class="com.apusic.md.model.emarket.Product" column="F_PRODUCT_ID"/>
+	<many-to-one name="order" class="com.apusic.md.model.orderbook.Order" column="F_ORDER_ID" />
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_EMARKET_HELP_CENTER" name="com.apusic.md.model.emarket.HelpCenterNavigation">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_emarket_help_center</param>
+      </generator>
+    </id>
+    <many-to-one name="parent" column="F_PARENT_ID" class="com.apusic.md.model.emarket.HelpCenterNavigation"/>
+	<set name="childrens" lazy="false" inverse="true" cascade="all" order-by="F_SERIAL_NUMBER asc,F_ID asc">
+      <key column="F_PARENT_ID"/>
+      <one-to-many class="com.apusic.md.model.emarket.HelpCenterNavigation"/>
+    </set>
+    <property name="name" column="F_NAME" type="string"/>
+    <property name="level" column="F_LEVEL" type="integer"/>
+    <property name="serialNumber" column="F_SERIAL_NUMBER" type="integer"/>
+    <property name="cssName" column="F_CSS_NAME" type="string"/>
+  </class>
+</hibernate-mapping>

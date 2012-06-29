@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_ORDERBOOK_DELIVERY_INFO" name="com.apusic.md.model.orderbook.DeliveryInfo">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_orderbook_delivery_info</param>
+      </generator>
+    </id>
+    <many-to-one name="order" class="com.apusic.md.model.orderbook.Order" unique="true" column="F_ORDER_ID"/>
+    <property name="mode" column="F_MODE" type="com.apusic.md.model.orderbook.DeliveryModeEnumType"/>
+    <property name="timeSlot" column="F_TIME_SLOT"  type="com.apusic.md.model.orderbook.DeliveryTimeSlotEnumType"/>
+    <property name="cost" column="F_COST"  type="double"/>
+    <property name="receiver" column="F_RECEIVER"  type="string"/>
+    <property name="address" column="F_ADDRESS"  type="string"/>
+    <property name="postcode" column="F_POSTCODE"  type="string"/>
+    <property name="mobile" column="F_MOBILE"  type="string"/>
+    <property name="phone" column="F_PHONE" type="string"></property>
+  </class>
+</hibernate-mapping>

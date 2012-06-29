@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_EMARKET_PRODUCT_CATEGORY" name="com.apusic.md.model.emarket.ProductCategory">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_emarket_product_category</param>
+      </generator>
+    </id>
+    <many-to-one name="parent" lazy="false" column="F_PARENT_ID" class="com.apusic.md.model.emarket.ProductCategory"/>
+	<set name="childrens" lazy="false" inverse="true" cascade="all" order-by="F_SERIAL_NUMBER asc,F_ID asc">
+      <key column="F_PARENT_ID"/>
+      <one-to-many class="com.apusic.md.model.emarket.ProductCategory"/>
+    </set>
+    <property name="name" length="50" column="F_NAME" access="field" type="string"/>
+    <property name="level" column="F_LEVEL" access="field" type="integer"/>
+    <property name="key" length="50" column="F_KEY" access="field" type="string"/>
+    <property name="serialNumber" column="F_SERIAL_NUMBER" access="field" type="integer"/>
+    <property name="state" column="F_STATE" access="field" type="com.apusic.md.model.emarket.StateEnumType"/>
+
+    <set cascade="none" access="field" lazy="false" table="T_EMARKET_BRAND_CATEGORY" name="brands">
+      <key column="F_CATEGORY_ID"/>
+      <many-to-many class="com.apusic.md.model.emarket.Brand" column="F_BARND_ID"/>
+    </set>
+
+	<set name="categoryAttrs" inverse="true" cascade="all" lazy="false">
+		<key column="F_CATEGORY_ID"/>
+		<one-to-many class="com.apusic.md.model.emarket.CategoryAttr"/>
+	</set>
+  </class>
+</hibernate-mapping>

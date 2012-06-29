@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_USERSPHERE_CONTACT" name="com.apusic.md.model.usersphere.Contact">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_usersphere_contact</param>
+      </generator>
+    </id>
+    <property name="contactName" length="50" column="F_NAME" access="field" type="string"/>
+    <property name="phone" column="F_PHONE" access="field" type="string"/>
+    <property name="mobile" length="50" column="F_MOBILE" access="field" type="string"/>
+    <property name="address" length="50" column="F_ADDRESS" access="field" type="string"/>
+    <property name="postCode" length="50" column="F_POSTCODE" access="field" type="string"/>
+    <property name="email" length="50" column="F_EMAIL" access="field" type="string"/>
+
+    <many-to-one  name="user" class="com.apusic.ebiz.model.user.User"  column="F_USER_ID"/>
+  </class>
+</hibernate-mapping>

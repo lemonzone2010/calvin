@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_ORDERBOOK_INVOICE" name="com.apusic.md.model.orderbook.Invoice">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_orderbook_invoice</param>
+      </generator>
+    </id>
+
+    <property name="type" column="F_TYPE" type="com.apusic.md.model.orderbook.InvoiceTypeEnumType"/>
+    <property name="head" column="F_HEAD" type="string"/>
+    <property name="content" column="F_CONTENT" type="com.apusic.md.model.orderbook.InvoiceContentTypeEnumType"/>
+    <property name="userName" column="F_USER_NAME" type="string"/>
+  </class>
+</hibernate-mapping>

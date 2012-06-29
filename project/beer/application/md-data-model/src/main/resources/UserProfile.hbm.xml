@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="T_USERSPHERE_USERPROFILE" name="com.apusic.md.model.usersphere.UserProfile">
+    <id access="field" name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_usersphere_userprofile</param>
+      </generator>
+    </id>
+    <property name="fullName" length="60" column="F_FULLNAME" access="field" type="string"/>
+    <property name="gender" column="F_GENDER" access="field" type="int"/>
+    <property name="nickname" length="50" column="F_NICKNAME" access="field" type="string"/>
+    <property name="email" length="50" column="F_EMAIL" access="field" type="string"/>
+    <property name="mobilePhone" length="50" column="F_MOBILEPHONE" access="field" type="string"/>
+    <property name="phone" length="50" column="F_PHONE" access="field" type="string"/>
+    <property name="qq" length="50" column="F_QQ" access="field" type="string"/>
+    <property name="postCode" length="50" column="F_POSTCODE" access="field" type="string"/>
+    <property name="address" length="500" column="F_ADDRESS" access="field" type="string"/>
+    <property name="createTime" column="F_CREATE_TIME" access="field" type="timestamp"/>
+    <property name="memberType" length="40" column="F_MEMBER_TYPE" access="field" type="com.apusic.md.model.usersphere.MemberEnumType" not-null="true"></property>
+    <many-to-one  name="user" class="com.apusic.ebiz.model.user.User"  unique="true" column="F_USER_ID"/>
+  </class>
+</hibernate-mapping>
