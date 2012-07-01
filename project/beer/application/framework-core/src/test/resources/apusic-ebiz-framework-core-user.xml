@@ -166,7 +166,7 @@
             </value>
         </property>
     </bean>
-<bean class="com.apusic.ebiz.framework.core.dao.HibernateEventWiring" lazy-init="false"></bean>
+<bean class="com.apusic.ebiz.framework.core.solr.HibernateEventWiring" lazy-init="false"></bean>
 
 	<bean id="fullTextSearchListener" class="org.hibernate.search.event.impl.FullTextIndexEventListener">
 		<constructor-arg type="org.hibernate.search.event.impl.FullTextIndexEventListener$Installation" value="SINGLE_INSTANCE"/>
