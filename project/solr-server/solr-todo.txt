@@ -1,0 +1,5 @@
+1.when start,create schema field,api
+2.event,trigger,update solr luence,
+3.query luence
+4.gui,administrator
+5.config,need solr index?solr url config.
