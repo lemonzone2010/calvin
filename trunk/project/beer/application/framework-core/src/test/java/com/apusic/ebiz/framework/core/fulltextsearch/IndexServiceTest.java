@@ -57,7 +57,7 @@ public class IndexServiceTest {
 
 		//Reindex and try again
 		book.setTitle("活着就是为了改变世界");
-		//crudService.update(book);
+		crudService.update(book);
 		indexService.index(DummyBook.class, 1);
 		books= fullTextQueryService.find(param, 0, 10);
 		Assert.assertEquals(1, books.size());

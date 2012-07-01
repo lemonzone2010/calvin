@@ -42,7 +42,7 @@ public class DummyBook {
 
     private Integer id;
 
-    @Field(index = Index.NO, store = Store.YES)
+    @Field(index = Index.YES, store = Store.YES)
     @DateBridge(resolution = Resolution.DAY)
     private Date publicationDate;
 
@@ -54,7 +54,7 @@ public class DummyBook {
     @Analyzer(definition = "customanalyzer")
     private String subtitle;
 
-    @Field(index = Index.NO, store = Store.YES)
+    @Field(index = Index.YES, store = Store.YES)
     @NumericField
     private Double price;
 
