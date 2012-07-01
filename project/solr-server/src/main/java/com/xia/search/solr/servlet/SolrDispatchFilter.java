@@ -63,6 +63,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
+import com.xia.search.solr.xml.SolrXml;
+
 /**
  * This filter looks at the incoming URL maps them to handlers defined in solrconfig.xml
  *
