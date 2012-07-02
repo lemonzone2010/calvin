@@ -1,8 +1,10 @@
 package com.apusic.ebiz.framework.core.solr;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.cfg.Configuration;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ import com.apusic.ebiz.framework.core.dao.QueryService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:apusic-ebiz-framework-core.xml",
-		"classpath:apusic-ebiz-framework-core-user.xml" })
+		"classpath:apusic-ebiz-framework-core-solr.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Transactional
 public class HibernateSolrIntegratorTest {
@@ -34,7 +36,9 @@ public class HibernateSolrIntegratorTest {
 	}
 	@Test
 	public void search() {
-		List<DummyBook> findAll = queryService.findAll(DummyBook.class);
-		System.out.println(findAll);
+		//List<DummyBook> findAll = queryService.findAll(DummyBook.class);
+		//System.out.println(findAll);
+		Map<Class<?>, SolrEntity> mappingMap = SolrMapping.getMappingMap();
+		Assert.assertTrue(mappingMap.size()==2);//has 2mapping files
 	}
 }
