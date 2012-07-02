@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 
-public class SoQuickShardConfig {
+public class XiaShardConfig {
 	enum SolrType {
 		ReadOnly, WriteOnly
 	}

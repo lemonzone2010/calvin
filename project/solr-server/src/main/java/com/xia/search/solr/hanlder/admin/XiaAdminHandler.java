@@ -9,14 +9,14 @@ import org.apache.solr.handler.admin.CoreAdminHandler;
 import org.apache.solr.request.SolrQueryRequest;
 import org.apache.solr.response.SolrQueryResponse;
 
-public class SoQuickAdminHandler extends CoreAdminHandler {
+public class XiaAdminHandler extends CoreAdminHandler {
 	
 	/**
 	 * Overloaded ctor to inject CoreContainer into the handler.
 	 * 
 	 * @param coreContainer Core Container of the solr webapp installed.
 	 */
-	public SoQuickAdminHandler(final CoreContainer coreContainer) {
+	public XiaAdminHandler(final CoreContainer coreContainer) {
 		super(coreContainer);
 	}
 

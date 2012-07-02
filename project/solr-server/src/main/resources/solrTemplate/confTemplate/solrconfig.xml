@@ -718,6 +718,8 @@
        of SearchComponents (see below) and supports distributed
        queries across multiple shards
     -->
+  <requestHandler name="/updateschema" class="com.xia.search.solr.hanlder.SchemaUpdateHanlder">
+  </requestHandler>
   <requestHandler name="/select" class="solr.SearchHandler">
     <!-- default values for query parameters can be specified, these
          will be overridden by parameters in the request
