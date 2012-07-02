@@ -2,9 +2,12 @@ package com.xia.search.solr.xml;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.solr.core.SolrResourceLoader;
 import org.dom4j.Attribute;
 import org.dom4j.Node;
@@ -19,12 +22,14 @@ import com.xia.search.solr.util.XmlUtil;
  * 
  */
 public class SchemaConfig {
+	private final Log logger = LogFactory.getLog(getClass());
+	private static final String SCHEMA_FILE=SolrResourceLoader.locateSolrHome() + "conf/schema.xml";
 	private List<SchemaConfig.Field> fields = new ArrayList<SchemaConfig.Field>();
 	private List<SchemaConfig.Field> dynamicFields = new ArrayList<SchemaConfig.Field>();
 	private XmlUtil xmlUtil;
 
 	public SchemaConfig() {
-		xmlUtil = new XmlUtil(new File(SolrResourceLoader.locateSolrHome() + "conf/schema.xml"));
+		xmlUtil = new XmlUtil(new File(SCHEMA_FILE));
 		init();
 	}
 
@@ -44,7 +49,7 @@ public class SchemaConfig {
 			String type = element.attribute("type").getValue();
 			Boolean indexed = getBoolean(element, "indexed");
 			Boolean stored = getBoolean(element, "stored");
-			fields.add(new Field(name, type, indexed, stored));
+			fields.add(Field.newField(name, type, indexed, stored));
 		}
 	}
 
@@ -57,15 +62,18 @@ public class SchemaConfig {
 	}
 
 	public void addField(SchemaConfig.Field field) {
-		fields.add(field);
+		if(!fields.contains(field)) {
+			logger.info("Add new Field:"+field);
+			fields.add(field);
+		}
 	}
 
 	public List<SchemaConfig.Field> getFields() {
-		return fields;
+		return Collections.unmodifiableList(fields);
 	}
 
 	public List<SchemaConfig.Field> getDynamicFields() {
-		return dynamicFields;
+		return Collections.unmodifiableList(dynamicFields);
 	}
 
 	public SchemaConfig.Field getFieldByName(String name) {
@@ -79,18 +87,36 @@ public class SchemaConfig {
 
 	public void save() {
 		for (Field f : fields) {
+			DefaultElement parentNode = (DefaultElement) xmlUtil.getSingleNode(Field.FIELD_PARENT);
 			if(!xmlUtil.isExistsAttribute(Field.FIELD+"/@name", f.getName())) {
 				//write Field if not exists
+				DefaultElement childElement = new DefaultElement(Field.FIELD_NAME);
+				childElement.addAttribute("name", f.getName());
+				childElement.addAttribute("type", f.getType());
+				childElement.addAttribute("indexed", ""+f.isIndexed());
+				childElement.addAttribute("stored", ""+f.isStored());
+				childElement.addAttribute("termVectors", ""+f.isTermVectors());
+				childElement.addAttribute("termPositions", ""+f.isTermPositions());
+				childElement.addAttribute("termOffsets", ""+f.isTermOffsets());
+				//childElement.setParent(parentNode);
+				parentNode.add(childElement);
 			}
-			xmlUtil.wirteToFile("D:/a.xml","UTF-8");
 		}
+		xmlUtil.wirteToFile("D:/a.xml","UTF-8");//tmp file for observer
+		xmlUtil.wirteToFile(SCHEMA_FILE,"UTF-8");
 	}
 
+	/**
+	 * @author xiayong
+	 *
+	 */
 	public static class Field {
 		// <field name="includes" type="text_general" indexed="true"
 		// stored="true" termVectors="true" termPositions="true"
 		// termOffsets="true" />
 		public static final String FIELD = "//schema/fields/field";
+		public static final String FIELD_NAME = "field";
+		public static final String FIELD_PARENT = "//schema/fields";
 		public static final String DYMAIC_FIELD = "//schema/fields/dynamicField";
 		private String name;
 		private String type;
@@ -100,14 +126,16 @@ public class SchemaConfig {
 		private boolean termPositions = false;
 		private boolean termOffsets = false;
 
-		public Field(String name, String type) {
-			this(name, type, false, false, false, false, false);
+		public static Field newField(String name, String type) {
+			return new Field(name, type, true, false, false, false, false);
 		}
 
-		public Field(String name, String type, boolean indexed, boolean stored) {
-			this(name, type, indexed, stored, false, false, false);
+		public static Field newField(String name, String type, boolean indexed, boolean stored) {
+			return new Field(name, type, indexed, stored, false, false, false);
 		}
-
+		public Field() {
+			
+		}
 		public Field(String name, String type, boolean indexed, boolean stored, boolean termVectors,
 				boolean termPositions, boolean termOffsets) {
 			this.name = name;
@@ -174,6 +202,18 @@ public class SchemaConfig {
 		public void setTermOffsets(boolean termOffsets) {
 			this.termOffsets = termOffsets;
 		}
+		@Override
+		public boolean equals(Object obj) {
+			if(!(obj instanceof Field))return false;
+			Field t=(Field) obj;
+			return StringUtils.equals(getName(), t.getName());
+		}
+
+		@Override
+		public String toString() {
+			return "Field [name=" + name + ", type=" + type + ", indexed=" + indexed + ", stored=" + stored + "]";
+		}
+		
 	}
 
 }

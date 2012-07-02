@@ -19,6 +19,7 @@ import org.dom4j.Node;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
+import org.dom4j.tree.DefaultElement;
 
 /**
  * 
@@ -78,12 +79,24 @@ public class XmlUtil {
 	
 	@SuppressWarnings("unchecked")
 	public boolean isExistsAttribute(String attrXpath,String value) {
+		boolean ret=false;
 		List<Attribute> attrs=document.selectNodes(attrXpath);
+		//Attribute singleNode = (Attribute) getSingleNode(attrXpath);
 		for (Attribute attribute : attrs) {
-			StringUtils.equals(attribute.getValue(), value);
+			ret =	StringUtils.equals(attribute.getValue(), value);
+			if(ret) {
+				return true;
+			}
 		}
 		return false;
 	}
+	public Node getSingleNode(String xpath) {
+		return document.selectSingleNode(xpath);
+	}
+	/*public void createNode(String parentPath,String nodeName,Map<String,String> attributes) {
+		DefaultElement node = (DefaultElement) document.selectSingleNode(parentPath);
+		node.
+	}*/
 
 	/**
 	 * 不存在返回null

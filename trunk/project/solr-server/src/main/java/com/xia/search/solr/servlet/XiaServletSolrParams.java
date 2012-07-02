@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.common.params.MultiMapSolrParams;
 
-import com.xia.search.solr.hanlder.admin.SoQuickShardConfig;
+import com.xia.search.solr.hanlder.admin.XiaShardConfig;
 
 
 /**
@@ -18,9 +18,9 @@ import com.xia.search.solr.hanlder.admin.SoQuickShardConfig;
  * @author xiayong
  *
  */
-public class SoQuickServletSolrParams extends MultiMapSolrParams {
+public class XiaServletSolrParams extends MultiMapSolrParams {
 
-	public SoQuickServletSolrParams(ServletRequest req) {
+	public XiaServletSolrParams(ServletRequest req) {
 		super(getMap(req.getParameterMap(),req));
 	}
 
@@ -35,9 +35,9 @@ public class SoQuickServletSolrParams extends MultiMapSolrParams {
 	}
 
 	private static void addSharding4Select(Map ret, String path) {
-		if (SoQuickShardConfig.isNeedShard()) {
+		if (XiaShardConfig.isNeedShard()) {
 			if (StringUtils.equals(path, "/select")) {
-				String readMachines = SoQuickShardConfig
+				String readMachines = XiaShardConfig
 						.getReadMachines();
 				if (StringUtils.isNotBlank(readMachines)) {
 					ret.put("shards", new String[] { readMachines });
