@@ -1,76 +1,78 @@
 package com.apusic.ebiz.framework.core.solr;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.collections.map.MultiValueMap;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.mapping.Column;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
-import org.hibernate.mapping.SimpleValue;
 import org.hibernate.mapping.Value;
 import org.hibernate.metamodel.source.MetadataImplementor;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 
 public class HibernateSolrIntegrator implements Integrator{
-class DocField{
-	String name;
-	String columnName;
-	Annotation[] annos;
-}
-static class Doc{
-	static Map<String,DocField> field=new HashMap<String,DocField>();
-	List<DocField> fields;
-}
-	@Override
+@Override
+	@SuppressWarnings("unchecked")
 	public void integrate(Configuration configuration, SessionFactoryImplementor sessionFactory,
 			SessionFactoryServiceRegistry serviceRegistry) {
-		// TODO Auto-generated method stub
-		System.out.println(configuration);
 		
+		//covert hibernate mappings to solr mapping
 		Iterator<PersistentClass> classMappings = configuration.getClassMappings();
 		while(classMappings.hasNext()) {
-			PersistentClass next = classMappings.next();
+			PersistentClass persistentClass = classMappings.next();
 			try {
-				Class<?> clazz = Class.forName(next.getClassName());
-				Annotation[] declaredAnnotations = clazz.getDeclaredAnnotations();
-				Field[] declaredFields = clazz.getDeclaredFields();
-				for (Field field : declaredFields) {
-					Annotation[] declaredAnnotations2 = field.getDeclaredAnnotations();
-					DocField doc=new DocField();
-					doc.annos=declaredAnnotations2;
-					Doc.field.put(field.getName(), doc);
+				Class<?> clazz = Class.forName(persistentClass.getClassName());
+				if(clazz.isAnnotationPresent(Indexed.class)) {
+					continue;
 				}
-				for (Iterator propertyIterator = next.getPropertyIterator(); propertyIterator.hasNext();) {
-					Property next2 = (Property) propertyIterator.next();
-					Value value= next2.getValue();
-					DocField object = Doc.field.get(next2.getName());
-					if(null==object) {
-						object=new DocField();
-						Doc.field.put(next2.getName(), object);
-					}
-					if(value.getColumnIterator().hasNext()) {
-					Column next3 = (Column) value.getColumnIterator().next();
-					object.columnName=next3.getName();
-					}
-					//object.columnName=value.getColumnIterator().next().toString();
+				
+				SolrEntity entity=new SolrEntity();
+				entity.setTableName(persistentClass.getTable().getName());
+				
+				
+				SolrMapping.addField(clazz, entity);
+				entity.setAnnotations(clazz.getDeclaredAnnotations());
+				
+				
+				Field[] declaredFields = clazz.getDeclaredFields();
+				for (Field delcaredField : declaredFields) {
+					SolrField field=new SolrField();
+					entity.addField(delcaredField.getName(), field);
+					field.setAnnotations(delcaredField.getDeclaredAnnotations());
+				}
+				
+				Property idProperty = persistentClass.getIdentifierProperty();
+				loadProperty(entity, idProperty);
+				
+				for (Iterator<Property> propertyIterator = persistentClass.getPropertyIterator(); propertyIterator.hasNext();) {
+					Property property = (Property) propertyIterator.next();
 					
-					System.out.println(value);
+					loadProperty(entity, property);
 				}
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
-			System.out.println(next);
 		}
+		//System.out.println(SolrMapping.getMappingMap());
 		//TODO 解析实体类，将@Field定义的实体及相关的属性，提交到solr/addSchema?
+	}
+
+	private void loadProperty(SolrEntity entity, Property property) {
+		SolrField field = entity.get(property.getName());
+		if(null==field) {
+			field=new SolrField();
+			entity.addField(property.getName(), field);
+		}
+		
+		Value column= property.getValue();
+		if(column.getColumnIterator().hasNext()) {
+			Column next3 = (Column) column.getColumnIterator().next();
+			field.setColumnName(next3.getName());
+		}
 	}
 
 	@Override
