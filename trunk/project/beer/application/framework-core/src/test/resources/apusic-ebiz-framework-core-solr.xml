@@ -57,7 +57,6 @@
             </value>
         </property>
     </bean>
-<bean class="com.apusic.ebiz.framework.core.solr.HibernateEventWiring" lazy-init="false"></bean>
 
 
      <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
