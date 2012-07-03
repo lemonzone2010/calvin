@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <solr persistent="true">
-  <cores adminPath="/admin/cores" adminHandler="com.xia.search.solr.hanlder.admin.SoQuickAdminHandler" defaultCoreName="collection1">
+  <cores adminPath="/admin/cores" adminHandler="com.xia.search.solr.hanlder.admin.XiaAdminHandler" defaultCoreName="collection1">
     <core name="collection1" instanceDir=".\" dataDir="./data"/>
   </cores>
 </solr>
