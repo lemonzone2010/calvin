@@ -16,6 +16,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.apusic.ebiz.framework.core.DummyBook;
+import com.apusic.ebiz.framework.core.DummyUser;
 import com.apusic.ebiz.framework.core.dao.QueryService;
 import com.apusic.ebiz.framework.core.solr.DocumentHelper.FieldAdaptor;
 import com.apusic.ebiz.framework.core.solr.DocumentHelper.SolrDocument;
@@ -55,6 +56,11 @@ public class HibernateSolrIntegratorTest {
 		documentHelper.setCanAddEmptyField(false);
 		document = documentHelper.getDocument(book);
 		Assert.assertEquals(1, document.getFields().size());
+		
+		DummyUser user=new DummyUser();
+		documentHelper.setCanAddEmptyField(true);
+		document = documentHelper.getDocument(user);
+		Assert.assertEquals(0, document.getFields().size());
 	}
 
 	public static String toJson(Object obj) {

@@ -36,14 +36,13 @@ public class DocumentHelper {
 	 * @return
 	 */
 	public SolrDocument getDocument(Object entity) {
-		ConversionContext conversionContext = new ContextualExceptionBridgeHelper();
-		SearchFactoryImplementor searchFactoryImplementor = getSearchFactoryImplementor ();
-
-		DocumentBuilderIndexedEntity<Object> entityBuilder = (DocumentBuilderIndexedEntity<Object>) getEntityBuilder(searchFactoryImplementor, entity.getClass());
-		Map<String, String> fieldToAnalyzerMap = new HashMap<String, String>();
-		;
 		SolrDocument document=new SolrDocument();
 		try {
+			ConversionContext conversionContext = new ContextualExceptionBridgeHelper();
+			SearchFactoryImplementor searchFactoryImplementor = getSearchFactoryImplementor ();
+
+			DocumentBuilderIndexedEntity<Object> entityBuilder = (DocumentBuilderIndexedEntity<Object>) getEntityBuilder(searchFactoryImplementor, entity.getClass());
+			Map<String, String> fieldToAnalyzerMap = new HashMap<String, String>();
 			if(canAddEmptyField) {
 				LuceneOptionsImpl.canAddEmptyField=true;
 			}
@@ -52,12 +51,13 @@ public class DocumentHelper {
 			for (Fieldable field : doc.getFields()) {
 				document.add(new FieldAdaptor((Field)field));
 			}
-		} finally {
+		}catch (Exception e) {
+			//没有定义@indexed的实体，会跑错
+		}
+		finally {
 			LuceneOptionsImpl.canAddEmptyField=false;
 		}
 		return document;		
-
-
 	}
 
 	private SearchFactoryImplementor getSearchFactoryImplementor () {
