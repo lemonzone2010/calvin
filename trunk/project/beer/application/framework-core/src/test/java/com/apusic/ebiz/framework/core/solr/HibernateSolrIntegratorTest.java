@@ -19,7 +19,7 @@ import com.apusic.ebiz.framework.core.DummyBook;
 import com.apusic.ebiz.framework.core.DummyUser;
 import com.apusic.ebiz.framework.core.dao.QueryService;
 import com.apusic.ebiz.framework.core.solr.DocumentHelper.FieldAdaptor;
-import com.apusic.ebiz.framework.core.solr.DocumentHelper.SolrDocument;
+import com.apusic.ebiz.framework.core.solr.DocumentHelper.SolrSchemaDocument;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:apusic-ebiz-framework-core.xml",
@@ -46,7 +46,7 @@ public class HibernateSolrIntegratorTest {
 		DocumentHelper documentHelper=new DocumentHelper(sessionFactory.getCurrentSession());
 		DummyBook book=new DummyBook();
 		
-		SolrDocument document = documentHelper.getDocument(book);
+		SolrSchemaDocument document = documentHelper.getDocument(book);
 		Assert.assertEquals(5, document.getFields().size());
 		
 		for (FieldAdaptor field : document.getFields()) {

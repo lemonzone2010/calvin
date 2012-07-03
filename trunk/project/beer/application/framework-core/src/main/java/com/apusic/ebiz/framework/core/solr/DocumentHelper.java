@@ -2,6 +2,7 @@ package com.apusic.ebiz.framework.core.solr;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,8 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Fieldable;
 import org.apache.lucene.index.FieldInfo.IndexOptions;
 import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.mapping.PersistentClass;
 import org.hibernate.search.SearchException;
 import org.hibernate.search.bridge.spi.ConversionContext;
 import org.hibernate.search.bridge.util.impl.ContextualExceptionBridgeHelper;
@@ -30,13 +33,27 @@ public class DocumentHelper {
 		this.session = session;
 	}
 
+	public static void updateSolrSchema(Configuration configuration, Session session) {
+		Iterator<PersistentClass> classMappings = configuration.getClassMappings();
+		while (classMappings.hasNext()) {
+			PersistentClass persistentClass = classMappings.next();
+			try {
+				Class<?> clazz = Class.forName(persistentClass.getClassName());
+				DocumentHelper documentHelper = new DocumentHelper(session);
+				SolrUpdateSchemaHelper.updateSchema(documentHelper.getDocument(clazz.newInstance()));
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+	}
 	/**
 	 * 根据hibernate search相关的api取得相应的实体的luence的field
 	 * @param entity 定义了hsbernate search相关标签的实体
 	 * @return
 	 */
-	public SolrDocument getDocument(Object entity) {
-		SolrDocument document=new SolrDocument();
+	public SolrSchemaDocument getDocument(Object entity) {
+		SolrSchemaDocument document=new SolrSchemaDocument();
 		try {
 			ConversionContext conversionContext = new ContextualExceptionBridgeHelper();
 			SearchFactoryImplementor searchFactoryImplementor = getSearchFactoryImplementor ();
@@ -134,9 +151,9 @@ public class DocumentHelper {
 
 	}
 	
-	public final class SolrDocument {
+	public final class SolrSchemaDocument {
 	  List<FieldAdaptor> fields = new ArrayList<FieldAdaptor>();
-	  public SolrDocument() {}
+	  public SolrSchemaDocument() {}
 
 	  public final void add(FieldAdaptor field) {
 	    fields.add(field);
