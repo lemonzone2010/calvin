@@ -1,7 +1,6 @@
 package com.apusic.ebiz.framework.core.solr;
 
 import java.io.StringWriter;
-import java.util.Map;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.SessionFactory;
@@ -18,8 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.apusic.ebiz.framework.core.DummyBook;
 import com.apusic.ebiz.framework.core.DummyUser;
 import com.apusic.ebiz.framework.core.dao.QueryService;
-import com.apusic.ebiz.framework.core.solr.DocumentHelper.FieldAdaptor;
-import com.apusic.ebiz.framework.core.solr.DocumentHelper.SolrSchemaDocument;
+import com.xia.search.solr.schema.DocumentHelper;
+import com.xia.search.solr.schema.FieldAdaptor;
+import com.xia.search.solr.schema.SolrSchemaDocument;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:apusic-ebiz-framework-core.xml",
@@ -34,13 +34,13 @@ public class HibernateSolrIntegratorTest {
 	@Autowired
 	SessionFactory sessionFactory;
 	
-	@Test
+/*	@Test
 	public void search() {
 		//List<DummyBook> findAll = queryService.findAll(DummyBook.class);
 		//System.out.println(findAll);
 		Map<Class<?>, SolrEntity> mappingMap = SolrMapping.getMappingMap();
 		Assert.assertTrue(mappingMap.size()==2);//has 2mapping files
-	}
+	}*/
 	@Test
 	public void document() {
 		DocumentHelper documentHelper=new DocumentHelper(sessionFactory.getCurrentSession());
