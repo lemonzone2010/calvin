@@ -27,18 +27,15 @@ import org.apache.solr.schema.SchemaField;
 import org.apache.solr.update.AddUpdateCommand;
 import org.apache.solr.update.CommitUpdateCommand;
 import org.apache.solr.update.DeleteUpdateCommand;
-import org.apache.solr.update.DocumentBuilder;
 import org.apache.solr.update.MergeIndexesCommand;
 import org.apache.solr.update.RollbackUpdateCommand;
 import org.apache.solr.update.UpdateHandler;
 import org.apache.solr.update.processor.UpdateRequestProcessor;
 import org.apache.solr.update.processor.UpdateRequestProcessorFactory;
 
+import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.update.SchemaUpdateHandler;
 import com.xia.search.solr.util.JasonUtil;
-import com.xia.search.solr.util.XmlUtil;
-import com.xia.search.solr.xml.SchemaConfig;
-import com.xia.search.solr.xml.SchemaConfig.Field;
 import com.xia.search.solr.xml.SolrConfig;
 
 /**
@@ -71,7 +68,7 @@ class SchemaUpdateProcessor extends UpdateRequestProcessor {
 			String name = field.getName();
 			SchemaField field2 = req.getSchema().getFieldOrNull(name);
 			if(null==field2) {
-				Field f=JasonUtil.toObjectFromJson(field.getValue().toString(), Field.class);
+				FieldAdaptor f=JasonUtil.toObjectFromJson(field.getValue().toString(), FieldAdaptor.class);
 				System.out.println(f);
 				SolrConfig.getSchemaConfig().addField(f);
 			}
