@@ -1,9 +1,10 @@
 package com.apusic.ebiz.framework.core.solr;
 
-import java.util.List;
+import java.io.StringWriter;
 import java.util.Map;
 
-import org.hibernate.cfg.Configuration;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.hibernate.SessionFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.apusic.ebiz.framework.core.DummyBook;
 import com.apusic.ebiz.framework.core.dao.QueryService;
+import com.apusic.ebiz.framework.core.solr.DocumentHelper.FieldAdaptor;
+import com.apusic.ebiz.framework.core.solr.DocumentHelper.SolrDocument;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:apusic-ebiz-framework-core.xml",
@@ -27,13 +30,9 @@ public class HibernateSolrIntegratorTest {
 	@Autowired
 	@Qualifier("queryRepository")
 	QueryService queryService;
+	@Autowired
+	SessionFactory sessionFactory;
 	
-	private void init() {
-		//Configuration cfg = new Configuration().configure(new File("hibernate.cfg.xml"));
-		//sessionFactory = cfg.buildSessionFactory();
-		// TODO Auto-generated method stub
-		//Configuration configuration;
-	}
 	@Test
 	public void search() {
 		//List<DummyBook> findAll = queryService.findAll(DummyBook.class);
@@ -41,4 +40,33 @@ public class HibernateSolrIntegratorTest {
 		Map<Class<?>, SolrEntity> mappingMap = SolrMapping.getMappingMap();
 		Assert.assertTrue(mappingMap.size()==2);//has 2mapping files
 	}
+	@Test
+	public void document() {
+		DocumentHelper documentHelper=new DocumentHelper(sessionFactory.getCurrentSession());
+		DummyBook book=new DummyBook();
+		
+		SolrDocument document = documentHelper.getDocument(book);
+		Assert.assertEquals(5, document.getFields().size());
+		
+		for (FieldAdaptor field : document.getFields()) {
+			System.out.println(toJson(field));
+		}
+
+		documentHelper.setCanAddEmptyField(false);
+		document = documentHelper.getDocument(book);
+		Assert.assertEquals(1, document.getFields().size());
+	}
+
+	public static String toJson(Object obj) {
+		StringWriter sw=new StringWriter();
+		ObjectMapper mapper = new ObjectMapper(); 
+		try {
+			mapper.writeValue(sw, obj);
+			return sw.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return null;
+	}
+
 }
