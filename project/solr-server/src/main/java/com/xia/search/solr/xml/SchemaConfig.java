@@ -13,6 +13,7 @@ import org.dom4j.Attribute;
 import org.dom4j.Node;
 import org.dom4j.tree.DefaultElement;
 
+import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.util.XmlUtil;
 
 /**
@@ -24,8 +25,8 @@ import com.xia.search.solr.util.XmlUtil;
 public class SchemaConfig {
 	private final Log logger = LogFactory.getLog(getClass());
 	private static final String SCHEMA_FILE=SolrResourceLoader.locateSolrHome() + "conf/schema.xml";
-	private List<SchemaConfig.Field> fields = new ArrayList<SchemaConfig.Field>();
-	private List<SchemaConfig.Field> dynamicFields = new ArrayList<SchemaConfig.Field>();
+	private List<FieldAdaptor> fields = new ArrayList<FieldAdaptor>();
+	private List<FieldAdaptor> dynamicFields = new ArrayList<FieldAdaptor>();
 	private XmlUtil xmlUtil;
 
 	public SchemaConfig() {
@@ -34,22 +35,22 @@ public class SchemaConfig {
 	}
 
 	private void init() {
-		List<Node> nodes = xmlUtil.getNodes(Field.FIELD);
+		List<Node> nodes = xmlUtil.getNodes(FieldAdaptor.FIELD);
 		convert(nodes, fields);
 
-		nodes = xmlUtil.getNodes(Field.DYMAIC_FIELD);
+		nodes = xmlUtil.getNodes(FieldAdaptor.DYMAIC_FIELD);
 		convert(nodes, dynamicFields);
 
 	}
 
-	private void convert(List<Node> nodes, List<SchemaConfig.Field> fields) {
+	private void convert(List<Node> nodes, List<FieldAdaptor> fields) {
 		for (Node node : nodes) {
 			DefaultElement element = (DefaultElement) node;
 			String name = element.attribute("name").getValue();
 			String type = element.attribute("type").getValue();
 			Boolean indexed = getBoolean(element, "indexed");
 			Boolean stored = getBoolean(element, "stored");
-			fields.add(Field.newField(name, type, indexed, stored));
+			fields.add(FieldAdaptor.newField(name, type, indexed, stored));
 		}
 	}
 
@@ -61,24 +62,24 @@ public class SchemaConfig {
 		return Boolean.valueOf(attribute.getValue());
 	}
 
-	public void addField(SchemaConfig.Field field) {
+	public void addField(FieldAdaptor field) {
 		if(!fields.contains(field)) {
 			logger.info("Add new Field:"+field);
 			fields.add(field);
 		}
 	}
 
-	public List<SchemaConfig.Field> getFields() {
+	public List<FieldAdaptor> getFields() {
 		return Collections.unmodifiableList(fields);
 	}
 
-	public List<SchemaConfig.Field> getDynamicFields() {
+	public List<FieldAdaptor> getDynamicFields() {
 		return Collections.unmodifiableList(dynamicFields);
 	}
 
-	public SchemaConfig.Field getFieldByName(String name) {
-		for (Field f : fields) {
-			if (StringUtils.equals(f.getName(), name)) {
+	public FieldAdaptor getFieldByName(String name) {
+		for (FieldAdaptor f : fields) {
+			if (StringUtils.equals(f.getFieldName(), name)) {
 				return f;
 			}
 		}
@@ -86,18 +87,16 @@ public class SchemaConfig {
 	}
 
 	public void save() {
-		for (Field f : fields) {
-			DefaultElement parentNode = (DefaultElement) xmlUtil.getSingleNode(Field.FIELD_PARENT);
-			if(!xmlUtil.isExistsAttribute(Field.FIELD+"/@name", f.getName())) {
+		for (FieldAdaptor f : fields) {
+			DefaultElement parentNode = (DefaultElement) xmlUtil.getSingleNode(FieldAdaptor.FIELD_PARENT);
+			if(!xmlUtil.isExistsAttribute(FieldAdaptor.FIELD+"/@name", f.getFieldName())) {
 				//write Field if not exists
-				DefaultElement childElement = new DefaultElement(Field.FIELD_NAME);
-				childElement.addAttribute("name", f.getName());
+				DefaultElement childElement = new DefaultElement(FieldAdaptor.FIELD_NAME);
+				childElement.addAttribute("name", f.getFieldName());
 				childElement.addAttribute("type", f.getType());
 				childElement.addAttribute("indexed", ""+f.isIndexed());
 				childElement.addAttribute("stored", ""+f.isStored());
-				childElement.addAttribute("termVectors", ""+f.isTermVectors());
-				childElement.addAttribute("termPositions", ""+f.isTermPositions());
-				childElement.addAttribute("termOffsets", ""+f.isTermOffsets());
+				childElement.addAttribute("termVectors", ""+f.isStoreTermVector());
 				//childElement.setParent(parentNode);
 				parentNode.add(childElement);
 			}
@@ -106,114 +105,5 @@ public class SchemaConfig {
 		xmlUtil.wirteToFile(SCHEMA_FILE,"UTF-8");
 	}
 
-	/**
-	 * @author xiayong
-	 *
-	 */
-	public static class Field {
-		// <field name="includes" type="text_general" indexed="true"
-		// stored="true" termVectors="true" termPositions="true"
-		// termOffsets="true" />
-		public static final String FIELD = "//schema/fields/field";
-		public static final String FIELD_NAME = "field";
-		public static final String FIELD_PARENT = "//schema/fields";
-		public static final String DYMAIC_FIELD = "//schema/fields/dynamicField";
-		private String name;
-		private String type;
-		private boolean indexed = false;
-		private boolean stored = false;
-		private boolean termVectors = false;
-		private boolean termPositions = false;
-		private boolean termOffsets = false;
-
-		public static Field newField(String name, String type) {
-			return new Field(name, type, true, false, false, false, false);
-		}
-
-		public static Field newField(String name, String type, boolean indexed, boolean stored) {
-			return new Field(name, type, indexed, stored, false, false, false);
-		}
-		public Field() {
-			
-		}
-		public Field(String name, String type, boolean indexed, boolean stored, boolean termVectors,
-				boolean termPositions, boolean termOffsets) {
-			this.name = name;
-			this.type = type;
-			this.indexed = indexed;
-			this.stored = stored;
-			this.termVectors = termVectors;
-			this.termPositions = termPositions;
-			this.termOffsets = termOffsets;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
-		}
-
-		public boolean isIndexed() {
-			return indexed;
-		}
-
-		public void setIndexed(boolean indexed) {
-			this.indexed = indexed;
-		}
-
-		public boolean isStored() {
-			return stored;
-		}
-
-		public void setStored(boolean stored) {
-			this.stored = stored;
-		}
-
-		public boolean isTermVectors() {
-			return termVectors;
-		}
-
-		public void setTermVectors(boolean termVectors) {
-			this.termVectors = termVectors;
-		}
-
-		public boolean isTermPositions() {
-			return termPositions;
-		}
-
-		public void setTermPositions(boolean termPositions) {
-			this.termPositions = termPositions;
-		}
-
-		public boolean isTermOffsets() {
-			return termOffsets;
-		}
-
-		public void setTermOffsets(boolean termOffsets) {
-			this.termOffsets = termOffsets;
-		}
-		@Override
-		public boolean equals(Object obj) {
-			if(!(obj instanceof Field))return false;
-			Field t=(Field) obj;
-			return StringUtils.equals(getName(), t.getName());
-		}
-
-		@Override
-		public String toString() {
-			return "Field [name=" + name + ", type=" + type + ", indexed=" + indexed + ", stored=" + stored + "]";
-		}
-		
-	}
 
 }

@@ -3,23 +3,23 @@ package com.xia.search.solr.util;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.xia.search.solr.xml.SchemaConfig.Field;
+import com.xia.search.solr.schema.FieldAdaptor;
 
 public class JasonUtilTest {
 
 	@Test
 	public void toJsonString() {
-		Field f = Field.newField("xxx", "maxWord");
+		FieldAdaptor f = FieldAdaptor.newField("xxx", "maxWord");
 		String jsonString = JasonUtil.toJsonString(f);
 		System.out.println(jsonString);
-		Assert.assertEquals(jsonString, "{\"name\":\"xxx\",\"type\":\"maxWord\",\"indexed\":true,\"stored\":false,\"termVectors\":false,\"termPositions\":false,\"termOffsets\":false}");
+		Assert.assertEquals(jsonString, "{\"entityName\":\"\",\"fieldName\":\"xxx\",\"type\":\"maxWord\",\"storeTermVector\":false,\"stored\":false,\"indexed\":true,\"tokenized\":true}");
 	}
 
 	@Test
 	public void toObjectFromJson() {
-		String jsonString = "{\"name\":\"xxx\",\"type\":\"maxWord\",\"indexed\":true,\"stored\":false,\"termVectors\":false,\"termPositions\":false,\"termOffsets\":false}";
-		Field f = JasonUtil.toObjectFromJson(jsonString, Field.class);
+		String jsonString="{\"entityName\":\"DummyBook\",\"fieldName\":\"xxx\",\"storeTermVector\":false,\"stored\":true,\"indexed\":true,\"tokenized\":false}";
+		FieldAdaptor f = JasonUtil.toObjectFromJson(jsonString, FieldAdaptor.class);
 		System.out.println(f);
-		Assert.assertEquals(f.getName(), "xxx");
+		Assert.assertEquals(f.getFieldName(), "xxx");
 	}
 }
