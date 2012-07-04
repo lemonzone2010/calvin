@@ -27,7 +27,7 @@ public class SchemaConfigTest {
 	public void saveSchemaConfig() {
 		List<FieldAdaptor> fields = SolrConfig.getSchemaConfig().getFields();
 		Assert.assertTrue(fields.size() > 1);
-		FieldAdaptor newFile=FieldAdaptor.newField("ages_xiass", "maxWord");
+		FieldAdaptor newFile=FieldAdaptor.newField("ages_xiass", "text");
 		SolrConfig.getSchemaConfig().addField(newFile);
 		SolrConfig.getSchemaConfig().save();
 	}
@@ -37,7 +37,7 @@ public class SchemaConfigTest {
 		List<FieldAdaptor> fields = SolrConfig.getSchemaConfig().getFields();
 		int size = fields.size();
 		Assert.assertTrue(size > 1);
-		FieldAdaptor newFile=FieldAdaptor.newField("ages___---", "maxWord");
+		FieldAdaptor newFile=FieldAdaptor.newField("ages___---", "text");
 		
 		SolrConfig.getSchemaConfig().addField(newFile);		
 		Assert.assertEquals(size+1, fields.size());

@@ -41,5 +41,7 @@
 		<module>../datamanagement-service</module>
 		<module>../md-data-model</module>
 		<module>../usersphere-service</module>
+		<module>../../solr-client</module>
+		<module>../../solr-server</module>
     </modules>
 </project>

@@ -1,4 +1,4 @@
-package com.apusic.ebiz.framework.core.dao;
+package com.apusic.ebiz.framework.core.solr;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.apusic.ebiz.framework.core.DummyUser;
+import com.apusic.ebiz.framework.core.dao.CrudService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:apusic-ebiz-framework-core.xml",

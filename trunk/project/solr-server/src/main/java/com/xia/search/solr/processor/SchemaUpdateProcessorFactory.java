@@ -65,13 +65,13 @@ class SchemaUpdateProcessor extends UpdateRequestProcessor {
 		// FIXME modify schema here
 		SolrInputDocument docs = cmd.getSolrInputDocument();
 		for (SolrInputField field : docs) {
-			String name = field.getName();
-			SchemaField field2 = req.getSchema().getFieldOrNull(name);
-			if(null==field2) {
-				FieldAdaptor f=JasonUtil.toObjectFromJson(field.getValue().toString(), FieldAdaptor.class);
-				System.out.println(f);
-				SolrConfig.getSchemaConfig().addField(f);
-			}
+			//String name = field.getName();
+			//SchemaField field2 = req.getSchema().getFieldOrNull(name);
+			//if(null==field2) {
+			FieldAdaptor f=JasonUtil.toObjectFromJson(field.getValue().toString(), FieldAdaptor.class);
+			System.out.println(f);
+			SolrConfig.getSchemaConfig().addField(f);
+			//}
 		}
 		SolrConfig.getSchemaConfig().save();
 		//cmd.doc = DocumentBuilder.toDocument(docs, req.getSchema());
