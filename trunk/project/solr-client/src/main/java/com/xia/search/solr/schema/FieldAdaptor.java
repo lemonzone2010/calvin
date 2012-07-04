@@ -8,6 +8,7 @@ public class FieldAdaptor{
 	public static final String FIELD_NAME = "field";
 	public static final String FIELD_PARENT = "//schema/fields";
 	public static final String DYMAIC_FIELD = "//schema/fields/dynamicField";
+	public static final String HIBERNATE_CLASS_FLAG = "hibernate_class";
 	
 	private String entityName = "";
 	private String fieldName = "body";
@@ -16,6 +17,7 @@ public class FieldAdaptor{
 	private boolean stored = false;
 	private boolean indexed = true;
 	private boolean tokenized = true;
+	private Object fieldsData = null;
 
 	public FieldAdaptor() {
 	}
@@ -25,6 +27,16 @@ public class FieldAdaptor{
 		setStored(field.isStored());
 		setIndexed(field.isIndexed());
 		setTokenized(field.isTokenized());
+		try {
+			java.lang.reflect.Field dataField = field.getClass().getSuperclass().getDeclaredField("fieldsData");
+			dataField.setAccessible(true);
+			fieldsData= dataField.get(field);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(StringUtils.contains(fieldName, HIBERNATE_CLASS_FLAG)) {
+			indexed=false;
+		}
 	}
 	public static FieldAdaptor newField(String name, String type) {
 		return new FieldAdaptor(name, type, true, false, false);
@@ -106,6 +118,12 @@ public class FieldAdaptor{
 	public String toString() {
 		return "FieldAdaptor [entityName=" + entityName + ", fieldName=" + fieldName + ", type=" + type + ", stored="
 				+ stored + ", indexed=" + indexed + "]";
+	}
+	public Object getFieldsData() {
+		return fieldsData;
+	}
+	public void setFieldsData(Object fieldsData) {
+		this.fieldsData = fieldsData;
 	}
 
 }

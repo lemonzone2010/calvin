@@ -470,13 +470,13 @@
 
 	<fieldType name="textMaxWord" class="solr.TextField" positionIncrementGap="100" >  
         <analyzer>  
-            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="max-word" dicPath="c:\solr\data\dic"/>  
+            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="max-word"/>  <!-- dicPath="conf/dic" -->
             <filter class="solr.LowerCaseFilterFactory"/>  
         </analyzer>  
      </fieldType>  
      <fieldType name="text" class="solr.TextField" positionIncrementGap="100" >  
         <analyzer>  
-            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="max-word" dicPath="c:\solr\data\dic"/>  
+            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="max-word"/>  
             <filter class="solr.LowerCaseFilterFactory"/>  
         </analyzer>  
      </fieldType>  

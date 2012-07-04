@@ -28,6 +28,7 @@ public class SchemaConfig {
 	private List<FieldAdaptor> fields = new ArrayList<FieldAdaptor>();
 	private List<FieldAdaptor> dynamicFields = new ArrayList<FieldAdaptor>();
 	private XmlUtil xmlUtil;
+	private boolean isChanged=false;
 
 	public SchemaConfig() {
 		xmlUtil = new XmlUtil(new File(SCHEMA_FILE));
@@ -66,6 +67,7 @@ public class SchemaConfig {
 		if(!fields.contains(field)) {
 			logger.info("Add new Field:"+field);
 			fields.add(field);
+			isChanged=true;
 		}
 	}
 
@@ -87,6 +89,11 @@ public class SchemaConfig {
 	}
 
 	public void save() {
+		if(!isChanged) {
+			logger.info(SCHEMA_FILE+" Nothing changed,neednot save!");
+			return;
+		}
+		isChanged=false;
 		for (FieldAdaptor f : fields) {
 			DefaultElement parentNode = (DefaultElement) xmlUtil.getSingleNode(FieldAdaptor.FIELD_PARENT);
 			String name=f.getEntityName()+"."+f.getFieldName();

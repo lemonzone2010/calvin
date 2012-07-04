@@ -1,13 +1,14 @@
 package com.xia.search.solr.schema;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Fieldable;
-import org.apache.lucene.index.FieldInfo.IndexOptions;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.mapping.PersistentClass;
@@ -62,7 +63,16 @@ public class DocumentHelper {
 			if(canAddEmptyField) {
 				LuceneOptionsImpl.canAddEmptyField=true;
 			}
-			Document doc = entityBuilder.getDocument(entity, "", fieldToAnalyzerMap,
+			Serializable id=null;
+			try {
+				id=(Serializable) PropertyUtils.getProperty(entity, "id");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if(id==null) {
+				id="";
+			}
+			Document doc = entityBuilder.getDocument(entity, id, fieldToAnalyzerMap,
 					searchFactoryImplementor.getInstanceInitializer(), conversionContext);
 			for (Fieldable field : doc.getFields()) {
 				FieldAdaptor fieldAdaptor = new FieldAdaptor((Field)field);
