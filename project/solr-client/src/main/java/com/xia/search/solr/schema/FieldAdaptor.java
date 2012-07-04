@@ -100,7 +100,7 @@ public class FieldAdaptor{
 	public boolean equals(Object obj) {
 		if(!(obj instanceof FieldAdaptor))return false;
 		FieldAdaptor t=(FieldAdaptor) obj;
-		return StringUtils.equals(getFieldName(), t.getFieldName());
+		return StringUtils.equals(getFieldName(), t.getFieldName())&&StringUtils.equals(getEntityName(), t.getEntityName());
 	}
 	@Override
 	public String toString() {
