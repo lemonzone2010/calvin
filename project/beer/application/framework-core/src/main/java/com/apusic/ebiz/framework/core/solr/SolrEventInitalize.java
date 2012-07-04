@@ -43,7 +43,7 @@ public class SolrEventInitalize implements InitializingBean{
 
 				@Override
 				public Object call() throws Exception {
-					DocumentHelper.updateSolrSchema(HibernateSolrIntegrator.getConfiguration(), sessionFactory.getCurrentSession());
+					//DocumentHelper.updateSolrSchema(HibernateSolrIntegrator.getConfiguration(), sessionFactory.getCurrentSession());
 					return null;
 				}
 			});

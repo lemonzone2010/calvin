@@ -1,5 +1,9 @@
 package com.apusic.ebiz.framework.core.solr;
 
+import java.io.IOException;
+import java.util.Date;
+
+import org.apache.solr.client.solrj.SolrServerException;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.query.engine.spi.EntityInfo;
 import org.junit.Assert;
@@ -21,6 +25,7 @@ import com.xia.search.solr.entity.SolrObjectLoaderHelper;
 import com.xia.search.solr.schema.DocumentHelper;
 import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.schema.SolrSchemaDocument;
+import com.xia.search.solr.update.SolrUpdateHelper;
 import com.xia.search.solr.util.JasonUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -68,6 +73,20 @@ public class HibernateSolrIntegratorTest {
 		documentHelper.setCanAddEmptyField(true);
 		document = documentHelper.getDocument(user);
 		Assert.assertEquals(0, document.getFields().size());
+	}
+	@Test
+	public void indexOne() throws SolrServerException, IOException {
+		DummyBook book=new DummyBook();
+		book.setTitle("我是你大爷夏勇先生");
+		book.setSubtitle("是你哦，啊昌听");
+		book.setPublicationDate(new Date());		
+		crudService.create(book);
+		
+		DocumentHelper documentHelper=new DocumentHelper(sessionFactory.getCurrentSession());
+		SolrSchemaDocument document = documentHelper.getDocument(book);
+		System.out.println(document);
+		SolrUpdateHelper.updateSchema(document);
+		
 	}
 	@Test
 	public void loadEntity() {
