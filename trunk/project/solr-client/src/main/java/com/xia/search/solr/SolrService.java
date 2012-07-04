@@ -11,6 +11,7 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.TermsResponse;
@@ -18,7 +19,7 @@ import org.apache.solr.client.solrj.response.TermsResponse.Term;
 
 public class SolrService {
 	protected static final Log logger = LogFactory.getLog(SolrService.class);
-	private static CommonsHttpSolrServer solrServer;
+	private static HttpSolrServer solrServer;
 	private final HibernateDocBinder binder = new HibernateDocBinder();
 
 	public SolrServer getSolrServer() {
@@ -31,7 +32,7 @@ public class SolrService {
 
 	private void init(String url) {
 		try {
-			solrServer = new CommonsHttpSolrServer(url);
+			solrServer = new HttpSolrServer(url);
 			solrServer.setSoTimeout(1000); // socket read timeout
 			solrServer.setConnectionTimeout(100);
 			solrServer.setDefaultMaxConnectionsPerHost(100);
