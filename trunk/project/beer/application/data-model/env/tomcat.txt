@@ -1,2 +1,0 @@
-VM argument:-server -XX:PermSize=64M -XX:MaxPermSize=128m
--Xms256m -Xmx256m -XX:MaxNewSize=256m -XX:MaxPermSize=256m
