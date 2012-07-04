@@ -16,7 +16,7 @@ import com.xia.search.solr.util.JasonUtil;
 
 public class SolrUpdateSchemaHelper {
 	private static Log logger=LogFactory.getLog(SolrUpdateSchemaHelper.class);
-	private static String solrServerUrl = "http://localhost:8082/solr-server";
+	private static String solrServerUrl = "http://localhost:8080/solr-server";
 
 	public static void updateSchema(SolrSchemaDocument document) throws SolrServerException, IOException {
 		logger.info("正在请求:"+solrServerUrl+"/udpateschema");

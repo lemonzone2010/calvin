@@ -59,19 +59,9 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.5</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpmime</artifactId>
-			<version>4.2</version>
-		</dependency>
 	</dependencies>
 	<build>
-		<sourceDirectory>src/main/java</sourceDirectory>
+		<!-- <sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 
 
@@ -88,7 +78,7 @@
 			<testResource>
 				<directory>src/test/resources</directory>
 			</testResource>
-		</testResources>
+		</testResources> -->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -100,7 +90,6 @@
 				<version>2.5.1</version>
 			</plugin>
 
-			<!-- jar相关插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -114,7 +103,6 @@
 					</archive>
 				</configuration>
 			</plugin>
-			<!-- eclipse插件, 设定wtp版本并添加springIDE nature -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -147,7 +135,6 @@
 				</configuration>
 			</plugin>
 
-			<!-- assembly插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
