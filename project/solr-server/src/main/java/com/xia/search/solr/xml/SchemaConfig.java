@@ -89,10 +89,11 @@ public class SchemaConfig {
 	public void save() {
 		for (FieldAdaptor f : fields) {
 			DefaultElement parentNode = (DefaultElement) xmlUtil.getSingleNode(FieldAdaptor.FIELD_PARENT);
-			if(!xmlUtil.isExistsAttribute(FieldAdaptor.FIELD+"/@name", f.getFieldName())) {
+			String name=f.getEntityName()+"."+f.getFieldName();
+			if(!xmlUtil.isExistsAttribute(FieldAdaptor.FIELD+"/@name", name)) {
 				//write Field if not exists
 				DefaultElement childElement = new DefaultElement(FieldAdaptor.FIELD_NAME);
-				childElement.addAttribute("name", f.getFieldName());
+				childElement.addAttribute("name", name);
 				childElement.addAttribute("type", f.getType());
 				childElement.addAttribute("indexed", ""+f.isIndexed());
 				childElement.addAttribute("stored", ""+f.isStored());

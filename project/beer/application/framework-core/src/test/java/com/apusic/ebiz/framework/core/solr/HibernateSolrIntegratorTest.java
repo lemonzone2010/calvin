@@ -1,9 +1,7 @@
 package com.apusic.ebiz.framework.core.solr;
 
-import java.io.StringWriter;
-
-import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.SessionFactory;
+import org.hibernate.search.query.engine.spi.EntityInfo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.apusic.ebiz.framework.core.DummyBook;
 import com.apusic.ebiz.framework.core.DummyUser;
+import com.apusic.ebiz.framework.core.dao.CrudService;
 import com.apusic.ebiz.framework.core.dao.QueryService;
+import com.xia.search.solr.entity.SolrEntityInfoImpl;
+import com.xia.search.solr.entity.SolrObjectLoaderHelper; 
 import com.xia.search.solr.schema.DocumentHelper;
 import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.schema.SolrSchemaDocument;
+import com.xia.search.solr.util.JasonUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:apusic-ebiz-framework-core.xml",
@@ -31,6 +33,10 @@ public class HibernateSolrIntegratorTest {
 	@Autowired
 	@Qualifier("queryRepository")
 	QueryService queryService;
+	
+	@Autowired
+	@Qualifier("ebiz_CrudService")
+	private CrudService crudService;
 	@Autowired
 	SessionFactory sessionFactory;
 	
@@ -46,11 +52,12 @@ public class HibernateSolrIntegratorTest {
 		DocumentHelper documentHelper=new DocumentHelper(sessionFactory.getCurrentSession());
 		DummyBook book=new DummyBook();
 		
+		
 		SolrSchemaDocument document = documentHelper.getDocument(book);
 		Assert.assertEquals(5, document.getFields().size());
 		
 		for (FieldAdaptor field : document.getFields()) {
-			System.out.println(toJson(field));
+			System.out.println(JasonUtil.toJsonString(field));
 		}
 
 		documentHelper.setCanAddEmptyField(false);
@@ -62,17 +69,16 @@ public class HibernateSolrIntegratorTest {
 		document = documentHelper.getDocument(user);
 		Assert.assertEquals(0, document.getFields().size());
 	}
-
-	public static String toJson(Object obj) {
-		StringWriter sw=new StringWriter();
-		ObjectMapper mapper = new ObjectMapper(); 
-		try {
-			mapper.writeValue(sw, obj);
-			return sw.toString();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		return null;
+	@Test
+	public void loadEntity() {
+		DummyBook book=new DummyBook();
+		book.setTitle("11111");
+		book.setSubtitle("2222");
+		
+		crudService.create(book);
+		EntityInfo entityInfo=new SolrEntityInfoImpl(book.getClass(), "id",book.getId(), null);
+		DummyBook load = (DummyBook) SolrObjectLoaderHelper.load(entityInfo, sessionFactory.getCurrentSession());
+		Assert.assertEquals(book.getId(), load.getId());
 	}
 
 }
