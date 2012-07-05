@@ -2,6 +2,7 @@ package com.apusic.ebiz.framework.core.solr;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.solr.client.solrj.SolrServerException;
 import org.hibernate.SessionFactory;
@@ -22,6 +23,7 @@ import com.apusic.ebiz.framework.core.dao.CrudService;
 import com.apusic.ebiz.framework.core.dao.QueryService;
 import com.xia.search.solr.entity.SolrEntityInfoImpl;
 import com.xia.search.solr.entity.SolrObjectLoaderHelper; 
+import com.xia.search.solr.query.SolrQueryHelper;
 import com.xia.search.solr.schema.DocumentHelper;
 import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.schema.SolrSchemaDocument;
@@ -77,7 +79,7 @@ public class HibernateSolrIntegratorTest {
 	@Test
 	public void indexOne() throws SolrServerException, IOException {
 		DummyBook book=new DummyBook();
-		book.setTitle("我是你大爷夏勇先生");
+		book.setTitle("我是你大爷夏勇先生一天二天三天");
 		book.setSubtitle("是你哦，啊昌听");
 		book.setPublicationDate(new Date());		
 		crudService.create(book);
@@ -87,6 +89,20 @@ public class HibernateSolrIntegratorTest {
 		System.out.println(document);
 		SolrUpdateHelper.updateSchema(document);
 		
+	}
+	@Test
+	public void query() throws SolrServerException, IOException, ClassNotFoundException {
+		DummyBook book=new DummyBook();
+		book.setTitle("11111");
+		book.setSubtitle("2222");
+		
+		crudService.create(book);
+		
+		List<EntityInfo> query = SolrQueryHelper.query("DummyBook.title:*");
+		for (EntityInfo entityInfo : query) {
+			DummyBook load = (DummyBook) SolrObjectLoaderHelper.load(entityInfo, sessionFactory.getCurrentSession());
+			System.out.println(load);
+		}
 	}
 	@Test
 	public void loadEntity() {

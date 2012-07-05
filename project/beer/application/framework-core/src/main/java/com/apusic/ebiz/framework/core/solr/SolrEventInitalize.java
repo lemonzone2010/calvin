@@ -10,6 +10,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.apusic.ebiz.framework.core.util.TransactionHelper;
+import com.xia.search.solr.hibernate.HibernateContext;
 import com.xia.search.solr.schema.DocumentHelper;
 import com.xia.search.solr.schema.event.HibernateSolrIntegrator;
 
@@ -43,7 +44,7 @@ public class SolrEventInitalize implements InitializingBean{
 
 				@Override
 				public Object call() throws Exception {
-					//DocumentHelper.updateSolrSchema(HibernateSolrIntegrator.getConfiguration(), sessionFactory.getCurrentSession());
+					DocumentHelper.updateSolrSchema(HibernateContext.getConfiguration(), sessionFactory.getCurrentSession());
 					return null;
 				}
 			});
