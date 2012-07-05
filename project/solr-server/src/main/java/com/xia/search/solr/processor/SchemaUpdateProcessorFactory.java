@@ -19,8 +19,11 @@ package com.xia.search.solr.processor;
 
 import java.io.IOException;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.SolrInputField;
+import org.apache.solr.core.CoreContainer;
 import org.apache.solr.request.SolrQueryRequest;
 import org.apache.solr.response.SolrQueryResponse;
 import org.apache.solr.schema.SchemaField;
@@ -32,6 +35,7 @@ import org.apache.solr.update.RollbackUpdateCommand;
 import org.apache.solr.update.UpdateHandler;
 import org.apache.solr.update.processor.UpdateRequestProcessor;
 import org.apache.solr.update.processor.UpdateRequestProcessorFactory;
+import org.xml.sax.SAXException;
 
 import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.update.SchemaUpdateHandler;
@@ -65,17 +69,33 @@ class SchemaUpdateProcessor extends UpdateRequestProcessor {
 		// FIXME modify schema here
 		SolrInputDocument docs = cmd.getSolrInputDocument();
 		for (SolrInputField field : docs) {
-			//String name = field.getName();
-			//SchemaField field2 = req.getSchema().getFieldOrNull(name);
-			//if(null==field2) {
-			FieldAdaptor f=JasonUtil.toObjectFromJson(field.getValue().toString(), FieldAdaptor.class);
-			System.out.println(f);
-			SolrConfig.getSchemaConfig().addField(f);
-			//}
+			FieldAdaptor f = JasonUtil.toObjectFromJson(field.getValue().toString(), FieldAdaptor.class);
+			String name = f.getEntityName() + "." + f.getFieldName();
+			SchemaField field2 = req.getSchema().getFieldOrNull(name);
+			if (null == field2) {
+				SolrConfig.getSchemaConfig().addField(f);
+			}
 		}
+		boolean needReload = SolrConfig.getSchemaConfig().isChanged();
 		SolrConfig.getSchemaConfig().save();
-		//cmd.doc = DocumentBuilder.toDocument(docs, req.getSchema());
-		//updateHandler.addDoc(cmd);
+		if (needReload) {
+			// schema结束后，重载
+			CoreContainer coreContainer = req.getCore().getCoreDescriptor().getCoreContainer();
+			coreContainer.getCoreNames();
+			for (String coreName : coreContainer.getCoreNames()) {
+				try {
+					coreContainer.reload(coreName);
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		// cmd.doc = DocumentBuilder.toDocument(docs, req.getSchema());
+		// updateHandler.addDoc(cmd);
 		super.processAdd(cmd);
 	}
 
