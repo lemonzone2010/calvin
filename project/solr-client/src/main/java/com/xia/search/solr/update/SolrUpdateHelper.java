@@ -11,6 +11,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
+import org.apache.solr.common.params.UpdateParams;
 
 import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.schema.SolrSchemaDocument;
@@ -29,6 +30,7 @@ public class SolrUpdateHelper {
 		SolrInputDocument solrInputDoc = convert(document);
 
 		req.add(solrInputDoc);
+		req.setParam(UpdateParams.COMMIT, "true");
 		UpdateResponse rsp = req.process(server);
 		System.out.println(rsp);
 	}

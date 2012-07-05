@@ -64,6 +64,9 @@ public class FieldAdaptor{
 	public String getFieldName() {
 		return fieldName;
 	}
+	public String getSolrName() {
+		return entityName+"."+fieldName;
+	}
 
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;

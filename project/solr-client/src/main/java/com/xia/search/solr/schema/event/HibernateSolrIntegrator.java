@@ -9,14 +9,18 @@ import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.metamodel.source.MetadataImplementor;
 import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 
+import com.xia.search.solr.hibernate.HibernateContext;
+
 public class HibernateSolrIntegrator implements Integrator {
 	private FullTextIndexEventListener listener;
-	private static Configuration configuration;
 	@Override
 	@SuppressWarnings("unchecked")
 	public void integrate(Configuration configuration, SessionFactoryImplementor sessionFactory,
 			SessionFactoryServiceRegistry serviceRegistry) {
-		HibernateSolrIntegrator.configuration=configuration;
+		HibernateContext.setConfiguration(configuration);
+		HibernateContext.setSessionFactory(sessionFactory);
+		
+	//	sessionFactory.getCurrentSession();
 		
 		//SolrEventInitalize.setConfiguration(configuration);
 
@@ -34,7 +38,7 @@ public class HibernateSolrIntegrator implements Integrator {
 		listenerRegistry.getEventListenerGroup( EventType.POST_COLLECTION_REMOVE ).appendListener( listener );
 		listenerRegistry.getEventListenerGroup( EventType.POST_COLLECTION_UPDATE ).appendListener( listener );
 		listenerRegistry.getEventListenerGroup( EventType.FLUSH ).appendListener( listener );
-		//listenerRegistry.getEventListenerGroup( EventType.LOAD ).appendListener( listener );
+//		listenerRegistry.getEventListenerGroup( EventType. ).appendListener( listener );
 		
 		
 	}
@@ -44,20 +48,12 @@ public class HibernateSolrIntegrator implements Integrator {
 	@Override
 	public void integrate(MetadataImplementor metadata, SessionFactoryImplementor sessionFactory,
 			SessionFactoryServiceRegistry serviceRegistry) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void disintegrate(SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
-		// TODO Auto-generated method stub
 
 	}
 
-
-
-	public static Configuration getConfiguration() {
-		return configuration;
-	}
 
 }

@@ -19,6 +19,8 @@ import org.hibernate.event.spi.PostUpdateEvent;
 import org.hibernate.event.spi.PostUpdateEventListener;
 import org.hibernate.event.spi.LoadEventListener.LoadType;
 
+import com.xia.search.solr.util.SolrContext;
+
 public class FullTextIndexEventListener implements PostDeleteEventListener,
 PostInsertEventListener, PostUpdateEventListener,
 PostCollectionRecreateEventListener, PostCollectionRemoveEventListener,
@@ -57,6 +59,12 @@ PostCollectionUpdateEventListener, FlushEventListener,LoadEventListener{
 	@Override
 	public void onPostInsert(PostInsertEvent event) {
 		// TODO Auto-generated method stub
+		try {
+			SolrContext.getMySolrService().update(event.getEntity());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(event);
 	}
 

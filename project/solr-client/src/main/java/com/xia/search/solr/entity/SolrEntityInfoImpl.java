@@ -36,7 +36,7 @@ public class SolrEntityInfoImpl implements EntityInfo {
 	/**
 	 * The entity class.
 	 */
-	private final Class<?> clazz;
+	private Class<?> clazz;
 
 	/**
 	 * The document id.
@@ -51,11 +51,18 @@ public class SolrEntityInfoImpl implements EntityInfo {
 	/**
 	 * Array of projected values. {@code null} in case there are no projections.
 	 */
-	private final Object[] projection;
+	private Object[] projection;
 
 	private final List<Integer> indexesOfThis = new LinkedList<Integer>();
+	
+	private String className;
 
 	public Class<?> getClazz() {
+		try {
+			clazz=null!=clazz?clazz:Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		return clazz;
 	}
 
@@ -85,6 +92,11 @@ public class SolrEntityInfoImpl implements EntityInfo {
 		}
 	}
 
+	public SolrEntityInfoImpl(String className,  String idName,  Serializable id) {
+		this.className = className;
+		this.idName = idName;
+		this.id = id;
+	}
 	public SolrEntityInfoImpl(Class clazz,  String idName,  Serializable id, Object[] projection) {
 		this.clazz = clazz;
 		this.idName = idName;
