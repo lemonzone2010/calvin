@@ -15,7 +15,6 @@ import org.apache.solr.common.params.UpdateParams;
 
 import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.schema.SolrSchemaDocument;
-import com.xia.search.solr.schema.SolrUpdateSchemaHelper;
 import com.xia.search.solr.util.JasonUtil;
 
 public class SolrUpdateHelper {

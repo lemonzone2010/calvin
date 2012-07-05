@@ -24,7 +24,7 @@ import com.apusic.ebiz.framework.core.dao.QueryService;
 import com.xia.search.solr.entity.SolrEntityInfoImpl;
 import com.xia.search.solr.entity.SolrObjectLoaderHelper; 
 import com.xia.search.solr.query.SolrQueryHelper;
-import com.xia.search.solr.schema.DocumentHelper;
+import com.xia.search.solr.schema.SolrDocumentHelper;
 import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.schema.SolrSchemaDocument;
 import com.xia.search.solr.update.SolrUpdateHelper;
@@ -56,7 +56,7 @@ public class HibernateSolrIntegratorTest {
 	}*/
 	@Test
 	public void document() {
-		DocumentHelper documentHelper=new DocumentHelper(sessionFactory.getCurrentSession());
+		SolrDocumentHelper documentHelper=new SolrDocumentHelper(sessionFactory.getCurrentSession());
 		DummyBook book=new DummyBook();
 		
 		
@@ -84,7 +84,7 @@ public class HibernateSolrIntegratorTest {
 		book.setPublicationDate(new Date());		
 		crudService.create(book);
 		
-		DocumentHelper documentHelper=new DocumentHelper(sessionFactory.getCurrentSession());
+		SolrDocumentHelper documentHelper=new SolrDocumentHelper(sessionFactory.getCurrentSession());
 		SolrSchemaDocument document = documentHelper.getDocument(book);
 		System.out.println(document);
 		SolrUpdateHelper.updateSchema(document);

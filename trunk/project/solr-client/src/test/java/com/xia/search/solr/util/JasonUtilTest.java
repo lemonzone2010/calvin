@@ -12,12 +12,12 @@ public class JasonUtilTest {
 		FieldAdaptor f = FieldAdaptor.newField("xxx", "maxWord");
 		String jsonString = JasonUtil.toJsonString(f);
 		System.out.println(jsonString);
-		Assert.assertEquals(jsonString, "{\"entityName\":\"\",\"fieldName\":\"xxx\",\"type\":\"maxWord\",\"storeTermVector\":false,\"stored\":false,\"indexed\":true,\"tokenized\":true}");
+		Assert.assertEquals(jsonString, "{\"stored\":false,\"indexed\":true,\"tokenized\":true,\"entityName\":\"\",\"storeTermVector\":false,\"fieldsData\":null,\"type\":\"maxWord\",\"fieldName\":\"xxx\"}");
 	}
 
 	@Test
 	public void toObjectFromJson() {
-		String jsonString="{\"entityName\":\"DummyBook\",\"fieldName\":\"xxx\",\"storeTermVector\":false,\"stored\":true,\"indexed\":true,\"tokenized\":false}";
+		String jsonString="{\"stored\":false,\"indexed\":true,\"tokenized\":true,\"entityName\":\"\",\"storeTermVector\":false,\"fieldsData\":null,\"type\":\"maxWord\",\"fieldName\":\"xxx\"}";
 		FieldAdaptor f = JasonUtil.toObjectFromJson(jsonString, FieldAdaptor.class);
 		System.out.println(f);
 		Assert.assertEquals(f.getFieldName(), "xxx");

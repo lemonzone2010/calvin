@@ -1,4 +1,4 @@
-package com.xia.search.solr.schema;
+package com.xia.search.solr.update;
 
 import java.io.IOException;
 
@@ -11,6 +11,8 @@ import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 
+import com.xia.search.solr.schema.FieldAdaptor;
+import com.xia.search.solr.schema.SolrSchemaDocument;
 import com.xia.search.solr.util.JasonUtil;
 
 

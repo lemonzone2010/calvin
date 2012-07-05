@@ -82,9 +82,4 @@
 	<bean id="ebiz_ConfigService" class="com.apusic.ebiz.framework.core.config.ConfigServiceImpl">
     </bean>
     
-    <bean class="com.apusic.ebiz.framework.core.solr.SolrEventInitalize"
-		lazy-init="false">
-		<property name="sessionFactory" ref="sessionFactory"/>
-		<property name="transactionManager" ref="transactionManager"/>
-	</bean>
 </beans>

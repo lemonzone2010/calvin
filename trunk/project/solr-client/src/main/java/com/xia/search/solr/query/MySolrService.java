@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.solr.client.solrj.SolrServerException;
 
+import com.xia.search.solr.Page;
 import com.xia.search.solr.Query;
 
 public interface MySolrService {
@@ -18,9 +19,21 @@ public interface MySolrService {
 	 */
 	public Object getIdFromSolr(Object enitty) throws SolrServerException, IOException;
 
+	/**
+	 * 新增索引
+	 * @param entitys 不能是list,只能是数组
+	 * @return
+	 * @throws Exception
+	 */
 	public Result update(Object... entitys) throws Exception;
 
+	/**
+	 * 更新schema.xml
+	 * @param entitys
+	 * @return
+	 * @throws Exception
+	 */
 	public Result updateSchema(Object... entitys) throws Exception;
 
-	public List<?> query(Query query) throws Exception;
+	public <T> Page<T> query(Query q) throws Exception;
 }

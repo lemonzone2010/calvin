@@ -1,7 +1,5 @@
 package com.xia.search.solr.util;
 
-import java.io.StringWriter;
-
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class JasonUtil {
@@ -17,10 +15,11 @@ public class JasonUtil {
 	}
 
 	public static String toJsonString(Object obj) {
-		StringWriter sw = new StringWriter();
+		//StringWriter sw = new StringWriter();
 		try {
-			mapper.writeValue(sw, obj);
-			return sw.toString();
+		return	mapper.writeValueAsString(obj);
+			//mapper.writeValue(sw, obj);
+			//return sw.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Jason 转换出错:" + e.getMessage(), e);

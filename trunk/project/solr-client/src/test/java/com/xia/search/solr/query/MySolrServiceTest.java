@@ -7,7 +7,10 @@ import org.apache.solr.common.SolrDocument;
 import org.hibernate.Query;
 import org.junit.Test;
 
+import com.xia.search.solr.ItemH;
+import com.xia.search.solr.Page;
 import com.xia.search.solr.dao.AbstractHibernateTest;
+import com.xia.search.solr.dao.DummyBook;
 import com.xia.search.solr.dao.HibernateUtil;
 
 public class MySolrServiceTest extends AbstractHibernateTest{
@@ -39,5 +42,17 @@ public class MySolrServiceTest extends AbstractHibernateTest{
 		});
 		Object exists = ((MySolrServiceImpl)mySolrService).getIdFromSolr(list.get(0));
 		System.out.println(exists);
+	}
+	@Test
+	public void query() throws Exception {
+		Page<DummyBook> list=doInTranstaction(new Callable<Page<DummyBook>>() {
+			
+			@Override
+			public Page<DummyBook> call() throws Exception {
+				com.xia.search.solr.Query query = new com.xia.search.solr.Query (DummyBook.class, "title", "*");
+				return mySolrService.query(query);
+			}
+		});
+		System.out.println(list);
 	}
 }
