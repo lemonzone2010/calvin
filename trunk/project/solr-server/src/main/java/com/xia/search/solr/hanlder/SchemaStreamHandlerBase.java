@@ -20,6 +20,7 @@ package com.xia.search.solr.hanlder;
 import org.apache.solr.common.SolrException;
 import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.ContentStream;
+import org.apache.solr.core.CoreContainer;
 import org.apache.solr.handler.ContentStreamLoader;
 import org.apache.solr.handler.RequestHandlerBase;
 import org.apache.solr.handler.RequestHandlerUtils;
@@ -81,6 +82,7 @@ public abstract class SchemaStreamHandlerBase extends RequestHandlerBase {
       // finish the request
       processor.finish();
     }
+   
   }
 
   protected abstract ContentStreamLoader newLoader(SolrQueryRequest req, UpdateRequestProcessor processor);

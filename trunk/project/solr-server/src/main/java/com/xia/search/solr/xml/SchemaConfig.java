@@ -96,6 +96,9 @@ public class SchemaConfig {
 		isChanged=false;
 		for (FieldAdaptor f : fields) {
 			DefaultElement parentNode = (DefaultElement) xmlUtil.getSingleNode(FieldAdaptor.FIELD_PARENT);
+			if(StringUtils.isEmpty(f.getEntityName())) {
+				continue;
+			}
 			String name=f.getEntityName()+"."+f.getFieldName();
 			if(!xmlUtil.isExistsAttribute(FieldAdaptor.FIELD+"/@name", name)) {
 				//write Field if not exists
@@ -111,6 +114,10 @@ public class SchemaConfig {
 		}
 		xmlUtil.wirteToFile("D:/a.xml","UTF-8");//tmp file for observer
 		xmlUtil.wirteToFile(SCHEMA_FILE,"UTF-8");
+	}
+
+	public boolean isChanged() {
+		return isChanged;
 	}
 
 

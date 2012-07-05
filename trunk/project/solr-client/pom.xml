@@ -13,6 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.hibernate.version>4.1.1.Final</org.hibernate.version>
+		<org.hsqldb.version>2.2.8</org.hsqldb.version>
 	</properties>
 
 	<dependencies>
@@ -63,6 +64,22 @@
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils-core</artifactId>
 			<version>1.8.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${org.hsqldb.version}</version>
+			<!-- <scope>test</scope> -->
 		</dependency>
 	</dependencies>
 	<build>
