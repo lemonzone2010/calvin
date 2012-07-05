@@ -26,6 +26,11 @@ PostInsertEventListener, PostUpdateEventListener,
 PostCollectionRecreateEventListener, PostCollectionRemoveEventListener,
 PostCollectionUpdateEventListener, FlushEventListener,LoadEventListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void onFlush(FlushEvent event) throws HibernateException {
 		// TODO Auto-generated method stub
