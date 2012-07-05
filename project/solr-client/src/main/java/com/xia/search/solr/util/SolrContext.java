@@ -7,6 +7,7 @@ import com.xia.search.solr.query.MySolrServiceImpl;
 public class SolrContext {
 	public static final String SOLR_SERVER_URL = "http://localhost:8080/solr-server";
 	private static MySolrService mySolrService;
+//	private static Map<String,Docuemtn>
 
 	public static MySolrService getMySolrService() {
 		if (mySolrService == null)

@@ -2,7 +2,8 @@ package com.xia.search.solr.schema;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.document.Field;
-
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 public class FieldAdaptor{
 	public static final String FIELD = "//schema/fields/field";
 	public static final String FIELD_NAME = "field";
@@ -64,6 +65,7 @@ public class FieldAdaptor{
 	public String getFieldName() {
 		return fieldName;
 	}
+	@JsonIgnore
 	public String getSolrName() {
 		return entityName+"."+fieldName;
 	}

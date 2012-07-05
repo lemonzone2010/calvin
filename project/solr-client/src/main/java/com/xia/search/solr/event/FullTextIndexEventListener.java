@@ -1,4 +1,4 @@
-package com.xia.search.solr.schema.event;
+package com.xia.search.solr.event;
 
 import org.hibernate.HibernateException;
 import org.hibernate.event.spi.FlushEvent;

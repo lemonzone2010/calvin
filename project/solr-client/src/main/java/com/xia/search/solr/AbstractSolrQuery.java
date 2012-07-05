@@ -10,6 +10,10 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.xia.search.solr.hibernate.HibernateContext;
+import com.xia.search.solr.schema.SolrDocumentHelper;
+import com.xia.search.solr.schema.SolrSchemaDocument;
+
 public abstract class AbstractSolrQuery {
 	protected String q = "";
 	protected Class<?> clazz;
@@ -25,7 +29,19 @@ public abstract class AbstractSolrQuery {
 	}
 	
 	protected String getFieldName(String fieldName) {
-		Class<?> superClazz = clazz;
+		SolrDocumentHelper helper=new SolrDocumentHelper(HibernateContext.getSessionFactory().getCurrentSession());
+		try {
+			SolrSchemaDocument document = helper.getDocument(clazz.newInstance());
+			return document.getField(fieldName).getSolrName();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		/*Class<?> superClazz = clazz;
 		String tableName = "";
 		if (superClazz.isAnnotationPresent(Table.class)) {
 			tableName = ((Table) superClazz.getAnnotation(Table.class)).name();
@@ -47,7 +63,7 @@ public abstract class AbstractSolrQuery {
 				}
 			}
 		}
-		return fieldName;
+		return fieldName;*/
 	}
 
 	@SuppressWarnings("rawtypes")

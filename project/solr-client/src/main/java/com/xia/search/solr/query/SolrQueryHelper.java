@@ -19,7 +19,7 @@ import org.hibernate.search.query.engine.spi.EntityInfo;
 
 import com.xia.search.solr.entity.SolrEntityInfoImpl;
 import com.xia.search.solr.schema.FieldAdaptor;
-import com.xia.search.solr.schema.SolrUpdateSchemaHelper;
+import com.xia.search.solr.update.SolrUpdateSchemaHelper;
 
 public class SolrQueryHelper {
 	private static Log logger=LogFactory.getLog(SolrUpdateSchemaHelper.class);

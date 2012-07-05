@@ -1,4 +1,4 @@
-package com.xia.search.solr.schema.event;
+package com.xia.search.solr.event;
 
 import org.hibernate.cfg.Configuration;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
@@ -19,6 +19,8 @@ public class HibernateSolrIntegrator implements Integrator {
 			SessionFactoryServiceRegistry serviceRegistry) {
 		HibernateContext.setConfiguration(configuration);
 		HibernateContext.setSessionFactory(sessionFactory);
+		
+		sessionFactory.addObserver(new SolrSessionFactoryObserver());
 		
 	//	sessionFactory.getCurrentSession();
 		
