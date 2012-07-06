@@ -8,6 +8,7 @@ public class SolrContext {
 	public static final String SOLR_SERVER_URL = "http://localhost:8080/solr-server";
 	private static MySolrService mySolrService;
 //	private static Map<String,Docuemtn>
+	//本地缓存id<==>uuid映射，没有时，才去solr查询
 
 	public static MySolrService getMySolrService() {
 		if (mySolrService == null)

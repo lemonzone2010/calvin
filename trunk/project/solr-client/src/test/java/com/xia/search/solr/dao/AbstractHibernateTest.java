@@ -21,6 +21,7 @@ public class AbstractHibernateTest {
 		ret=call.call();
 
 		session.getTransaction().commit();
+		//session.close();
 		return ret;
 	}
 

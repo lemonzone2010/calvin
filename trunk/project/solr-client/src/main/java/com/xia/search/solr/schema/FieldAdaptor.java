@@ -7,6 +7,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 public class FieldAdaptor{
 	public static final String FIELD = "//schema/fields/field";
 	public static final String FIELD_NAME = "field";
+	public static final String COPY_TO_FIELD = "text";
+	public static final String SCHEMA = "//schema";
 	public static final String FIELD_PARENT = "//schema/fields";
 	public static final String DYMAIC_FIELD = "//schema/fields/dynamicField";
 	public static final String HIBERNATE_CLASS_FLAG = "hibernate_class";

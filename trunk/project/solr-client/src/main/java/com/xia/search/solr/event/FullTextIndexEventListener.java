@@ -58,14 +58,19 @@ PostCollectionUpdateEventListener, FlushEventListener,LoadEventListener{
 	@Override
 	public void onPostUpdate(PostUpdateEvent event) {
 		// TODO Auto-generated method stub
-		
+		try {
+			SolrContext.getMySolrService().indexSaveOrUpdate(event.getEntity());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onPostInsert(PostInsertEvent event) {
 		// TODO Auto-generated method stub
 		try {
-			SolrContext.getMySolrService().update(event.getEntity());
+			SolrContext.getMySolrService().indexSaveOrUpdate(event.getEntity());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,14 +81,19 @@ PostCollectionUpdateEventListener, FlushEventListener,LoadEventListener{
 	@Override
 	public void onPostDelete(PostDeleteEvent event) {
 		// TODO Auto-generated method stub
-		
+		try {
+			SolrContext.getMySolrService().indexDelete(event.getEntity());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onLoad(LoadEvent event, LoadType loadType) throws HibernateException {
 		// TODO Auto-generated method stub
 		
-		System.out.println(event);
+		//System.out.println(event);
 	}
 	
 }

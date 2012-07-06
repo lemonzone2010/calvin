@@ -10,6 +10,11 @@ public final class SolrSchemaDocument {
 	public SolrSchemaDocument() {
 	}
 
+	public String getIdValue() {
+		Object fieldsData = getField("id").getFieldsData();
+		return fieldsData == null ? null : fieldsData.toString();
+	}
+
 	public final void add(FieldAdaptor field) {
 		fields.add(field);
 	}
