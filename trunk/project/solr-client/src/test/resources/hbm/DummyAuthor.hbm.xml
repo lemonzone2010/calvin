@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true" package="com.xia.search.solr.dao">
+  <class table="T_DUMMY_AUTHOR" name="DummyAuthor">
+    <id name="id">
+      <column name="F_ID"/>
+      <generator class="native">
+        <param name="sequence">seq_md_dummy_author</param>
+      </generator>
+    </id>
+    <property name="name" length="50" column="F_NAME" type="string"/>
+  </class>
+</hibernate-mapping>
