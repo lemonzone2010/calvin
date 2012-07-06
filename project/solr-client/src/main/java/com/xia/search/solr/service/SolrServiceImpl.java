@@ -141,7 +141,7 @@ public class SolrServiceImpl implements SolrService {
 	public Result updateSchema(Object... entitys) throws Exception {
 		UpdateRequest req = new UpdateRequest("/updateschema");
 		for (Object object : entitys) {
-			SolrSchemaDocument document = documentHelper.getDocument(object);
+			SolrSchemaDocument document = documentHelper.getSchemaDocument(object);
 			req.add(convertForUpdateSchema(document));
 		}
 		UpdateResponse response = req.process(solrServer);
