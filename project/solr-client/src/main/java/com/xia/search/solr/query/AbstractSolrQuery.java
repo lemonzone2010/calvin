@@ -1,13 +1,5 @@
 package com.xia.search.solr.query;
 
-import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.persistence.Column;
-import javax.persistence.Table;
-
 import org.apache.commons.lang3.StringUtils;
 
 import com.xia.search.solr.hibernate.HibernateContext;
@@ -20,7 +12,7 @@ public abstract class AbstractSolrQuery {
 	private Integer start=0;
 	private Integer rows=10;
 	/**
-	 * @param clazz 有hibernate注解的类
+	 * @param clazz 有hibernate search注解的类
 	 * @param field bean类的属性,可为*
 	 * @param value 对应属性要查询的值，可为*
 	 */
@@ -44,29 +36,6 @@ public abstract class AbstractSolrQuery {
 			e.printStackTrace();
 		}
 		return null;
-		/*Class<?> superClazz = clazz;
-		String tableName = "";
-		if (superClazz.isAnnotationPresent(Table.class)) {
-			tableName = ((Table) superClazz.getAnnotation(Table.class)).name();
-		}
-		ArrayList<AccessibleObject> members = new ArrayList<AccessibleObject>();
-		while (superClazz != null && superClazz != Object.class) {
-			members.addAll(Arrays.asList(superClazz.getDeclaredFields()));
-			members.addAll(Arrays.asList(superClazz.getDeclaredMethods()));
-			superClazz = superClazz.getSuperclass();
-		}
-		for (AccessibleObject member : members) {
-			if (member.isAnnotationPresent(Column.class)) {
-				String name = member.getAnnotation(Column.class).name();
-				if (StringUtils.isNotBlank(name) && member instanceof Field
-						&& StringUtils.endsWith(((Field) member).getName(), fieldName)) {
-					return tableName + "." + name;
-				} else {
-					// TODO 对方法名的解析标记语言
-				}
-			}
-		}
-		return fieldName;*/
 	}
 
 	@SuppressWarnings("rawtypes")

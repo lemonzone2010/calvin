@@ -30,6 +30,9 @@ public class Query extends AbstractSolrQuery{
 		add(field, value, "");
 	}
 
+	public static Query newQuery(Class<?> clazz, String field, String value) {
+		return new Query(clazz, field, value);
+	}
 	/**
 	 * @param field
 	 * @param isAsc 是否升序
