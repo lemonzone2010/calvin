@@ -22,6 +22,7 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.params.UpdateParams;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.query.engine.spi.EntityInfo;
 
@@ -56,15 +57,15 @@ public class SolrServiceImpl implements SolrService {
 	private void init(String url) {
 		try {
 			solrServer = new HttpSolrServer(url);
-			solrServer.setSoTimeout(1000); // socket read timeout
-			solrServer.setConnectionTimeout(100);
+			solrServer.setSoTimeout(5000); // socket read timeout
+			solrServer.setConnectionTimeout(5000);
 			solrServer.setDefaultMaxConnectionsPerHost(100);
 			solrServer.setMaxTotalConnections(100);
 			solrServer.setFollowRedirects(false); // defaults to false
 			solrServer.setAllowCompression(true);
 			solrServer.setMaxRetries(1); // defaults to 0. > 1 not recommended.
 			solrServer.setParser(new XMLResponseParser());
-			documentHelper = new SolrDocumentHelper(sessionFactory.getCurrentSession());
+			documentHelper = new SolrDocumentHelper(sessionFactory);
 
 		} catch (Exception e) {
 			logger.error("初始化SOLR服务器出错", e);
@@ -178,14 +179,15 @@ public class SolrServiceImpl implements SolrService {
 
 			logger.info(rsp.getResults());
 			List<T> beans=new ArrayList<T>();
+			Session currentSession = sessionFactory.getCurrentSession();
 			for (SolrDocument solrDocument : rsp.getResults()) {
-				T load = (T) SolrObjectLoaderHelper.load(convert2EntityInfo(solrDocument), sessionFactory.getCurrentSession());
+				T load = (T) SolrObjectLoaderHelper.load(convert2EntityInfo(solrDocument), currentSession);
 				beans.add(load);
 			}
 			ret.setResult(beans);
 		} catch (Exception e) {
 			logger.error("SOLR查询出错:" + q.toString(), e);
-			throw new XiaSolrException("SOLR查询出错:" + q.toString(), e);
+			throw new XiaSolrException("SOLR查询出错:" + q.toString()+","+e.getMessage(), e);
 		}
 		return ret;
 	}

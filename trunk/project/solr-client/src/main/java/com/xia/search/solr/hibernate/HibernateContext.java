@@ -45,7 +45,6 @@ public final class HibernateContext {
 
 	public interface HibernateCallback<T> {
 		T doInHibernateTransaction(Session session) throws HibernateException, SQLException;
-
 	}
 
 }

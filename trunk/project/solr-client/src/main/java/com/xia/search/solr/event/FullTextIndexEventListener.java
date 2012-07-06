@@ -17,14 +17,12 @@ import org.hibernate.event.spi.PostInsertEvent;
 import org.hibernate.event.spi.PostInsertEventListener;
 import org.hibernate.event.spi.PostUpdateEvent;
 import org.hibernate.event.spi.PostUpdateEventListener;
-import org.hibernate.event.spi.LoadEventListener.LoadType;
 
-import com.xia.search.solr.util.SolrContext;
+import com.xia.search.solr.service.SolrContext;
 
-public class FullTextIndexEventListener implements PostDeleteEventListener,
-PostInsertEventListener, PostUpdateEventListener,
-PostCollectionRecreateEventListener, PostCollectionRemoveEventListener,
-PostCollectionUpdateEventListener, FlushEventListener,LoadEventListener{
+public class FullTextIndexEventListener implements PostDeleteEventListener, PostInsertEventListener,
+		PostUpdateEventListener, PostCollectionRecreateEventListener, PostCollectionRemoveEventListener,
+		PostCollectionUpdateEventListener, FlushEventListener, LoadEventListener {
 
 	/**
 	 * 
@@ -34,30 +32,29 @@ PostCollectionUpdateEventListener, FlushEventListener,LoadEventListener{
 	@Override
 	public void onFlush(FlushEvent event) throws HibernateException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onPostUpdateCollection(PostCollectionUpdateEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onPostRemoveCollection(PostCollectionRemoveEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onPostRecreateCollection(PostCollectionRecreateEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onPostUpdate(PostUpdateEvent event) {
-		// TODO Auto-generated method stub
 		try {
 			SolrContext.getMySolrService().indexSaveOrUpdate(event.getEntity());
 		} catch (Exception e) {
@@ -68,7 +65,6 @@ PostCollectionUpdateEventListener, FlushEventListener,LoadEventListener{
 
 	@Override
 	public void onPostInsert(PostInsertEvent event) {
-		// TODO Auto-generated method stub
 		try {
 			SolrContext.getMySolrService().indexSaveOrUpdate(event.getEntity());
 		} catch (Exception e) {
@@ -80,7 +76,6 @@ PostCollectionUpdateEventListener, FlushEventListener,LoadEventListener{
 
 	@Override
 	public void onPostDelete(PostDeleteEvent event) {
-		// TODO Auto-generated method stub
 		try {
 			SolrContext.getMySolrService().indexDelete(event.getEntity());
 		} catch (Exception e) {
@@ -92,8 +87,8 @@ PostCollectionUpdateEventListener, FlushEventListener,LoadEventListener{
 	@Override
 	public void onLoad(LoadEvent event, LoadType loadType) throws HibernateException {
 		// TODO Auto-generated method stub
-		
-		//System.out.println(event);
+
+		// System.out.println(event);
 	}
-	
+
 }

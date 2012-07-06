@@ -1,14 +1,12 @@
-package com.xia.search.solr.util;
+package com.xia.search.solr.service;
 
 import com.xia.search.solr.hibernate.HibernateContext;
-import com.xia.search.solr.service.SolrService;
-import com.xia.search.solr.service.SolrServiceImpl;
 
+//TODO 配置文件,spring文件
 public class SolrContext {
 	public static final String SOLR_SERVER_URL = "http://localhost:8080/solr-server";
+	public static final boolean NEED_UPDATE_SCHEMA_AT_START = true;
 	private static SolrService mySolrService;
-//	private static Map<String,Docuemtn>
-	//本地缓存id<==>uuid映射，没有时，才去solr查询
 
 	public static SolrService getMySolrService() {
 		if (mySolrService == null)
