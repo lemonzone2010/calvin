@@ -1,5 +1,8 @@
 package com.apusic.ebiz.framework.core.solr;
 
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +27,14 @@ import com.apusic.ebiz.framework.core.dao.QueryService;
 import com.xia.search.solr.entity.SolrEntityInfoImpl;
 import com.xia.search.solr.entity.SolrObjectLoaderHelper; 
 //import com.xia.search.solr.query.SolrQueryHelper;
+import com.xia.search.solr.query.Page;
+import com.xia.search.solr.query.Query;
 import com.xia.search.solr.schema.SolrDocumentHelper;
 import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.schema.SolrSchemaDocument;
+import com.xia.search.solr.service.SolrContext;
+import com.xia.search.solr.service.SolrService;
+import com.xia.search.solr.service.SolrServiceImpl;
 //import com.xia.search.solr.update.SolrUpdateHelper;
 import com.xia.search.solr.util.JasonUtil;
 
@@ -56,7 +64,7 @@ public class HibernateSolrIntegratorTest {
 	}*/
 	@Test
 	public void document() {
-		SolrDocumentHelper documentHelper=new SolrDocumentHelper(sessionFactory.getCurrentSession());
+		SolrDocumentHelper documentHelper=new SolrDocumentHelper(sessionFactory);
 		DummyBook book=new DummyBook();
 		
 		
@@ -84,25 +92,27 @@ public class HibernateSolrIntegratorTest {
 		book.setPublicationDate(new Date());		
 		crudService.create(book);
 		
-		SolrDocumentHelper documentHelper=new SolrDocumentHelper(sessionFactory.getCurrentSession());
+		SolrDocumentHelper documentHelper=new SolrDocumentHelper(sessionFactory);
 		SolrSchemaDocument document = documentHelper.getDocument(book);
 		System.out.println(document);
 		//SolrUpdateHelper.updateSchema(document);
 		
 	}
 	@Test
-	public void query() throws SolrServerException, IOException, ClassNotFoundException {
+	public void query() throws Exception {
 		DummyBook book=new DummyBook();
 		book.setTitle("11111");
 		book.setSubtitle("2222");
 		
 		crudService.create(book);
 		
-		/*List<EntityInfo> query = SolrQueryHelper.query("DummyBook.title:*");
-		for (EntityInfo entityInfo : query) {
-			DummyBook load = (DummyBook) SolrObjectLoaderHelper.load(entityInfo, sessionFactory.getCurrentSession());
-			System.out.println(load);
-		}*/
+		SolrService service=SolrContext.getMySolrService();
+		List<DummyBook> list = queryService.findAll(DummyBook.class);
+		service.indexSaveOrUpdate(list.toArray());
+		
+		Page<DummyBook> page = service.query(new Query(DummyBook.class, "id", "15").or("id", "16"));
+		assertNotNull(page);
+		assertTrue(page.getNumFound()==2);
 	}
 	@Test
 	public void loadEntity() {
