@@ -29,7 +29,7 @@ public abstract class AbstractSolrQuery {
 	}
 	
 	protected String getFieldName(String fieldName) {
-		SolrDocumentHelper helper=new SolrDocumentHelper(HibernateContext.getSessionFactory().getCurrentSession());
+		SolrDocumentHelper helper=new SolrDocumentHelper(HibernateContext.getSessionFactory());
 		try {
 			SolrSchemaDocument document = helper.getSchemaDocument(clazz.newInstance());
 			if(StringUtils.equals(fieldName, "*")) {

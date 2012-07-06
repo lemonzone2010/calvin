@@ -12,9 +12,8 @@ import org.hibernate.SessionFactoryObserver;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.mapping.PersistentClass;
 
-import com.xia.search.solr.SolrConst;
 import com.xia.search.solr.hibernate.HibernateContext;
-import com.xia.search.solr.util.SolrContext;
+import com.xia.search.solr.service.SolrContext;
 
 public class SolrSessionFactoryObserver implements SessionFactoryObserver {
 	private static final Log logger = LogFactory.getLog(SolrSessionFactoryObserver.class);
@@ -25,7 +24,7 @@ public class SolrSessionFactoryObserver implements SessionFactoryObserver {
 
 	@Override
 	public void sessionFactoryCreated(SessionFactory sessionFactory) {
-		if (SolrConst.NEED_UPDATE_SCHEMA_AT_START == false) {
+		if (SolrContext.NEED_UPDATE_SCHEMA_AT_START == false) {
 			return;
 		}
 		// update schema to solr

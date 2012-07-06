@@ -12,6 +12,8 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Fieldable;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.search.SearchException;
 import org.hibernate.search.bridge.spi.ConversionContext;
 import org.hibernate.search.bridge.util.impl.ContextualExceptionBridgeHelper;
@@ -27,11 +29,11 @@ import org.hibernate.search.util.impl.ContextHelper;
 public class SolrDocumentHelper {
 	private static final Log logger = LogFactory.getLog(SolrDocumentHelper.class);
 	private static Map<Class<?>,SolrSchemaDocument> cache=new ConcurrentHashMap<Class<?>, SolrSchemaDocument>();
-	private Session session;
+	private SessionFactory sessionFactory;
 	private boolean canAddEmptyField=true;
 
-	public SolrDocumentHelper(Session session) {
-		this.session = session;
+	public SolrDocumentHelper(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 	
 	public SolrSchemaDocument getSchemaDocument(Object entity) {
@@ -85,7 +87,7 @@ public class SolrDocumentHelper {
 	}
 
 	private SearchFactoryImplementor getSearchFactoryImplementor () {
-		return ContextHelper. getSearchFactory( session) ;
+		return ContextHelper. getSearchFactoryBySFI((SessionFactoryImplementor) sessionFactory) ;
 	}
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private <T> AbstractDocumentBuilder<T> getEntityBuilder(SearchFactoryImplementor searchFactoryImplementor, Class<?> entityClass) {
