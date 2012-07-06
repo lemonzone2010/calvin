@@ -23,11 +23,11 @@ import com.apusic.ebiz.framework.core.dao.CrudService;
 import com.apusic.ebiz.framework.core.dao.QueryService;
 import com.xia.search.solr.entity.SolrEntityInfoImpl;
 import com.xia.search.solr.entity.SolrObjectLoaderHelper; 
-import com.xia.search.solr.query.SolrQueryHelper;
+//import com.xia.search.solr.query.SolrQueryHelper;
 import com.xia.search.solr.schema.SolrDocumentHelper;
 import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.schema.SolrSchemaDocument;
-import com.xia.search.solr.update.SolrUpdateHelper;
+//import com.xia.search.solr.update.SolrUpdateHelper;
 import com.xia.search.solr.util.JasonUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -87,7 +87,7 @@ public class HibernateSolrIntegratorTest {
 		SolrDocumentHelper documentHelper=new SolrDocumentHelper(sessionFactory.getCurrentSession());
 		SolrSchemaDocument document = documentHelper.getDocument(book);
 		System.out.println(document);
-		SolrUpdateHelper.updateSchema(document);
+		//SolrUpdateHelper.updateSchema(document);
 		
 	}
 	@Test
@@ -98,11 +98,11 @@ public class HibernateSolrIntegratorTest {
 		
 		crudService.create(book);
 		
-		List<EntityInfo> query = SolrQueryHelper.query("DummyBook.title:*");
+		/*List<EntityInfo> query = SolrQueryHelper.query("DummyBook.title:*");
 		for (EntityInfo entityInfo : query) {
 			DummyBook load = (DummyBook) SolrObjectLoaderHelper.load(entityInfo, sessionFactory.getCurrentSession());
 			System.out.println(load);
-		}
+		}*/
 	}
 	@Test
 	public void loadEntity() {
