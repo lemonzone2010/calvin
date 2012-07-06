@@ -2,6 +2,8 @@ package com.xia.search.solr;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.xia.search.solr.query.AbstractSolrQuery;
+
 //http://localhost:8081/solr/terms?terms.fl=F_Table.F_title&terms.sort=index&terms.prefix=测试
 /**
  * Just for test

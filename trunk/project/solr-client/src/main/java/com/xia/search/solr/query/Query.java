@@ -1,4 +1,4 @@
-package com.xia.search.solr;
+package com.xia.search.solr.query;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -7,6 +7,8 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.common.util.DateUtil;
+
+import com.xia.search.solr.XiaSolrException;
 
 /**
  * 已实现：and,or,not,order,range
@@ -71,7 +73,7 @@ public class Query extends AbstractSolrQuery{
 	private Query add(String field, String value, String condition) {
 		if(StringUtils.contains(field, "*")&&StringUtils.equals("*", value)) {
 			if(!(StringUtils.equals(field, "*")&&StringUtils.equals("*", value)))
-				throw new SoQuickException("filed里不能带*.(例外：value为*时，field可为*)");
+				throw new XiaSolrException("filed里不能带*.(例外：value为*时，field可为*)");
 		}
 		q += condition + getFieldName(field) + ":" + value;
 		return this;

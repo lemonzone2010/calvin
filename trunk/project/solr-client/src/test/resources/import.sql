@@ -23,3 +23,8 @@ INSERT INTO T_DUMMY_BOOK VALUES (12, '2005-01-12', '', 'Lucene In Action', 99.9)
 INSERT INTO T_DUMMY_BOOK VALUES (13, '1999-09-14', 'Yourdon Press computing series', 'Death March', 101.9);
 
 INSERT INTO T_DUMMY_BOOK VALUES (14, '2006-04-04', 'Pragmatic Programmers', 'Practices of an Agile Developer: Working in the Real World', 112.3);
+
+
+INSERT INTO T_DUMMY_AUTHOR VALUES (0, 'Greg Wilson');
+INSERT INTO T_DUMMY_AUTHOR VALUES (1, 'Andy Oram');
+INSERT INTO T_DUMMY_AUTHOR VALUES (2, 'Joel Spolsky');

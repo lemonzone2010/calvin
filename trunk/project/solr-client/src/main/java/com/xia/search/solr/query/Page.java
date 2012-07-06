@@ -1,4 +1,4 @@
-package com.xia.search.solr;
+package com.xia.search.solr.query;
 
 import java.util.List;
 

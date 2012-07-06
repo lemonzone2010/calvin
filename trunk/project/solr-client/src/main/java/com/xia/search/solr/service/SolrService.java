@@ -1,14 +1,16 @@
-package com.xia.search.solr.query;
+package com.xia.search.solr.service;
 
 import java.io.IOException;
 
 import org.apache.solr.client.solrj.SolrServerException;
 
-import com.xia.search.solr.Page;
-import com.xia.search.solr.Query;
+import com.xia.search.solr.query.Page;
+import com.xia.search.solr.query.Query;
+import com.xia.search.solr.query.Result;
+
 
 //TODO 索引的操作：新增，更新，删除，查询4类
-public interface MySolrService {
+public interface SolrService {
 	/**
 	 * 根据ID去检索,存在时,返回结果,存在于solr 中的uuid的id
 	 * 
