@@ -29,12 +29,12 @@ public abstract class AbstractSolrQuery {
 	}
 	
 	protected String getFieldName(String fieldName) {
-		if(StringUtils.equals(fieldName, "*")) {
-			return "*";
-		}
 		SolrDocumentHelper helper=new SolrDocumentHelper(HibernateContext.getSessionFactory().getCurrentSession());
 		try {
-			SolrSchemaDocument document = helper.getDocument(clazz.newInstance());
+			SolrSchemaDocument document = helper.getSchemaDocument(clazz.newInstance());
+			if(StringUtils.equals(fieldName, "*")) {
+				return document.getField("id").getSolrName();
+			}
 			return document.getField(fieldName).getSolrName();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block

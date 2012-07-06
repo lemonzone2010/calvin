@@ -3,6 +3,7 @@ package com.xia.search.solr.schema;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.logging.Log;
@@ -25,6 +26,7 @@ import org.hibernate.search.util.impl.ContextHelper;
 @SuppressWarnings("deprecation")
 public class SolrDocumentHelper {
 	private static final Log logger = LogFactory.getLog(SolrDocumentHelper.class);
+	private static Map<Class<?>,SolrSchemaDocument> cache=new ConcurrentHashMap<Class<?>, SolrSchemaDocument>();
 	private Session session;
 	private boolean canAddEmptyField=true;
 
@@ -32,6 +34,14 @@ public class SolrDocumentHelper {
 		this.session = session;
 	}
 	
+	public SolrSchemaDocument getSchemaDocument(Object entity) {
+		if (cache.get(entity.getClass()) != null) {
+			return cache.get(entity.getClass());
+		}
+		SolrSchemaDocument document = getDocument(entity);
+		cache.put(entity.getClass(), document);
+		return document;
+	}
 	/**
 	 * 根据hibernate search相关的api取得相应的实体的luence的field
 	 * @param entity 定义了hsbernate search相关标签的实体

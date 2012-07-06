@@ -64,7 +64,8 @@ public class QueryTest extends BaseTestCase {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		new Query(DummyBook.class, "*", "*");
+		Query query = new Query(DummyBook.class, "*", "*");
+		assertEquals("DummyBook.id:*", query.toString());
 	}
 	
 }
