@@ -94,8 +94,9 @@ public class SchemaConfig {
 			return;
 		}
 		isChanged=false;
+		DefaultElement parentSchemaNode = (DefaultElement) xmlUtil.getSingleNode(FieldAdaptor.SCHEMA);
+		DefaultElement parentFieldsNode = (DefaultElement) xmlUtil.getSingleNode(FieldAdaptor.FIELD_PARENT);
 		for (FieldAdaptor f : fields) {
-			DefaultElement parentNode = (DefaultElement) xmlUtil.getSingleNode(FieldAdaptor.FIELD_PARENT);
 			if(StringUtils.isEmpty(f.getEntityName())) {
 				continue;
 			}
@@ -109,7 +110,14 @@ public class SchemaConfig {
 				childElement.addAttribute("stored", ""+f.isStored());
 				childElement.addAttribute("termVectors", ""+f.isStoreTermVector());
 				//childElement.setParent(parentNode);
-				parentNode.add(childElement);
+				parentFieldsNode.add(childElement);
+				
+				
+				//把字段copy到默认字段，方便查询
+				DefaultElement copyFieldElement = new DefaultElement("copyField");
+				copyFieldElement.addAttribute("source", name);
+				copyFieldElement.addAttribute("dest", FieldAdaptor.COPY_TO_FIELD);
+				parentSchemaNode.add(copyFieldElement);
 			}
 		}
 		xmlUtil.wirteToFile("D:/a.xml","UTF-8");//tmp file for observer
