@@ -97,7 +97,7 @@ public class SolrServiceTest extends AbstractHibernateTest{
 			
 			@Override
 			public Page<DummyBook> call() throws Exception {
-				com.xia.search.solr.query.Query query = new com.xia.search.solr.query.Query (DummyBook.class, "title", "*");
+				com.xia.search.solr.query.Query query = new com.xia.search.solr.query.Query (DummyBook.class, "*", "*");
 				return mySolrService.query(query);
 			}
 		});

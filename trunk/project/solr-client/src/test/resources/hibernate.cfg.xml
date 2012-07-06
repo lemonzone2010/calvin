@@ -33,7 +33,7 @@
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">create-drop</property>
-		<mapping resource="DummyBook.hbm.xml" />
-		<mapping resource="DummyAuthor.hbm.xml" />
+		<mapping resource="hbm/DummyBook.hbm.xml" />
+		<mapping resource="hbm/DummyAuthor.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>
