@@ -17,16 +17,18 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.TermsResponse;
 import org.apache.solr.client.solrj.response.TermsResponse.Term;
 
-public class SolrService {
-	protected static final Log logger = LogFactory.getLog(SolrService.class);
+import com.xia.search.solr.query.Page;
+import com.xia.search.solr.query.Query;
+
+public class SolrService_Old {
+	protected static final Log logger = LogFactory.getLog(SolrService_Old.class);
 	private static HttpSolrServer solrServer;
-	private final HibernateDocBinder binder = new HibernateDocBinder();
 
 	public SolrServer getSolrServer() {
 		return solrServer;
 	}
 
-	public SolrService(String url) {
+	public SolrService_Old(String url) {
 		init(url);
 	}
 
@@ -44,38 +46,11 @@ public class SolrService {
 
 		} catch (Exception e) {
 			logger.error("初始化SOLR服务器出错", e);
-			throw new SoQuickException("初始化SOLR服务器出错", e);
+			throw new XiaSolrException("初始化SOLR服务器出错", e);
 		}
 
 	}
 
-	// TODO 分组，分页,ge等参看lucene语法
-	public <T> Page<T> query(Query q) {
-		Page<T> ret = new Page<T>();
-
-		try {
-			SolrQuery query = new SolrQuery();
-			query.setStart(q.getStart());
-			query.setRows(q.getRows());
-			query.setQuery(q.toString());
-			for (Entry<String, ORDER> order : q.getOrder().entrySet()) {
-				query.addSortField(order.getKey(), order.getValue());
-			}
-			QueryResponse rsp = solrServer.query(query);
-			ret.setNumFound(rsp.getResults().getNumFound());
-			ret.setqTime(Long.valueOf(rsp.getHeader().get("QTime").toString()));
-
-			logger.info(rsp.getResults());
-			@SuppressWarnings("unchecked")
-			List<T> beans = getBinder().getBeans(q.getQueryClazz(), rsp.getResults());
-
-			ret.setResult(beans);
-		} catch (Exception e) {
-			logger.error("SOLR查询出错:" + q.toString(), e);
-			throw new SoQuickException("SOLR查询出错:" + q.toString(), e);
-		}
-		return ret;
-	}
 	/**
 	 * 根据用户输入的前缀,查询出相关词,但貌似只能查询出分词,比如测试结果,如果输入测,则只能出测试,而输入测试结,则不出结果.
 	 * Just for test now.by xiayong
@@ -108,7 +83,7 @@ public class SolrService {
 			ret.setResult(result);
 		} catch (SolrServerException e) {
 			logger.error("SOLR查询出错:" + q.toString(), e);
-			throw new SoQuickException("SOLR查询出错:" + q.toString(), e);
+			throw new XiaSolrException("SOLR查询出错:" + q.toString(), e);
 		}
 		return ret;
 	}
@@ -131,19 +106,6 @@ public class SolrService {
 		}  
 	}*/
 
-	private HibernateDocBinder getBinder() {
-		return binder;
-	}
-
-	public void add(Object o) {
-		try {
-			solrServer.add(getBinder().toSolrInputDocument(o));
-			solrServer.commit();
-		} catch (Exception e) {
-			logger.error("增加SOLR索引出错:" + o, e);
-			throw new SoQuickException("增加SOLR索引出错:" + o, e);
-		}
-	}
 
 	public void delete(Query q) {
 		try {
@@ -151,7 +113,7 @@ public class SolrService {
 			solrServer.commit();
 		} catch (Exception e) {
 			logger.error("删除SOLR索引出错:" + q, e);
-			throw new SoQuickException("删除SOLR索引出错:" + q, e);
+			throw new XiaSolrException("删除SOLR索引出错:" + q, e);
 		}
 	}
 
@@ -165,7 +127,7 @@ public class SolrService {
 			return solrServer.ping().getResponse().toString();
 		} catch (Exception e) {
 			logger.error("PING SOLR服务器出错", e);
-			throw new SoQuickException("PING SOLR服务器出错", e);
+			throw new XiaSolrException("PING SOLR服务器出错", e);
 		}
 	}
 }

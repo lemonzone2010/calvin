@@ -1,4 +1,4 @@
-package com.xia.search.solr;
+package com.xia.search.solr.query;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
@@ -29,6 +29,9 @@ public abstract class AbstractSolrQuery {
 	}
 	
 	protected String getFieldName(String fieldName) {
+		if(StringUtils.equals(fieldName, "*")) {
+			return "*";
+		}
 		SolrDocumentHelper helper=new SolrDocumentHelper(HibernateContext.getSessionFactory().getCurrentSession());
 		try {
 			SolrSchemaDocument document = helper.getDocument(clazz.newInstance());

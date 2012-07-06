@@ -34,5 +34,6 @@
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">create-drop</property>
 		<mapping resource="DummyBook.hbm.xml" />
+		<mapping resource="DummyAuthor.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

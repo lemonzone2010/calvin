@@ -1,4 +1,4 @@
-package com.xia.search.solr.query;
+package com.xia.search.solr.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,24 +25,26 @@ import org.apache.solr.common.params.UpdateParams;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.query.engine.spi.EntityInfo;
 
-import com.xia.search.solr.Page;
-import com.xia.search.solr.Query;
-import com.xia.search.solr.SoQuickException;
+import com.xia.search.solr.XiaSolrException;
 import com.xia.search.solr.entity.SolrEntityInfoImpl;
 import com.xia.search.solr.entity.SolrObjectLoaderHelper;
+import com.xia.search.solr.query.IdMappingMap;
+import com.xia.search.solr.query.Page;
+import com.xia.search.solr.query.Query;
+import com.xia.search.solr.query.Result;
 import com.xia.search.solr.schema.FieldAdaptor;
 import com.xia.search.solr.schema.SolrDocumentHelper;
 import com.xia.search.solr.schema.SolrSchemaDocument;
 import com.xia.search.solr.util.JasonUtil;
 
-public class MySolrServiceImpl implements MySolrService {
-	protected static final Log logger = LogFactory.getLog(MySolrServiceImpl.class);
+public class SolrServiceImpl implements SolrService {
+	protected static final Log logger = LogFactory.getLog(SolrServiceImpl.class);
 	private static IdMappingMap idMapping=new IdMappingMap();
 	private static HttpSolrServer solrServer;
 	private SolrDocumentHelper documentHelper;
 	private SessionFactory sessionFactory;
 
-	public MySolrServiceImpl(String url, SessionFactory sessionFactory) {
+	public SolrServiceImpl(String url, SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 		init(url);
 	}
@@ -66,7 +68,7 @@ public class MySolrServiceImpl implements MySolrService {
 
 		} catch (Exception e) {
 			logger.error("初始化SOLR服务器出错", e);
-			throw new SoQuickException("初始化SOLR服务器出错", e);
+			throw new XiaSolrException("初始化SOLR服务器出错", e);
 		}
 
 	}
@@ -183,7 +185,7 @@ public class MySolrServiceImpl implements MySolrService {
 			ret.setResult(beans);
 		} catch (Exception e) {
 			logger.error("SOLR查询出错:" + q.toString(), e);
-			throw new SoQuickException("SOLR查询出错:" + q.toString(), e);
+			throw new XiaSolrException("SOLR查询出错:" + q.toString(), e);
 		}
 		return ret;
 	}
