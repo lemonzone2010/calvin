@@ -14,8 +14,6 @@ import org.hibernate.mapping.PersistentClass;
 
 import com.xia.search.solr.SolrConst;
 import com.xia.search.solr.hibernate.HibernateContext;
-import com.xia.search.solr.schema.SolrDocumentHelper;
-import com.xia.search.solr.update.SolrUpdateSchemaHelper;
 import com.xia.search.solr.util.SolrContext;
 
 public class SolrSessionFactoryObserver implements SessionFactoryObserver {

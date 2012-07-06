@@ -37,6 +37,7 @@ import com.xia.search.solr.util.JasonUtil;
 
 public class MySolrServiceImpl implements MySolrService {
 	protected static final Log logger = LogFactory.getLog(MySolrServiceImpl.class);
+	private static IdMappingMap idMapping=new IdMappingMap();
 	private static HttpSolrServer solrServer;
 	private SolrDocumentHelper documentHelper;
 	private SessionFactory sessionFactory;
@@ -71,12 +72,11 @@ public class MySolrServiceImpl implements MySolrService {
 	}
 
 	@Override
-	public Result update(Object... entitys) throws Exception {
-		// FIXME 如果已存在,只更新,否则新增
+	public Result indexSaveOrUpdate(Object... entitys) throws Exception {
 		UpdateRequest req = new UpdateRequest("/update");
 		for (Object object : entitys) {
 			SolrSchemaDocument document = documentHelper.getDocument(object);
-			req.add(convert(document));
+			req.add(convertForIndex(document));
 		}
 		req.setParam(UpdateParams.COMMIT, "true");
 		UpdateResponse response = req.process(solrServer);
@@ -84,11 +84,13 @@ public class MySolrServiceImpl implements MySolrService {
 		return Result.getResult(response.getStatus() == 0, response.getElapsedTime());
 	}
 
-	private SolrInputDocument convert(SolrSchemaDocument document) throws SolrServerException, IOException {
+	private SolrInputDocument convertForIndex(SolrSchemaDocument document) throws SolrServerException, IOException {
 		SolrInputDocument doc = new SolrInputDocument();
-		Object id = getIdFromSolr(document);
+		Object id = getSolrId(document);
 		if (null == id) {
-			doc.addField("id", UUID.randomUUID());
+			UUID idUUID = UUID.randomUUID();
+			doc.addField("id", idUUID);
+			idMapping.put(document.getIdValue(), idUUID.toString());
 		} else {
 			doc.addField("id", id);
 		}
@@ -97,20 +99,40 @@ public class MySolrServiceImpl implements MySolrService {
 		}
 		return doc;
 	}
+	public Result indexDelete(Object... entitys) throws Exception{
+		UpdateRequest req = new UpdateRequest("/update");
+		for (Object object : entitys) {
+			req.deleteById(getSolrId(object));
+			//SolrSchemaDocument document = documentHelper.getDocument(object);
+			//req.add(convertForIndex(document));
+		}
+		req.setParam(UpdateParams.COMMIT, "true");
+		UpdateResponse response = req.process(solrServer);
 
-	public Object getIdFromSolr(Object enitty) throws SolrServerException, IOException {
-		return getIdFromSolr(documentHelper.getDocument(enitty));
+		return Result.getResult(response.getStatus() == 0, response.getElapsedTime());
 	}
 
-	private Object getIdFromSolr(SolrSchemaDocument document) throws SolrServerException, IOException {
+	public String getSolrId(Object enitty) throws SolrServerException, IOException {
+		return getSolrId(documentHelper.getDocument(enitty));
+	}
+
+	private String getSolrId(SolrSchemaDocument document) throws SolrServerException, IOException {
+		String ret=idMapping.get(document.getIdValue());
+		if(StringUtils.isNotEmpty(ret)) {
+			return ret;
+		}
 		FieldAdaptor field = document.getField("id");
 		SolrQuery query = new SolrQuery();
 		query.setStart(0);
 		query.setRows(20);
-		query.setQuery(field.getSolrName());
+		query.setQuery(field.getSolrName()+":"+field.getFieldsData());
 		QueryResponse rsp = solrServer.query(query);
 		SolrDocumentList results = rsp.getResults();
-		return results.size() > 0 ? results.get(0).getFieldValue("id") : null;
+		ret=results.size() > 0 ? results.get(0).getFieldValue("id").toString() : null;
+		if(StringUtils.isNotEmpty(ret)) {
+			idMapping.put(document.getIdValue(), ret);
+		}
+		return ret;
 	}
 
 	@Override
@@ -118,14 +140,14 @@ public class MySolrServiceImpl implements MySolrService {
 		UpdateRequest req = new UpdateRequest("/updateschema");
 		for (Object object : entitys) {
 			SolrSchemaDocument document = documentHelper.getDocument(object);
-			req.add(convert2SolrInput(document));
+			req.add(convertForUpdateSchema(document));
 		}
 		UpdateResponse response = req.process(solrServer);
 
 		return Result.getResult(response.getStatus() == 0, response.getElapsedTime());
 	}
 
-	private SolrInputDocument convert2SolrInput(SolrSchemaDocument document) {
+	private SolrInputDocument convertForUpdateSchema(SolrSchemaDocument document) {
 		SolrInputDocument doc = new SolrInputDocument();
 		for (FieldAdaptor field : document.getFields()) {
 			doc.addField(field.getFieldName(), JasonUtil.toJsonString(field));
@@ -133,6 +155,7 @@ public class MySolrServiceImpl implements MySolrService {
 		return doc;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	// TODO 分组，分页,ge等参看lucene语法
 	//FIXME 将persistence持久解析的document缓存起来
