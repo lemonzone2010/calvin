@@ -1,4 +1,4 @@
-package com.xia.search.solr;
+package com.xia.search.solr.query;
 
 import static org.junit.Assert.assertEquals;
 
