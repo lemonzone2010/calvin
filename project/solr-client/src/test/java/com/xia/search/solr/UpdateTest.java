@@ -3,6 +3,7 @@ package com.xia.search.solr;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
@@ -11,6 +12,8 @@ import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.SpellCheckResponse;
+import org.apache.solr.client.solrj.response.SpellCheckResponse.Suggestion;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 
@@ -26,6 +29,11 @@ public class UpdateTest {
 		//query.setTermsSortString(q.isIndexSort()?"index":"count");
 		query.setQuery("夏");
 		QueryResponse rsp = server.query(query);
+		SpellCheckResponse spellCheckResponse = rsp.getSpellCheckResponse();
+		List<Suggestion> suggestions = spellCheckResponse.getSuggestions();
+		for (Suggestion suggestion : suggestions) {
+			suggestion.getAlternatives();
+		}
 		System.out.println(rsp);
 	}
 
