@@ -50,6 +50,26 @@ public class HibernateDaoTest extends AbstractHibernateTest{
 		assertNotNull(list);
 		
 	}
+	@Test
+	public void insertN() throws Exception{
+		
+		Serializable list=doInTranstaction(new Callable<Serializable>() {
+			
+			@Override
+			public Serializable call() throws Exception {
+				for (int i = 0; i < 15; i++) {
+					
+				DummyBook book=new DummyBook();
+				book.setTitle("夏勇是什么"+i);
+				book.setSubtitle("test"+i);
+				book.setPublicationDate(new Date());		
+				session.save(book);
+				}
+			 return null;
+			}
+		});
+		
+	}
 
 
 }
