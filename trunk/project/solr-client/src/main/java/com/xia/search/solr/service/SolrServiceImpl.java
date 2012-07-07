@@ -17,7 +17,9 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.apache.solr.client.solrj.request.UpdateRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.SpellCheckResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.apache.solr.client.solrj.response.SpellCheckResponse.Suggestion;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
@@ -40,7 +42,7 @@ import com.xia.search.solr.util.JasonUtil;
 
 public class SolrServiceImpl implements SolrService {
 	protected static final Log logger = LogFactory.getLog(SolrServiceImpl.class);
-	private static IdMappingMap idMapping=new IdMappingMap();
+	private static IdMappingMap idMapping = new IdMappingMap();
 	private static HttpSolrServer solrServer;
 	private SolrDocumentHelper documentHelper;
 	private SessionFactory sessionFactory;
@@ -102,12 +104,13 @@ public class SolrServiceImpl implements SolrService {
 		}
 		return doc;
 	}
-	public Result indexDelete(Object... entitys) throws Exception{
+
+	public Result indexDelete(Object... entitys) throws Exception {
 		UpdateRequest req = new UpdateRequest("/update");
 		for (Object object : entitys) {
 			req.deleteById(getSolrId(object));
-			//SolrSchemaDocument document = documentHelper.getDocument(object);
-			//req.add(convertForIndex(document));
+			// SolrSchemaDocument document = documentHelper.getDocument(object);
+			// req.add(convertForIndex(document));
 		}
 		req.setParam(UpdateParams.COMMIT, "true");
 		UpdateResponse response = req.process(solrServer);
@@ -120,19 +123,19 @@ public class SolrServiceImpl implements SolrService {
 	}
 
 	private String getSolrId(SolrSchemaDocument document) throws SolrServerException, IOException {
-		String ret=idMapping.get(document.getIdValue());
-		if(StringUtils.isNotEmpty(ret)) {
+		String ret = idMapping.get(document.getIdValue());
+		if (StringUtils.isNotEmpty(ret)) {
 			return ret;
 		}
 		FieldAdaptor field = document.getField("id");
 		SolrQuery query = new SolrQuery();
 		query.setStart(0);
 		query.setRows(20);
-		query.setQuery(field.getSolrName()+":"+field.getFieldsData());
+		query.setQuery(field.getSolrName() + ":" + field.getFieldsData());
 		QueryResponse rsp = solrServer.query(query);
 		SolrDocumentList results = rsp.getResults();
-		ret=results.size() > 0 ? results.get(0).getFieldValue("id").toString() : null;
-		if(StringUtils.isNotEmpty(ret)) {
+		ret = results.size() > 0 ? results.get(0).getFieldValue("id").toString() : null;
+		if (StringUtils.isNotEmpty(ret)) {
 			idMapping.put(document.getIdValue(), ret);
 		}
 		return ret;
@@ -161,7 +164,7 @@ public class SolrServiceImpl implements SolrService {
 	@SuppressWarnings("unchecked")
 	@Override
 	// TODO 分组，分页,ge等参看lucene语法
-	//FIXME 将persistence持久解析的document缓存起来
+	// FIXME 将persistence持久解析的document缓存起来
 	public <T> Page<T> query(Query q) throws Exception {
 		Page<T> ret = new Page<T>();
 
@@ -178,7 +181,7 @@ public class SolrServiceImpl implements SolrService {
 			ret.setqTime(Long.valueOf(rsp.getHeader().get("QTime").toString()));
 
 			logger.info(rsp.getResults());
-			List<T> beans=new ArrayList<T>();
+			List<T> beans = new ArrayList<T>();
 			Session currentSession = sessionFactory.getCurrentSession();
 			for (SolrDocument solrDocument : rsp.getResults()) {
 				T load = (T) SolrObjectLoaderHelper.load(convert2EntityInfo(solrDocument), currentSession);
@@ -187,10 +190,11 @@ public class SolrServiceImpl implements SolrService {
 			ret.setResult(beans);
 		} catch (Exception e) {
 			logger.error("SOLR查询出错:" + q.toString(), e);
-			throw new XiaSolrException("SOLR查询出错:" + q.toString()+","+e.getMessage(), e);
+			throw new XiaSolrException("SOLR查询出错:" + q.toString() + "," + e.getMessage(), e);
 		}
 		return ret;
 	}
+
 	private EntityInfo convert2EntityInfo(SolrDocument doc) throws ClassNotFoundException {
 		String className = "";
 		Integer id = null;
@@ -207,6 +211,29 @@ public class SolrServiceImpl implements SolrService {
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+
+	@Override
+	public Page<String> suggest(String q) throws Exception {
+		Page<String> ret = new Page<String>();
+		SolrQuery query = new SolrQuery();
+		query.setQueryType("/suggest");
+		query.setQuery(q);
+		QueryResponse rsp = solrServer.query(query);
+		SpellCheckResponse spellCheckResponse = rsp.getSpellCheckResponse();
+		ret.setqTime(Long.valueOf(rsp.getHeader().get("QTime").toString()));
+
+		logger.info(spellCheckResponse);
+		List<String> beans = new ArrayList<String>();
+		List<Suggestion> suggestions = spellCheckResponse.getSuggestions();
+		long found = 0;
+		for (Suggestion suggestion : suggestions) {
+			beans.addAll(suggestion.getAlternatives());
+			found += suggestion.getNumFound();
+		}
+		ret.setResult(beans);
+		ret.setNumFound(found);
+		return ret;
 	}
 
 }

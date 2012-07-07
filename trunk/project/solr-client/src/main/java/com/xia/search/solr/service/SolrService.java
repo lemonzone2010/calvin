@@ -51,4 +51,5 @@ public interface SolrService {
 	 * @throws Exception
 	 */
 	public <T> Page<T> query(Query q) throws Exception;
+	public Page<String> suggest(String q) throws Exception;
 }

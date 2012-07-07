@@ -114,4 +114,13 @@ public class SolrServiceTest extends AbstractHibernateTest{
 		id = mySolrService.getSolrId(book);//just get from mapping.
 		assertNotNull(id);
 	}
+	@Test
+	public void suggest() throws Exception {
+		Page<String> page = mySolrService.suggest("夏");
+		System.out.println(page);
+		for (String s : page.getResult()) {
+			System.out.println(s);
+		}
+		assertNotNull(page);
+	}
 }
