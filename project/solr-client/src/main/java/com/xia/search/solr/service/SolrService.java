@@ -1,6 +1,7 @@
 package com.xia.search.solr.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.solr.client.solrj.SolrServerException;
 
@@ -51,5 +52,5 @@ public interface SolrService {
 	 * @throws Exception
 	 */
 	public <T> Page<T> query(Query q) throws Exception;
-	public Page<String> suggest(String q) throws Exception;
+	public List<String> suggest(String q) throws Exception;
 }
