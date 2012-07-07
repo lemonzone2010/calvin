@@ -116,11 +116,11 @@ public class SolrServiceTest extends AbstractHibernateTest{
 	}
 	@Test
 	public void suggest() throws Exception {
-		Page<String> page = mySolrService.suggest("夏");
+		List<String> page = mySolrService.suggest("夏");
+		assertNotNull(page);
 		System.out.println(page);
-		for (String s : page.getResult()) {
+		for (String s : page) {
 			System.out.println(s);
 		}
-		assertNotNull(page);
 	}
 }

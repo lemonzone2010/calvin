@@ -214,25 +214,25 @@ public class SolrServiceImpl implements SolrService {
 	}
 
 	@Override
-	public Page<String> suggest(String q) throws Exception {
-		Page<String> ret = new Page<String>();
+	public List<String> suggest(String q) throws Exception {
+		List<String> ret = new ArrayList<String>();
 		SolrQuery query = new SolrQuery();
 		query.setQueryType("/suggest");
 		query.setQuery(q);
 		QueryResponse rsp = solrServer.query(query);
 		SpellCheckResponse spellCheckResponse = rsp.getSpellCheckResponse();
-		ret.setqTime(Long.valueOf(rsp.getHeader().get("QTime").toString()));
+		// ret.setqTime(Long.valueOf(rsp.getHeader().get("QTime").toString()));
 
 		logger.info(spellCheckResponse);
-		List<String> beans = new ArrayList<String>();
+		// List<String> beans = new ArrayList<String>();
 		List<Suggestion> suggestions = spellCheckResponse.getSuggestions();
-		long found = 0;
+		// long found = 0;
 		for (Suggestion suggestion : suggestions) {
-			beans.addAll(suggestion.getAlternatives());
-			found += suggestion.getNumFound();
+			ret.addAll(suggestion.getAlternatives());
+			// found += suggestion.getNumFound();
 		}
-		ret.setResult(beans);
-		ret.setNumFound(found);
+		// ret.setResult(beans);
+		// ret.setNumFound(found);
 		return ret;
 	}
 
