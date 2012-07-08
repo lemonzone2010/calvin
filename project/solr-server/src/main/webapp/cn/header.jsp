@@ -59,11 +59,11 @@ var host_name="<%= hostname %>"
 
 <body  class="privacy">
 
-<nav id="globalheader">
+<nav id="globalheader" class="apple">
 	<!--googleoff: all-->
 	<ul id="globalnav" role="navigation">
-		<li id="gn-apple"><a href="/"><span>Apple</span></a></li>
-		<li id="gn-store"><a href="http://store.apple.com/"><span>Store</span></a></li>
+		<li id="gn-apple"><a href="index.jsp"><span>Apple</span></a></li>
+		<li id="gn-store"><a href="config.jsp"><span>Store</span></a></li>
 		<li id="gn-mac"><a href="/mac/"><span>Mac</span></a></li>
 		<li id="gn-ipod"><a href="/ipod/"><span>iPod</span></a></li>
 		<li id="gn-iphone"><a href="/iphone/"><span>iPhone</span></a></li>
@@ -81,6 +81,3 @@ var host_name="<%= hostname %>"
 		<div id="sp-results"></div>
 	</div>
 </nav>
-<script type="text/javascript">
-	AC.GlobalNav.Instance = new AC.GlobalNav();
-</script>
