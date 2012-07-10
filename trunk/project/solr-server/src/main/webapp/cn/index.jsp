@@ -55,6 +55,7 @@
 			$('#xmlcode').html('<pre class="brush: xml"></pre>');
 			$('pre').html($(result).children());
 			SyntaxHighlighter.highlight();
+			resizeContent();
 		  },'xml').error(function(result) {
 			  $('pre').html(result.responseText);
 			  });

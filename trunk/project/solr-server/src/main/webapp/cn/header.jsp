@@ -55,6 +55,17 @@ var host_name="<%= hostname %>"
 <script src="../js/globalnav.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/jquery/jquery-1.7.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="../js/jquery/jquery.extend.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	function resizeContent(){
+		var remainHeight=$(document).height()-250;
+		$('#content').height(remainHeight);
+		$('.syntaxhighlighter').height(remainHeight-50);
+	}
+$(document).ready(function() {
+	resizeContent();
+	$(window).resize(resizeContent);
+});
+</script>
 </head>
 
 <body  class="privacy">
@@ -62,8 +73,8 @@ var host_name="<%= hostname %>"
 <nav id="globalheader" class="apple">
 	<!--googleoff: all-->
 	<ul id="globalnav" role="navigation">
-		<li id="gn-apple"><a href="index.jsp"><span>Apple</span></a></li>
-		<li id="gn-store"><a href="config.jsp"><span>Store</span></a></li>
+		<li id="gn-apple"><a href="index.jsp"><span>Home</span></a></li>
+		<li id="gn-store"><a href="config.jsp"><span>Config</span></a></li>
 		<li id="gn-mac"><a href="/mac/"><span>Mac</span></a></li>
 		<li id="gn-ipod"><a href="/ipod/"><span>iPod</span></a></li>
 		<li id="gn-iphone"><a href="/iphone/"><span>iPhone</span></a></li>
