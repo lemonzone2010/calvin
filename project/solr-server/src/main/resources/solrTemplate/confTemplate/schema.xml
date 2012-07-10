@@ -468,20 +468,38 @@
    -->
     <fieldtype name="geohash" class="solr.GeoHashField"/>
 
-	<fieldType name="textMaxWord" class="solr.TextField" positionIncrementGap="100" >  
-        <analyzer>  
-            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="complex" dicPath="conf/dic"/> 
-             <!-- dicPath="conf/dic" -->
-             <!-- dicPath 指定词库位置（每个MMSegTokenizerFactory可以指定不同的目录，当是相对目录时，是相对 solr.home 的目录），mode 指定分词模式（simple|complex|max-word，默认是max-word）。 -->
-            <filter class="solr.LowerCaseFilterFactory"/>  
-        </analyzer>  
-     </fieldType>  
      <fieldType name="text" class="solr.TextField" positionIncrementGap="100" >  
         <analyzer>  
+		 <!-- dicPath="conf/dic" -->
             <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="max-word" dicPath="conf/dic"/>  
-            <filter class="solr.LowerCaseFilterFactory"/>  
+            <filter class="solr.LowerCaseFilterFactory"/> 
+            <filter class="solr.StopFilterFactory"
+                ignoreCase="true"
+                words="stopwords.txt"
+                enablePositionIncrements="true"
+                /> 
         </analyzer>  
      </fieldType>  
+     <fieldType name="text_pd" class="solr.TextField" positionIncrementGap="100" >  
+     <!-- <analyzer class="net.paoding.analysis.analyzer.PaodingAnalyzer"></analyzer> -->
+        <analyzer>  <!-- max-word-length/most-words -->
+            <tokenizer class="net.paoding.analysis.solr.PaodingTokenizerFactory" mode="most-words"/>  
+            <filter class="solr.LowerCaseFilterFactory"/>  
+            <filter class="solr.StopFilterFactory"
+                ignoreCase="true"
+                words="stopwords.txt"
+                enablePositionIncrements="true"
+                />
+        </analyzer>  
+     </fieldType>
+	<fieldType name="text_smart" class="solr.TextField">
+		<analyzer class="org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer" />
+	</fieldType>
+	<fieldType name="text_ik" class="solr.TextField">
+		<analyzer >
+		<tokenizer class="org.wltea.analyzer.solr.IKTokenizerFactory" isMaxWordLength="true"/>
+		</analyzer>
+	</fieldType>    
  </types>
 
 
@@ -508,8 +526,7 @@
      default: a value that should be used if no value is specified
        when adding a document.
    -->
-   <field name="xia" type="textMaxWord" indexed="true" stored="true" multiValued="true"/>
-      <field name="xiayong" type="textMaxWord" indexed="true" stored="true" multiValued="true"/>
+
 
    <field name="id" type="string" indexed="true" stored="true" required="true" /> 
    <field name="sku" type="text_en_splitting_tight" indexed="true" stored="true" omitNorms="true"/>

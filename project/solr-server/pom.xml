@@ -221,5 +221,20 @@
 			<artifactId>httpmime</artifactId>
 			<version>4.2</version>
 		</dependency> -->
+		<dependency>
+			<groupId>com.xia.search</groupId>
+			<artifactId>paoding</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-smartcn</artifactId>
+			<version>3.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.xia.search</groupId>
+			<artifactId>ik-analyzer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
