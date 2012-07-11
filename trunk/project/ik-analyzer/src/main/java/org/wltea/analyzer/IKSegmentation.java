@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wltea.analyzer.cfg.Configuration;
+import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.help.CharacterHelper;
 import org.wltea.analyzer.seg.ISegmenter;
 
@@ -19,7 +22,7 @@ import org.wltea.analyzer.seg.ISegmenter;
  *
  */
 public final class IKSegmentation{
-
+	private static Log logger=LogFactory.getLog(IKSegmentation.class);
 	
 	private Reader input;	
 	//默认缓冲区大小
@@ -79,6 +82,7 @@ public final class IKSegmentation{
         			context.setCursor(buffIndex);
         			//进行字符规格化（全角转半角，大写转小写处理）
         			segmentBuff[buffIndex] = CharacterHelper.regularize(segmentBuff[buffIndex]);
+        			logger.debug("处理："+segmentBuff[buffIndex]);
         			//遍历子分词器
         			for(ISegmenter segmenter : segmenters){
         				segmenter.nextLexeme(segmentBuff , context);
@@ -155,6 +159,7 @@ public final class IKSegmentation{
     	if(lexeme != null){
 			//生成lexeme的词元文本
 			lexeme.setLexemeText(String.valueOf(segmentBuff , lexeme.getBegin() , lexeme.getLength()));
+			logger.debug("buildLexeme:"+lexeme);
 			return lexeme;
 			
 		}else{

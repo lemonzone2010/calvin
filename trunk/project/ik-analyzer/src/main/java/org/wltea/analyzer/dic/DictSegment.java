@@ -3,8 +3,12 @@
  */
 package org.wltea.analyzer.dic;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 /**
@@ -18,6 +22,7 @@ import java.util.Map;
  *
  */
 public class DictSegment {
+	private static Log logger=LogFactory.getLog(DictSegment.class);
 	
 	//公用字典表，存储汉字
 	private static final Map<Character , Character> charMap = new HashMap<Character , Character>(16 , 0.95f);
@@ -88,7 +93,7 @@ public class DictSegment {
 	 * @return Hit 
 	 */
 	public Hit match(char[] charArray , int begin , int length , Hit searchHit){
-		
+		logger.debug("match(char[] charArray , int begin , int length , Hit searchHit)"+begin+","+length+","+searchHit);
 		if(searchHit == null){
 			//如果hit为空，新建
 			searchHit= new Hit();
@@ -289,6 +294,12 @@ public class DictSegment {
 				segmentMap.put(segment.nodeChar, segment);
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "DictSegment [nodeChar=" + nodeChar + ", childrenMap=" + childrenMap + ", childrenArray="
+				+ Arrays.toString(childrenArray) + ", storeSize=" + storeSize + ", nodeState=" + nodeState + "]";
 	}
 	
 }

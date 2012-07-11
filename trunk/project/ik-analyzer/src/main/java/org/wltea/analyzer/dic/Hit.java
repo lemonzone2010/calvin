@@ -93,6 +93,11 @@ public class Hit {
 	
 	public void setEnd(int end) {
 		this.end = end;
-	}	
+	}
+	@Override
+	public String toString() {
+		return "Hit [begin=" + begin + ", end=" + end + ", isMatch()=" + isMatch() + ", isPrefix()=" + isPrefix()
+				+ ", isUnmatch()=" + isUnmatch() + "]";
+	}
 	
 }

@@ -22,6 +22,7 @@ public class IKTokenerTest extends TestCase {
 		t="夏勇是一个好人啊阿黛拉的非凡冒险你是猪,也是中，国，是35W系列\r\n" + 
 				"50W系列凌钢\r\n" + 
 				"aΦcd新抚钢真的SPCCdefes abc123 ";
+		//t="我中华人民共和国人呢";
 		String result=printTokener(t);
 		System.out.println(result);
 		
@@ -33,6 +34,7 @@ public class IKTokenerTest extends TestCase {
 		try {
 			while(tokenizer.incrementToken()){
 				TermAttribute termAtt = tokenizer.getAttribute(TermAttribute.class);
+				System.out.println("得到结果："+termAtt.term());
 				ret+=(termAtt.term()+" | ");				
 			}
 		} catch (IOException e) {

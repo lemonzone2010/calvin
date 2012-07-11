@@ -206,19 +206,19 @@ public class SegmentorTester extends TestCase{
 		System.out.println("Length = " + testString.length() + "  | " +testString.getBytes().length);
 		IKSegmentation ikSeg = new IKSegmentation(new StringReader(testString) , false);
 		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		
 		long begin = System.currentTimeMillis();   
 		try {
 			Lexeme l = null;
-//			while( (l = ikSeg.next()) != null){
-//				System.out.println(l);
-//			}
+			while( (l = ikSeg.next()) != null){
+				System.out.println(l);
+			}
 			while( ikSeg.next()!= null);
 			
 		} catch (IOException e) {
