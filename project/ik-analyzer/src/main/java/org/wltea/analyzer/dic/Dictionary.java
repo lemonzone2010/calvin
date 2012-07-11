@@ -10,7 +10,10 @@ import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wltea.analyzer.cfg.Configuration;
+import org.wltea.analyzer.seg.CharHelper;
 
 /**
  * IK Analyzer v3.2
@@ -19,6 +22,7 @@ import org.wltea.analyzer.cfg.Configuration;
  *
  */
 public class Dictionary {
+	private static Log logger=LogFactory.getLog(Dictionary.class);
 	/*
 	 * 分词器默认字典路径 
 	 */
@@ -440,7 +444,11 @@ public class Dictionary {
 	 * @return Hit 匹配结果描述
 	 */
 	public static Hit matchInMainDict(char[] charArray , int begin, int length){
-		return singleton._MainDict.match(charArray, begin, length);
+		logger.debug("matchInMainDict(char[] charArray , int begin, int length)"+begin+","+length);
+		CharHelper.print(charArray, begin, length);
+		Hit match = singleton._MainDict.match(charArray, begin, length);
+		logger.debug("Matched?"+match);
+		return match;
 	}
 	
 	/**
@@ -452,8 +460,12 @@ public class Dictionary {
 	 * @return Hit
 	 */
 	public static Hit matchWithHit(char[] charArray , int currentIndex , Hit matchedHit){
+		logger.debug("matchWithHit(char[] charArray , int currentIndex , Hit matchedHit)"+currentIndex+","+matchedHit);
+		CharHelper.print(charArray, currentIndex, currentIndex);
 		DictSegment ds = matchedHit.getMatchedDictSegment();
-		return ds.match(charArray, currentIndex, 1 , matchedHit);
+		Hit ret = ds.match(charArray, currentIndex, 1 , matchedHit);
+		logger.debug("Matched?"+ret);
+		return ret;
 	}
 
 	/**

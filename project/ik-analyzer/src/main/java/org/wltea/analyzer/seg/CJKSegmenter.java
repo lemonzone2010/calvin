@@ -6,6 +6,8 @@ package org.wltea.analyzer.seg;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wltea.analyzer.Context;
 import org.wltea.analyzer.Lexeme;
 import org.wltea.analyzer.dic.Dictionary;
@@ -23,6 +25,7 @@ import org.wltea.analyzer.help.CharacterHelper;
  * @version 3.2  
  */
 public class CJKSegmenter implements ISegmenter {
+	private static Log logger=LogFactory.getLog(CJKSegmenter.class);
 	/*
 	 * 已完成处理的位置
 	 */
@@ -42,9 +45,9 @@ public class CJKSegmenter implements ISegmenter {
 	 * @see org.wltea.analyzer.seg.ISegmenter#nextLexeme(org.wltea.analyzer.Context)
 	 */
 	public void nextLexeme(char[] segmentBuff , Context context) {
-
 		//读取当前位置的char	
 		char input = segmentBuff[context.getCursor()];
+		logger.debug("nextLexeme:"+input);
 		
 		if(CharacterHelper.isCJKCharacter(input)){//是（CJK）字符，则进行处理
 			if(hitList.size() > 0){
@@ -172,6 +175,7 @@ public class CJKSegmenter implements ISegmenter {
 	 * @param uEnd 终止位置
 	 */
 	private void processUnknown(char[] segmentBuff , Context context , int uBegin , int uEnd){
+		logger.debug("processUnknown:"+uBegin+","+uEnd);
 		Lexeme newLexeme = null;
 		
 		Hit hit = Dictionary.matchInPrepDict(segmentBuff, uBegin, 1);		

@@ -3,6 +3,8 @@ package org.wltea.analyzer;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.seg.ISegmenter;
 
@@ -12,7 +14,7 @@ import org.wltea.analyzer.seg.ISegmenter;
  *
  */
 public class Context{
-	
+	private static Log logger=LogFactory.getLog(Context.class);
 	//是否使用最大词长切分（粗粒度）
 	private boolean isMaxWordLength = false;	
     //记录Reader内已分析的字串总长度
@@ -140,6 +142,7 @@ public class Context{
 	 * @param lexeme
 	 */
 	public void addLexeme(Lexeme lexeme){
+		logger.debug("addLexeme:"+lexeme);
 		if(!Dictionary.isStopWord(segmentBuff , lexeme.getBegin() , lexeme.getLength())){
 			this.lexemeSet.addLexeme(lexeme);
 		}

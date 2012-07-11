@@ -63,6 +63,7 @@ public class StandardAnalyzerTest extends TestCase{
  +"有人在背后开始对我指指点点，说一个30岁的女人还不结婚一定是有问题。 "
  +"我不为所动。 但是我知道，总有一天，我会老去，且没有人会再听我说话。";
 		}
+		testString="我是夏勇，来自中华人民共和国";
 		System.out.println("Length = " + testString.length() + "  | " +testString.getBytes().length);
 		
 		StringReader reader = new StringReader(testString);
@@ -70,20 +71,14 @@ public class StandardAnalyzerTest extends TestCase{
 		SmartChineseAnalyzer ss = new SmartChineseAnalyzer(Version.LUCENE_30);	
 		
 		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		long begin = System.currentTimeMillis();   
 		
 		TokenStream tokenStream = ss.tokenStream("", reader);
 		try {
 			while(tokenStream.incrementToken()){
-//				TermAttribute termAttribute = tokenStream.getAttribute(TermAttribute.class);
-//				System.out.println(termAttribute.toString());
+				TermAttribute termAttribute = tokenStream.getAttribute(TermAttribute.class);
+				System.out.println(termAttribute.toString());
 				
 			}
 		} catch (IOException e) {
