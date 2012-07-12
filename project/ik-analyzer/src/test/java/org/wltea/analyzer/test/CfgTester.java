@@ -14,8 +14,10 @@ import junit.framework.TestCase;
 public class CfgTester extends TestCase{
 	
 	public void testCfgLoading(){
-		System.out.println(Configuration.getExtDictionarys().size());
-		System.out.println(Configuration.getExtStopWordDictionarys().size());
+		assertEquals(Configuration.getExtDictionarys().size(),4);
+		assertEquals(Configuration.getExtStopWordDictionarys().size(),1);
+		//System.out.println(Configuration.getExtDictionarys().size());
+		//System.out.println(Configuration.getExtStopWordDictionarys().size());
 	}
 
 }

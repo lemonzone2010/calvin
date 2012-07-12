@@ -15,14 +15,18 @@ public class CharacterTest extends TestCase{
 
 	public void testSBC2DBCChar(){
 		char a = '‘';
-//		char a = 'Ｏ';
+		assertEquals(8216, (int)a);
+		assertEquals(a, CharacterHelper.regularize(a));
+		assertEquals((int)a, (int)CharacterHelper.regularize(a));
+//		 a = 'Ｏ';
 //		char a = '○';
-		System.out.println((int)a);
-		System.out.println(CharacterHelper.regularize(a));
-		System.out.println((int)CharacterHelper.regularize(a));
+//		System.out.println((int)a);
+//		System.out.println(CharacterHelper.regularize(a));
+//		System.out.println((int)CharacterHelper.regularize(a));
 		
-		String sss  = "智灵通乳酸钙冲剂(5g\14袋)-1244466518522.txt";
-		System.out.println(sss.replaceAll("[\\\\]", "每"));
+		String sss  = "智灵通乳酸钙冲剂(5g\\14袋)-1244466518522.txt";
+		assertEquals("智灵通乳酸钙冲剂(5g每14袋)-1244466518522.txt", sss.replaceAll("[\\\\]", "每"));
+		//System.out.println(sss.replaceAll("[\\\\]", "每"));
 	}
 	
 	public void testCharBlock(){
