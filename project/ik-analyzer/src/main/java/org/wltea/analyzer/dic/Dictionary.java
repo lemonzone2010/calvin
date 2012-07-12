@@ -13,7 +13,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wltea.analyzer.cfg.Configuration;
-import org.wltea.analyzer.seg.CharHelper;
+import org.wltea.analyzer.help.CharHelper;
 
 /**
  * IK Analyzer v3.2
