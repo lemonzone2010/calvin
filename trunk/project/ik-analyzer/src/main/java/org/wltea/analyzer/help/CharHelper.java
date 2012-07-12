@@ -1,4 +1,4 @@
-package org.wltea.analyzer.seg;
+package org.wltea.analyzer.help;
 
 public class CharHelper {
 

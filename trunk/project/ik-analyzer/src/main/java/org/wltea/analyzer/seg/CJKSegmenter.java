@@ -12,6 +12,7 @@ import org.wltea.analyzer.Context;
 import org.wltea.analyzer.Lexeme;
 import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.dic.Hit;
+import org.wltea.analyzer.help.CharHelper;
 import org.wltea.analyzer.help.CharacterHelper;
 
 /**
