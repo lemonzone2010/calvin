@@ -60,7 +60,7 @@ public class HibernateDaoTest extends AbstractHibernateTest{
 				for (int i = 0; i < 15; i++) {
 					
 				DummyBook book=new DummyBook();
-				book.setTitle("夏勇"+i);
+				book.setTitle("nokia"+i);
 				book.setSubtitle("夏天"+i);
 				book.setPublicationDate(new Date());		
 				session.save(book);

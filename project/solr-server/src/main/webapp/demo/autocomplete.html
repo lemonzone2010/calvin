@@ -20,6 +20,7 @@
 		$( "#names" ).autocomplete({
 			source: "../suggestdemo",
 			minLength: 1,
+			autoFocus:true,
 			select: function( event, ui ) {
 				log( 
 					"Selected: " + ui.item.value  );
