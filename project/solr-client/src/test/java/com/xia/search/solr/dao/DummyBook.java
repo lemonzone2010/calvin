@@ -40,7 +40,7 @@ public class DummyBook {
     @Analyzer(definition = "customanalyzer")
     private String title;
 
-    @Field(index = Index.YES, store = Store.NO)
+    @Field(index = Index.YES, store = Store.YES)
     @Analyzer(definition = "customanalyzer")
     private String subtitle;
 

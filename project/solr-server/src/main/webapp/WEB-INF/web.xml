@@ -105,6 +105,14 @@
     <servlet-name>Logging</servlet-name>
     <servlet-class>org.apache.solr.servlet.LogLevelSelection</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>SuggestDemoServlet</servlet-name>
+    <servlet-class>com.xia.search.solr.servlet.SuggestDemoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SuggestDemoServlet</servlet-name>
+    <url-pattern>/suggestdemo/*</url-pattern>
+  </servlet-mapping>
 
   <!-- @Deprecated -->
   <servlet>
