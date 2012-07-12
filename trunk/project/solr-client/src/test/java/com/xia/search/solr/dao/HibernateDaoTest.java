@@ -42,7 +42,7 @@ public class HibernateDaoTest extends AbstractHibernateTest{
 			public Serializable call() throws Exception {
 				DummyBook book=new DummyBook();
 				book.setTitle("我是你大爷夏勇先生一天二天三天11111");
-				book.setSubtitle("是你哦，啊昌听");
+				book.setSubtitle("是你哦，啊昌听夏一宸");
 				book.setPublicationDate(new Date());		
 				return session.save(book);
 			}
@@ -60,8 +60,8 @@ public class HibernateDaoTest extends AbstractHibernateTest{
 				for (int i = 0; i < 15; i++) {
 					
 				DummyBook book=new DummyBook();
-				book.setTitle("夏勇是什么"+i);
-				book.setSubtitle("test"+i);
+				book.setTitle("夏勇"+i);
+				book.setSubtitle("夏天"+i);
 				book.setPublicationDate(new Date());		
 				session.save(book);
 				}

@@ -721,6 +721,7 @@
   <requestHandler name="/updateschema" class="com.xia.search.solr.hanlder.SchemaUpdateHanlder">
   </requestHandler>
   <searchComponent class="solr.SpellCheckComponent" name="suggest">
+  <str name="queryAnalyzerFieldType">string</str>
     <lst name="spellchecker">
       <str name="name">suggest</str>
       <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
@@ -731,8 +732,8 @@
            org.apache.solr.spelling.suggest.jaspell.JaspellLookup [default, jaspell-based]
            org.apache.solr.spelling.suggest.tst.TSTLookup   [ternary trees]
       -->
-      <str name="field">text</str>  <!-- the indexed field to derive suggestions from -->
-      <float name="threshold">0.005</float>
+      <str name="field">suggestion</str>  <!-- the indexed field to derive suggestions from -->
+      <float name="threshold">0.0001</float>
       <str name="buildOnCommit">true</str>
 <!--
       <str name="sourceLocation">american-english</str>
@@ -744,7 +745,8 @@
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">suggest</str>
       <str name="spellcheck.onlyMorePopular">true</str>
-      <str name="spellcheck.count">5</str>
+      <str name="spellcheck.extendedResults">false</str>
+      <str name="spellcheck.count">10</str>
       <str name="spellcheck.collate">true</str>
     </lst>
     <arr name="components">
