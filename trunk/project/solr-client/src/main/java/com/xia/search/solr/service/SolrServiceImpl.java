@@ -227,6 +227,9 @@ public class SolrServiceImpl implements SolrService {
 		// List<String> beans = new ArrayList<String>();
 		List<Suggestion> suggestions = spellCheckResponse.getSuggestions();
 		// long found = 0;
+		if(suggestions.size()>0) {
+			ret.add(spellCheckResponse.getCollatedResult());
+		}
 		for (Suggestion suggestion : suggestions) {
 			ret.addAll(suggestion.getAlternatives());
 			// found += suggestion.getNumFound();

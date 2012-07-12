@@ -46,11 +46,17 @@ public interface SolrService {
 	public Result updateSchema(Object... entitys) throws Exception;
 
 	/**
+	 * 
 	 * 查询，返回的结果为实体
 	 * @param q
 	 * @return
 	 * @throws Exception
 	 */
 	public <T> Page<T> query(Query q) throws Exception;
+	/**http://wiki.apache.org/solr/SpellCheckComponent
+	 * @param q
+	 * @return
+	 * @throws Exception
+	 */
 	public List<String> suggest(String q) throws Exception;
 }

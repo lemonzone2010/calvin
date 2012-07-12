@@ -52,6 +52,7 @@
     [<a href="distributiondump.jsp">Distribution</a>]
     [<a href="ping">Ping</a>]
     [<a href="logging">Logging</a>]
+    [<a href="demo/autocomplete.html">AutoComplete</a>]
   </td>
 </tr>
 
