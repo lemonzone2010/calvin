@@ -6,6 +6,7 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wltea.analyzer.dic.Dictionary;
+import org.wltea.analyzer.seg.CharHelper;
 import org.wltea.analyzer.seg.ISegmenter;
 
 /**
@@ -142,7 +143,7 @@ public class Context{
 	 * @param lexeme
 	 */
 	public void addLexeme(Lexeme lexeme){
-		logger.debug("addLexeme:"+lexeme);
+		logger.debug("addLexeme:"+lexeme+CharHelper.get(segmentBuff , lexeme.getBegin() , lexeme.getLength()));
 		if(!Dictionary.isStopWord(segmentBuff , lexeme.getBegin() , lexeme.getLength())){
 			this.lexemeSet.addLexeme(lexeme);
 		}

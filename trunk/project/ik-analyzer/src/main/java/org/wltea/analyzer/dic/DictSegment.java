@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wltea.analyzer.seg.CharHelper;
 
 
 /**
@@ -93,7 +94,7 @@ public class DictSegment {
 	 * @return Hit 
 	 */
 	public Hit match(char[] charArray , int begin , int length , Hit searchHit){
-		logger.debug("match(char[] charArray , int begin , int length , Hit searchHit)"+begin+","+length+","+searchHit);
+		logger.debug("match(char[] charArray , int begin , int length , Hit searchHit)"+CharHelper.get(charArray, begin, length)+begin+","+length+","+searchHit);
 		if(searchHit == null){
 			//如果hit为空，新建
 			searchHit= new Hit();

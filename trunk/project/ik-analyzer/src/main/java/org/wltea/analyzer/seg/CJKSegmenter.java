@@ -175,7 +175,7 @@ public class CJKSegmenter implements ISegmenter {
 	 * @param uEnd 终止位置
 	 */
 	private void processUnknown(char[] segmentBuff , Context context , int uBegin , int uEnd){
-		logger.debug("processUnknown:"+uBegin+","+uEnd);
+		logger.debug("processUnknown:"+uBegin+","+uEnd+","+CharHelper.get(segmentBuff, uBegin, uEnd));
 		Lexeme newLexeme = null;
 		
 		Hit hit = Dictionary.matchInPrepDict(segmentBuff, uBegin, 1);		
