@@ -473,7 +473,7 @@
 	</fieldType>
 	<fieldType name="text" class="solr.TextField">
 		<analyzer >
-		<tokenizer class="org.wltea.analyzer.solr.IKTokenizerFactory" isMaxWordLength="true"/>
+		<tokenizer class="org.wltea.analyzer.solr.IKTokenizerFactory" /><!-- isMaxWordLength="true" -->
 		</analyzer>
 	</fieldType>    
  </types>
@@ -515,6 +515,7 @@
 
    <field name="weight" type="float" indexed="true" stored="true"/>
    <field name="price"  type="float" indexed="true" stored="true"/>
+   <field name="price_c"  type="string" indexed="true" stored="true"/>
    <field name="popularity" type="int" indexed="true" stored="true" />
    <field name="inStock" type="boolean" indexed="true" stored="true" />
 
@@ -630,7 +631,9 @@
    <copyField source="features" dest="text"/>
    <copyField source="includes" dest="text"/>
    <copyField source="manu" dest="manu_exact"/>
-   <copyField source="text" dest="suggestion"/>
+   <copyField source="name" dest="suggestion"/>
+   
+   <copyField source="price" dest="price_c"/>
 	
    <!-- Above, multiple source fields are copied to the [text] field. 
 	  Another way to map multiple source fields to the same 

@@ -1,6 +1,8 @@
 package com.xia.search.solr.dao;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.solr.analysis.CJKTokenizerFactory;
 import org.apache.solr.analysis.LowerCaseFilterFactory;
@@ -12,6 +14,7 @@ import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.NumericField;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.Resolution;
@@ -52,6 +55,18 @@ public class DummyBook {
     @Field(index = Index.YES, store = Store.YES)
     private String cataloge="JAVA";//JAVA/ENGLISH
 
+    private Set<DummyAuthor> authors = new HashSet<DummyAuthor>();
+
+
+
+    @IndexedEmbedded
+    public Set<DummyAuthor> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<DummyAuthor> authors) {
+        this.authors = authors;
+    }
 
     public DummyBook() {
     }
