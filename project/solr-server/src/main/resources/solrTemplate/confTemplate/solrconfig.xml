@@ -725,7 +725,7 @@
     <lst name="spellchecker">
       <str name="name">suggest</str>
       <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
-      <str name="lookupImpl">org.apache.solr.spelling.suggest.fst.WFSTLookupFactory</str>
+      <str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
       <!-- Alternatives to lookupImpl: 
            org.apache.solr.spelling.suggest.fst.FSTLookup   [finite state automaton]
            org.apache.solr.spelling.suggest.fst.WFSTLookupFactory [weighted finite state automaton]

@@ -3,3 +3,9 @@
 3.query luence
 4.gui,administrator
 5.config,need solr index?solr url config.
+
+
+solr google map
+
+http://wiki.apache.org/solr/SpatialSearch 空间搜索
+http://www.lucidimagination.com/devzone/technical-articles/faceted-search-solr
