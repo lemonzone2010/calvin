@@ -54,6 +54,7 @@ public interface SolrService {
 	 */
 	public <T> Page<T> query(Query q) throws Exception;
 	/**http://wiki.apache.org/solr/SpellCheckComponent
+	 * http://localhost:8080/solr-server/suggest?spellcheck.build=true
 	 * @param q
 	 * @return
 	 * @throws Exception

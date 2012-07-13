@@ -60,9 +60,12 @@ public class HibernateDaoTest extends AbstractHibernateTest{
 				for (int i = 0; i < 15; i++) {
 					
 				DummyBook book=new DummyBook();
-				book.setTitle("nokia"+i);
+				book.setTitle("nokia 0x夏"+i);
 				book.setSubtitle("夏天"+i);
-				book.setPublicationDate(new Date());		
+				book.setPublicationDate(new Date());	
+				if(i>9) {
+					book.setCataloge("ENGLISH");
+				}
 				session.save(book);
 				}
 			 return null;
