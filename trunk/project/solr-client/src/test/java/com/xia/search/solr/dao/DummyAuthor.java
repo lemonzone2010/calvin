@@ -5,12 +5,12 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
-@Indexed
+//@Indexed
 public class DummyAuthor {
     private Integer id;
     private String name;
 
-    @DocumentId
+   // @DocumentId
     public Integer getId() {
         return id;
     }

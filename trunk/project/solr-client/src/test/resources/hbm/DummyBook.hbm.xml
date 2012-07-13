@@ -13,5 +13,9 @@
      <property name="subtitle" length="500" column="F_SUBTITLE" type="string"/>
     <property name="title" length="500" column="F_TITLE" type="string"/>
     <property name="price" column="F_RETAIL_PRICE" access="field" type="double"/>
+    <set cascade="persist" access="field" lazy="true" table="T_DUMMBYBOOK_DUMMYAUTHOR" name="authors">
+     	 <key column="F_DUMMYBOOK_ID"/>
+      	<many-to-many class="DummyAuthor" column="F_AUTHOR_ID"/>
+    </set>
   </class>
 </hibernate-mapping>

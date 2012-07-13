@@ -26,6 +26,32 @@ import com.xia.search.solr.service.SolrServiceImpl;
 
 public class SolrServiceTest extends AbstractHibernateTest{
 	SolrService mySolrService=new SolrServiceImpl("http://localhost:8080/solr-server",HibernateUtil.getSessionFactory());
+	
+	@Test
+	public void indexAll() throws Exception {
+		doInTranstaction(new Callable<List>() {
+
+			@Override
+			public List call() throws Exception {
+				Query query = session.createQuery("from DummyBook");
+				List list = query.list();
+				//索引所有
+				Result result = mySolrService.indexSaveOrUpdate(list.toArray());
+				
+				assertTrue(result.isStatus());
+				
+			//	query = session.createQuery("from DummyAuthor");
+			//	List list1 = query.list();
+				//索引所有
+			//	result = mySolrService.indexSaveOrUpdate(list1.toArray());
+				
+				assertTrue(result.isStatus());
+				
+				
+				return null;
+			}
+		});
+	}
 	@Test
 	public void update() throws Exception {
 		List list=doInTranstaction(new Callable<List>() {
