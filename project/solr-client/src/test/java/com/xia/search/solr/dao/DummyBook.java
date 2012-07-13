@@ -48,6 +48,9 @@ public class DummyBook {
     @NumericField
     private Double price;
 
+    
+    @Field(index = Index.YES, store = Store.YES)
+    private String cataloge="JAVA";//JAVA/ENGLISH
 
 
     public DummyBook() {
@@ -94,6 +97,14 @@ public class DummyBook {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public String getCataloge() {
+		return cataloge;
+	}
+
+	public void setCataloge(String cataloge) {
+		this.cataloge = cataloge;
 	}
 
 }
