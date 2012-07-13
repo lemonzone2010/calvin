@@ -14,6 +14,7 @@ import org.dom4j.Node;
 import org.dom4j.tree.DefaultElement;
 
 import com.xia.search.solr.schema.FieldAdaptor;
+import com.xia.search.solr.service.SolrContext;
 import com.xia.search.solr.util.XmlUtil;
 
 /**
@@ -100,7 +101,7 @@ public class SchemaConfig {
 			if(StringUtils.isEmpty(f.getEntityName())) {
 				continue;
 			}
-			String name=f.getEntityName()+"."+f.getFieldName();
+			String name=f.getEntityName()+SolrContext.ENTITY_FIELD_SPILT+f.getFieldName();
 			if(!xmlUtil.isExistsAttribute(FieldAdaptor.FIELD+"/@name", name)) {
 				//write Field if not exists
 				DefaultElement childElement = new DefaultElement(FieldAdaptor.FIELD_NAME);

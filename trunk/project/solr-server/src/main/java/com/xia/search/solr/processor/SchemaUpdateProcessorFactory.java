@@ -38,6 +38,7 @@ import org.apache.solr.update.processor.UpdateRequestProcessorFactory;
 import org.xml.sax.SAXException;
 
 import com.xia.search.solr.schema.FieldAdaptor;
+import com.xia.search.solr.service.SolrContext;
 import com.xia.search.solr.update.SchemaUpdateHandler;
 import com.xia.search.solr.util.JasonUtil;
 import com.xia.search.solr.xml.SolrConfig;
@@ -70,7 +71,7 @@ class SchemaUpdateProcessor extends UpdateRequestProcessor {
 		SolrInputDocument docs = cmd.getSolrInputDocument();
 		for (SolrInputField field : docs) {
 			FieldAdaptor f = JasonUtil.toObjectFromJson(field.getValue().toString(), FieldAdaptor.class);
-			String name = f.getEntityName() + "." + f.getFieldName();
+			String name = f.getEntityName() + SolrContext.ENTITY_FIELD_SPILT + f.getFieldName();
 			SchemaField field2 = req.getSchema().getFieldOrNull(name);
 			if (null == field2) {
 				SolrConfig.getSchemaConfig().addField(f);

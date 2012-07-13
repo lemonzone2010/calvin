@@ -93,6 +93,11 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${org.slf4j.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-velocity</artifactId>
+			<version>3.6.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<!-- <sourceDirectory>src/main/java</sourceDirectory>
