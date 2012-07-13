@@ -1,0 +1,3 @@
+# accept hosts in MY.DOMAIN.NAME  
++^http://([a-z0-9]*\.)*163.com/   
+# skip everything else  
