@@ -1,15 +1,12 @@
-java -Dcommit=yes -Durl=http://localhost:8080/solr-server/update -jar post.jar *.xml
+﻿java -Dcommit=yes -Durl=http://localhost:8080/solr-server/update -jar post.jar *.xml
 howto:solr post.jar使用
   java -jar post.jar *.xml
   java -Ddata=args -jar post.jar '<delete><id>42</id></delete>'
   java -Ddata=stdin -jar post.jar < hd.xml
-  java -Durl=http://localhost:8080/solr-server/update/csv -Dtype=text/csv -jar post.jar
-
- *.csv
-  java -Durl=http://localhost:8080/solr-server/update/json -Dtype=application/json -jar
- post.jar *.json
-  java -Durl=http://localhost:8080/solr-server/update/extract?literal.id=a -Dtype=appli
-cation/pdf -jar post.jar a.pdf
+java -Dcommit=yes -Durl=http://localhost:8080/solr-server/update -jar post.jar *.xml
+  java -Durl=http://localhost:8080/solr-server/update/csv -Dtype=text/csv -jar post.jar *.csv
+  java -Durl=http://localhost:8080/solr-server/update/json -Dtype=application/json -jar post.jar *.json
+  java -Durl=http://localhost:8080/solr-server/update/extract?literal.id=Better_Search_with_lucene_and_solr -Dtype=application/pdf -jar post.jar "Better Search with lucene and solr.pdf"
 Other options controlled by System Properties include the Solr
 URL to POST to, the Content-Type of the data, whether a commit
 or optimize should be executed, and whether the response should
