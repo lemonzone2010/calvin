@@ -2,6 +2,8 @@ package com.xia.search.solr.schema;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.Fieldable;
+import org.apache.lucene.document.NumericField;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -26,7 +28,7 @@ public class FieldAdaptor{
 
 	public FieldAdaptor() {
 	}
-	public FieldAdaptor(Field field) {
+	public FieldAdaptor(Fieldable field) {
 		setFieldName(field.name());
 		setStoreTermVector(field.isTermVectorStored());
 		setStored(field.isStored());
@@ -41,6 +43,9 @@ public class FieldAdaptor{
 		}
 		if(StringUtils.contains(fieldName, HIBERNATE_CLASS_FLAG)) {
 			indexed=false;
+		}
+		if(field instanceof NumericField) {
+			type="float";
 		}
 	}
 	public static FieldAdaptor newField(String name, String type) {

@@ -73,7 +73,7 @@ public class SolrDocumentHelper {
 			Document doc = entityBuilder.getDocument(entity, id, fieldToAnalyzerMap,
 					searchFactoryImplementor.getInstanceInitializer(), conversionContext);
 			for (Fieldable field : doc.getFields()) {
-				FieldAdaptor fieldAdaptor = new FieldAdaptor((Field)field);
+				FieldAdaptor fieldAdaptor = new FieldAdaptor(field);
 				fieldAdaptor.setEntityName(document.getEntityName());
 				document.add(fieldAdaptor);
 			}
