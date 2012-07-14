@@ -36,7 +36,7 @@ public class DummyBook {
     private Integer id;
 
     @Field(index = Index.YES, store = Store.YES)
-    @DateBridge(resolution = Resolution.DAY)
+    @DateBridge(resolution = Resolution.SECOND)
     private Date publicationDate;
 
     @Field(index = Index.YES, store = Store.YES)
