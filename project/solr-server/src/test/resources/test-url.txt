@@ -1,5 +1,8 @@
+http://localhost:8080/solr-server/select?q=*&facet.field=DummyBook_authors.name&facet.range=DummyBook_price&facet.mincount=1&f.DummyBook_price.facet.range.start=0&f.DummyBook_price.facet.range.end=10&f.DummyBook_price.facet.range.gap=10&facet.query=lucene
 
+http://localhost:8080/solr-server/select?q=DummyBook_title:lucene&facet=on&facet.field=DummyBook_authors.name&facet.range=DummyBook_price&facet.mincount=1&f.DummyBook_price.facet.range.start=0&f.DummyBook_price.facet.range.end=10&f.DummyBook_price.facet.range.gap=10&facet.query=lucene&f.DummyBook_publicationDate.facet.range.start=NOW/YEAR-10YEARS&f.DummyBook_publicationDate.facet.range.end=NOW&f.DummyBook_publicationDate.facet.range.gap=%2B1MONTH&f.DummyBook_publicationDate.facet.range.other=before&f.DummyBook_publicationDate.facet.range.other=after&facet.range=DummyBook_publicationDate
 
+http://localhost:8080/solr-server/select?q=DummyBook_title:lucene&facet=on&facet.field=DummyBook_authors.name&facet.range=DummyBook_price&facet.mincount=1&f.DummyBook_price.facet.range.start=0&f.DummyBook_price.facet.range.end=10&f.DummyBook_price.facet.range.gap=10&facet.query=lucene&f.DummyBook_publicationDate.facet.range.start=NOW/YEAR-10YEARS&f.DummyBook_publicationDate.facet.range.end=NOW&f.DummyBook_publicationDate.facet.range.gap=%2B1MONTH&f.DummyBook_publicationDate.facet.range.other=before&f.DummyBook_publicationDate.facet.range.other=after&facet.range=DummyBook_publicationDate&hl=on&hl.fl=DummyBook_title
 
 
 http://localhost:8080/solr-server/select?q=*&rows=0&facet=true&facet.limit=-1&facet.field=suggestion&&facet.prefix=n
