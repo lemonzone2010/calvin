@@ -51,10 +51,14 @@ public class Crawl extends Configured implements Tool {
   /* Perform complete crawling and indexing (to Solr) given a set of root urls and the -solr
      parameter respectively. More information and Usage parameters can be found below. */
   public static void main(String args[]) throws Exception {
-	  args=new String[]{"Crawl","target/urls","-depth","1","-topN","3"};
-    Configuration conf = NutchConfiguration.create();
-    int res = ToolRunner.run(conf, new Crawl(), args);
-    System.exit(res);
+    crawl(args);
+  }
+
+
+  public static void crawl(String[] args) throws Exception {
+	  Configuration conf = NutchConfiguration.create();
+	  int res = ToolRunner.run(conf, new Crawl(), args);
+	  System.exit(res);
   }
   
   @Override
