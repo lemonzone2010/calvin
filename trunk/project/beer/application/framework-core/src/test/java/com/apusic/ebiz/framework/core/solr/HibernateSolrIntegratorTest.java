@@ -1,4 +1,4 @@
-package com.apusic.ebiz.framework.core.solr;
+/*package com.apusic.ebiz.framework.core.solr;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
@@ -55,13 +55,13 @@ public class HibernateSolrIntegratorTest {
 	@Autowired
 	SessionFactory sessionFactory;
 	
-/*	@Test
+	@Test
 	public void search() {
 		//List<DummyBook> findAll = queryService.findAll(DummyBook.class);
 		//System.out.println(findAll);
 		Map<Class<?>, SolrEntity> mappingMap = SolrMapping.getMappingMap();
 		Assert.assertTrue(mappingMap.size()==2);//has 2mapping files
-	}*/
+	}
 	@Test
 	public void document() {
 		SolrDocumentHelper documentHelper=new SolrDocumentHelper(sessionFactory);
@@ -127,3 +127,4 @@ public class HibernateSolrIntegratorTest {
 	}
 
 }
+*/
