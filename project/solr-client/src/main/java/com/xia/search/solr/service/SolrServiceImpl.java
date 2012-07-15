@@ -2,7 +2,11 @@ package com.xia.search.solr.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
@@ -16,7 +20,10 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.apache.solr.client.solrj.request.UpdateRequest;
+import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.FieldStatsInfo;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.RangeFacet;
 import org.apache.solr.client.solrj.response.SpellCheckResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.client.solrj.response.SpellCheckResponse.Suggestion;
@@ -31,6 +38,9 @@ import org.hibernate.search.query.engine.spi.EntityInfo;
 import com.xia.search.solr.XiaSolrException;
 import com.xia.search.solr.entity.SolrEntityInfoImpl;
 import com.xia.search.solr.entity.SolrObjectLoaderHelper;
+import com.xia.search.solr.query.FacetQuery;
+import com.xia.search.solr.query.FacetQuery.DateRange;
+import com.xia.search.solr.query.FacetQuery.NumericRange;
 import com.xia.search.solr.query.IdMappingMap;
 import com.xia.search.solr.query.Page;
 import com.xia.search.solr.query.Query;
@@ -227,7 +237,7 @@ public class SolrServiceImpl implements SolrService {
 		// List<String> beans = new ArrayList<String>();
 		List<Suggestion> suggestions = spellCheckResponse.getSuggestions();
 		// long found = 0;
-		if(suggestions.size()>1) {
+		if (suggestions.size() > 1) {
 			ret.add(spellCheckResponse.getCollatedResult());
 		}
 		for (Suggestion suggestion : suggestions) {
@@ -237,6 +247,50 @@ public class SolrServiceImpl implements SolrService {
 		// ret.setResult(beans);
 		// ret.setNumFound(found);
 		return ret;
+	}
+
+	@Override
+	public QueryResponse facetQuery(FacetQuery q) throws Exception {
+		SolrQuery query = new SolrQuery();
+		query.setStart(q.getStart());
+		query.setRows(q.getRows());
+		query.setQuery(q.toString());
+		for (Entry<String, ORDER> order : q.getOrder().entrySet()) {
+			query.addSortField(order.getKey(), order.getValue());
+		}
+		query.setFacet(true);
+
+		for (String field : q.facetFields) {
+			query.addFacetField(field);
+		}
+		for (String field : q.highlightFields) {
+			query.addHighlightField(field);
+		}
+		for (String field : q.facetQuerys) {
+			query.addFacetQuery(field);
+		}
+		for (DateRange field : q.dateRangeFields) {
+			query.addDateRangeFacet(field.getField(), field.getStart(), field.getEnd(), field.getGap());
+		}
+		for (NumericRange field : q.numericRangeFields) {
+			query.addNumericRangeFacet(field.getField(), field.getStart(), field.getEnd(), field.getGap());
+		}
+		if (StringUtils.isNotEmpty(q.getFacetPrefix()))
+			query.setFacetPrefix(q.getFacetPrefix());
+		
+		query.setHighlightSimplePre("<font color=\"red\">");
+		query.setHighlightSimplePost("</font>");
+
+		query.setFacetMinCount(1);
+
+		QueryResponse rsp = solrServer.query(query);
+		List<FacetField> facetFields = rsp.getFacetFields();
+		List<RangeFacet> facetRanges = rsp.getFacetRanges();
+		Map<String, Map<String, List<String>>> highlighting = rsp.getHighlighting();
+		Map<String, FieldStatsInfo> fieldStatsInfo = rsp.getFieldStatsInfo();
+
+		Iterator<SolrDocument> iter = rsp.getResults().iterator();
+		return rsp;
 	}
 
 }
