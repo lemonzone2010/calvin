@@ -28,6 +28,6 @@ public class HibernateEventsTest {
 		user.setEmailAddress("ttt@apusic.com");
 		user.setPassword("122");
 		user.setSex("m");
-		crudService.create(user);
+		crudService.create(user);//after insert,solr must add new record
 	}
 }

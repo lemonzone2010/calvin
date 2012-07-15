@@ -126,7 +126,7 @@
 		</dependency>
 
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.xia.search</groupId>
 			<artifactId>solr-client</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
@@ -140,6 +140,6 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
 			<version>4.2</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 </project>
