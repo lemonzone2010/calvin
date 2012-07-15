@@ -1,0 +1,53 @@
+<div class="row topmessage" >
+  <div class="column grid_6"> &nbsp; </div>
+  <div class="column grid_10">
+  	<div class="float_right">
+	  欢迎来到锦绣商城！
+	  <span id="hadlogin" style="display:none"><span></span> <a href="${logoutUrl}">[退出]</a></span>
+	  <span id="nologin"><a href="$loginUrl" >[请登录]</a>，新用户？<a href="/usersphere/register/personRegister.faces">[免费注册]</a></span>
+	| <a href="/usersphere/navigation.jsp" style="color:black;">我的锦绣</a> | <a href="/emarket/shoppingcart/shoppingCart.faces">购物车<span id="shoppingCartCookieCount">（0）</span></a>
+
+ 	</div>
+  </div>
+</div>
+
+<div class="row margin_top10">
+		  <div class="column grid_4"><a href="/product/index.html"><img src="/ebiz-resource/md/image/common/toplogo.jpg" /></a></div>
+		  <div class="column grid_1"> &#160; </div>
+		   <div class="column grid_11">
+			  <div class="tsearch">
+			  		<ul class="tsearch-tab">
+			                <li class="current" role="tab" alt="retail"><a>零售</a><b class="rc-lt"></b><b class="rc-rt"></b></li>
+			                <li role="tab" alt="wholesale"><a  >批发</a><b class="rc-lt"></b><b class="rc-rt"></b></li>
+			         </ul>
+			    </div>
+			    <div class="search">
+			    	 <input type="hidden" id="searchType" value="retail"/>
+			    	 <span><input  type="text" name="keyword" id="index_keyword" class="inp k" onkeypress="enterSearch();"/></span>
+		             <button class="sear searchbtn"  onclick="fulltextQuerySearch();">搜索</button>
+			      	<div class="hots" id="hotkeywords"><em>热门网购：</em> </div>
+			    </div>
+			    <div class="only_clear"></div>
+ 		 </div>
+		</div>
+<div class="row margin_top10">
+  <div  class="column grid_16 ">
+    <div class="row i-bg1">
+      <div class="column grid_1">&nbsp;</div>
+      <div class="column grid_15">
+        <div class="navitem">
+          <ul class="nav">
+            <li class="home current"><a href="/product/index.html">首页</a></li>
+            <li><a  href="/product/brand/brandlibrary.html">品牌库</a></li>
+            <li><a href="/emarket/search/category.faces?category=%25E8%25BF%2590%25E5%258A%25A8">运动</a></li>
+		    <li><a href="/emarket/search/category.faces?category=%25E6%2588%25B7%25E5%25A4%2596">户外</a></li>
+		    <li><a href="/emarket/search/category.faces?category=%25E5%25A5%25B3%25E9%259E%258B">女鞋</a></li>
+		    <li><a href="/emarket/search/category.faces?category=%25E7%2594%25B7%25E9%259E%258B">男鞋</a></li>
+			<li><a href="/emarket/search/category.faces?category=%25E7%25AB%25A5%25E9%259E%258B">童鞋</a></li>
+            <li><a  href="/emarket/search/wholesale.faces">批发</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

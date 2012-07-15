@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
+<title>$!{productBean.productName}-锦绣商城</title>
+<script type="text/javascript" src="/emarket/_global/resource/ext/om/ajax.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/emarket/_global/resource/ext/ext-base.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/emarket/_global/resource/ext/ext-core.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/emarket/_global/resource/js/window/ebizWindow.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/emarket/_global/resource/ext/om/SubmitAction.js" charset="UTF-8"></script>
+<script type="text/javascript">Ext.BLANK_IMAGE_URL="/emarket/_global/resource/ext/s.gif";</script>
+<link class="x-skin" rel="stylesheet" type="text/css" href="/emarket/_global/resource/ext/skin/default/yuiext/css/ext-all.css"/>
+<link class="x-skin" rel="stylesheet" type="text/css" href="/emarket/_global/resource/ext/skin/default/yuiext/css/ext-extra.css"/>
+<script type="text/javascript" src="/emarket/_global/resource/ext/locale/ext-lang.js?zh_CN" charset="UTF-8"></script>
+
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/table.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/form.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/grid.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/all.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/_all.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/form.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/css/template.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/css/window/window.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/emarket/emarket.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/kissy/css/demo.css"/>
+		<script src="/ebiz-resource/js/jquery/jquery.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/js/common/template.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/template_web.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/location.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/fileupload.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/emarket/shoppingcart.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/emarket/cookiecount.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/kissy/js/kissy.js"></script>
+		<script src="/ebiz-resource/kissy/js/imagezoom.js"></script>
+		<script src="/ebiz-resource/kissy/js/uibase.js"></script>
+		<script src="/ebiz-resource/md/js/emarket/emarket.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/emarket/topinit.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/emarket/search.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/hotkeywords.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".defaultSelected").click();
+	emarket_imagezoomInit();
+	ebiz_topinit('${server_ip}');
+	ebiz_footinit('${server_ip}');
+});
+</script>
+</head>
+
+<body>
+#parse("/headTemplate.vm")
+	 <div class="row">
+	  <div class="column grid_16">
+	    <div >您现在的位置：<a href="/product/index.html">锦绣商城</a> &gt; <span><a href="">产品详情</a></span> &gt; <span><a href="">$!{productBean.productName}</a></span></div>
+	  </div>
+	</div>
+
+<div class="row margin_top10">
+  <div class="column grid_16">
+    <div class="dp_main">
+      <div class="show margin_top10">
+        <div class="pic big">
+        	<a href="#"><img id="multi" class="bigimg" data-ks-imagezoom="${mainImage.imagePath}" src="${mainImage.imagePath}" /></a>
+        </div>
+        <div class="show_label2"></div>
+        <div class="abbreviation">
+				#foreach($img in $images)
+			          <span class="imgspan  #if($velocityCount == 1 ) current #end"><a class="show_pic_small" href="javascript:;">
+		            	<img class="smallimg" src="${img.imagePath}_140x140.jpg" data-has-zoom="true" data-ks-imagezoom="${img.imagePath}"/>
+		             </a></span>
+			        #end
+        </div>
+      </div>
+
+      <div class="info margin_top10">
+        <div class="h1_title">
+          <h1>$!{productBean.productName}</h1>
+        </div>
+        <p class="price_d">商品编号：<span>$!{productBean.code}</span></p>
+        <p class="price_d">零售价：<span class="num">￥$!{productBean.retailPrice}</span></p>
+        <p class="price_d">库存：<span>$!{productBean.stock.type}</span>&#160;&#160;&#160;
+            	#if( $isCancel ) <span style="color:red;">该商品已下架</span> #end
+        </p>
+        <p class="price_m">该商品由<a href="">$!{userProfile.fullName}</a>商户提供</p>
+
+        <div class="property">
+          		#foreach($custom in $customizations)
+              	 <div class="size_wrap">
+					<dl class="size clearfix">
+	                  <dt>$!{custom.name}：</dt>
+	                  #foreach($item in $custom.items)
+	                  	<dd><a class="sl #if($velocityCount == 1)defaultSelected#end " title="${item}" href="javascript:;" onclick="emarket_selectCustomization(this,'${custom.name}','${item}')">${item}</a> </dd>
+	                  #end
+               		</dl>
+               	  </div>
+				#end
+
+          <div class="num">
+                <label>我要买：</label>
+               		 	<span>
+						  <span class="numinput">
+		                	<input type="text" class="text" id="quantity" name="quantity" value="1" onkeyup="emarket_justNumber(this)" />
+		              		<a href="javascript:;" onclick="emarket_quantityAdd(1,'quantity');"><span class="numadjust increase"></span></a>
+							<a href="javascript:;" onclick="emarket_quantityAdd(0,'quantity');"><span class="numadjust decrease"></span></a>
+						</span>件
+						<span buy_num="1" style="display:none" class="wrong">请输入购买数量</span>
+                </div>
+
+          		<p style="display:none;">
+					<span class="select selectedAttrs">已选择：</span>
+						#foreach($custom in $customizations)
+		              	 	<span class='selectedAttr'  alt="$custom.name"></span>
+						#end
+	              	<input type="hidden" id="attribute" name="attribute" value=""/>
+	              	<input type="hidden" id="addFrom" name="addFrom" value="productPage"/>
+	              	<input type="hidden" id="productId" name="productId" value="$productBean.id"/>
+	              	<input type="hidden" id="shoppingCartType" name="shoppingCartType" value="RETAIL"/>
+	              	<input type="hidden" id="favoriteType" name="favoriteType" value="RETAIL"/>
+	              	<input type="hidden" id="isCancel" name="isCancel" value="$!{isCancel}"/>
+	              	<input type="hidden" id="inStock" name="inStock" value="$!{inStock}"/>
+	              	<input type="hidden" id="stock" name="stock" value="$!{productBean.stock.type}"/>
+	              	<div class="clear"></div>
+             	 </p>
+
+          	 <div class="but">
+               <a title="购买" href="javascript:;" onclick="emarket_addShopCart('RETAIL');"><img src="/ebiz-resource/md/image/emarket/but_buy.gif"></a>
+               <a class="none" title="收藏" href="javascript:;" onclick="emarket_addFavorite();"><img src="/ebiz-resource/md/image/emarket/but_collect.gif"></a>
+                <div class="clear"></div>
+              </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+      <a name="review_point"></a>
+      <ul class="tab_title">
+          <li class="current2"><a href="javascript:;" onclick="emarket_detailSelect(this,'detail_product')">商品详情</a></li>
+            <li ><a href="javascript:;" onclick="emarket_detailSelect(this,'detail_shop_info')">商家信息</a></li>
+      </ul>
+
+
+      <div class="item_pd" style="display: block;">
+        <div style="" id="detail_product">
+              <div class="mall_goods_foursort_style">
+ 					<div class="clear"></div>
+
+					<div class="mall_goods">
+						  商品名称：$!{productBean.productName}
+					</div>
+					<br/>
+
+	                <div class="mall_goods_foursort_style_frame">
+	                	货号：$!{productBean.code}
+	                </div>
+
+	                <div class="mall_goods_foursort_style_frame">
+	                	品牌：<a target="_blank" href="$!{productBean.brand.url}">$!{productBean.brand.name}</a>
+	                </div>
+	                <div class="mall_goods_foursort_style_frame">
+	                	类别：$!{productBean.category.name}
+	                </div>
+					<div class="mall_goods_foursort_style_frame">
+	                	库存：$!{productBean.stock.type}
+	                </div>
+
+	                <div class="mall_goods_foursort_style_frame">
+	                	发票：$!{productBean.receipt.type}
+	                </div>
+
+	                <div class="clear"></div>
+					<br/>
+					<div class="mall_goods">
+						  商品描述：$!{productBean.desc}
+					</div>
+
+					#if($attributes.size() != 0)
+						<div class="clear"></div>
+	                	<hr style="margin-top:20px;"/>
+	                 	<h2 style="display: block;"><span class="intro_title">规格参数</span></h2>
+
+		 					#foreach($attr in $attributes)
+				                <div class="mall_goods_foursort_style_frame">
+									$attr.name : #foreach($item in $attr.items) ${item} #end
+					            </div>
+		 					#end
+ 					#end
+
+                	<div class="clear"></div>
+                	<hr style="margin-top:20px;"/>
+                 	<h2 style="display: block;"><span class="intro_title">商品介绍</span></h2>
+					<div style="margin-top:10px;">
+	          			$!{productBean.introduction}
+	          		</div>
+              </div>
+              <br/>
+              <div class="clear"></div>
+            </div>
+
+     <div  id="detail_shop_info"  style="display: none;" isloaded="1">
+				<div class="mall_goods_foursort_style">
+		                <div class="mall_goods_foursort_style_frame">
+		                	商家：$!{productBean.user.name}
+		                </div>
+						<div class="mall_goods_foursort_style_frame">
+		                	店铺名称：$!{userProfile.fullName}
+		                </div>
+		                <div class="mall_goods_foursort_style_frame">
+		                	邮箱：$!{userProfile.email}
+		                </div>
+		                <div class="mall_goods_foursort_style_frame">
+		                	QQ：$!{userProfile.qq}
+		                </div>
+		                <div class="mall_goods_foursort_style_frame">
+		                	手机：$!{userProfile.mobilePhone}
+		                </div>
+		                <div class="mall_goods_foursort_style_frame">
+		                	电话：$!{userProfile.phone}
+		                </div>
+	            <div class="clear"></div>
+	            </div>
+	            <br/>
+	              <div class="clear"></div>
+            </div>
+		 </div>
+    </div>
+
+
+    <div id="promises">
+		<hr/>
+		<h2 class="intro_title">锦绣商城服务承诺：</h2>
+		<br/>
+		锦绣商城向您保证所售商品均为正品行货，自带机打发票，与商品一起寄送。凭质保证书及锦绣商城发票，可享受全国联保服务，与您亲临商场选购的商品享受相同的质量保证。
+		<br/>
+		锦绣商城还为您提供具有竞争力的商品价格和免运费政策，请您放心购买！
+		<br/>
+		注：钟表除外。
+		</div>
+		<div id="state">
+		<hr/>
+		<strong >声明:</strong>
+		因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，本司不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若本商城没有及时更新，请大家谅解！
+		</div>
+  </div>
+</div>
+
+  #parse("/footTemplate.vm")
+
+</body>
+</html>
