@@ -20,7 +20,7 @@ public abstract class AbstractSolrQuery {
 		this.clazz = clazz;
 	}
 	
-	protected String getFieldName(String fieldName) {
+	public String getFieldName(String fieldName) {
 		SolrDocumentHelper helper=new SolrDocumentHelper(HibernateContext.getSessionFactory());
 		try {
 			SolrSchemaDocument document = helper.getSchemaDocument(clazz.newInstance());

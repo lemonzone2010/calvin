@@ -5,10 +5,13 @@ import static junit.framework.Assert.assertTrue;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -19,6 +22,9 @@ import com.xia.search.solr.dao.DummyBook;
 import com.xia.search.solr.dao.HibernateUtil;
 import com.xia.search.solr.hibernate.HibernateContext;
 import com.xia.search.solr.hibernate.HibernateContext.HibernateCallback;
+import com.xia.search.solr.query.FacetQuery;
+import com.xia.search.solr.query.FacetQuery.DateRange;
+import com.xia.search.solr.query.FacetQuery.NumericRange;
 import com.xia.search.solr.query.Page;
 import com.xia.search.solr.query.Result;
 import com.xia.search.solr.service.SolrService;
@@ -148,5 +154,20 @@ public class SolrServiceTest extends AbstractHibernateTest{
 		for (String s : page) {
 			System.out.println(s);
 		}
+	}
+	
+	@Test
+	public void facetQuery() throws Exception {
+		FacetQuery query=new FacetQuery(DummyBook.class, "title", "lucene");
+		query.facetFields.add("{!key=作者}"+query.getFieldName("authors.name"));
+		query.numericRangeFields.add(new NumericRange(query.getFieldName("price"), 0, 500, 50));
+		Calendar startCal = Calendar.getInstance();
+		startCal.add(Calendar.YEAR, -5);
+		Date startDate = startCal.getTime();
+		Date endDate = Calendar.getInstance().getTime();
+		query.dateRangeFields.add(new DateRange(query.getFieldName("publicationDate"),  startDate, endDate, "+1MONTH"));
+		query.highlightFields.add(query.getFieldName("title"));
+		QueryResponse facetQuery = mySolrService.facetQuery(query);
+		System.out.println(facetQuery);
 	}
 }

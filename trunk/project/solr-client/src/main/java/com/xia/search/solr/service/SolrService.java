@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
 
+import com.xia.search.solr.query.FacetQuery;
 import com.xia.search.solr.query.Page;
 import com.xia.search.solr.query.Query;
 import com.xia.search.solr.query.Result;
@@ -60,4 +62,5 @@ public interface SolrService {
 	 * @throws Exception
 	 */
 	public List<String> suggest(String q) throws Exception;
+	public QueryResponse facetQuery(FacetQuery q) throws Exception;
 }
