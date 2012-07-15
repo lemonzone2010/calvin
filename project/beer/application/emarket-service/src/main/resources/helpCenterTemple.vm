@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
+<title>品牌库-锦绣商城</title>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/table.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/form.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/grid.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/all.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/_all.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/css/template.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/css/window/window.css"/>
+		<link rel="stylesheet" type="text/css" href="/ebiz-resource/md/css/emarket/emarket.css"/>
+		<script src="/ebiz-resource/js/jquery/jquery.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/emarket/topinit.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/emarket/search.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/emarket/shoppingcart.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/emarket/cookiecount.js" type="text/javascript"></script>
+		<script src="/ebiz-resource/md/js/hotkeywords.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				ebiz_topinit('${server_ip}');
+				ebiz_footinit('${server_ip}');
+			});
+		</script>
+</head>
+
+<body >
+  #parse("/headTemplate.vm")
+	<!-- 导航 -->
+			<div class="row">
+			  <div class="column grid_16">
+			    <div >您现在的位置：<a href='/product/index.html'>锦绣商城</a> &gt; <span><a href="/product/brand/brandlibrary.html">帮助中心</a></span> </div>
+			  </div>
+			</div>
+
+
+	<div class="row margin_top10">
+	  	<div class="column grid_3 ">
+			<div class="mydnew_sidel">
+				<h3>新手帮助</h3>
+				#foreach($foot in $pageFoot)
+					
+					<div class="divborder my_content" style="border-top:none;border-bottom:none;">
+						<ul><li><span>&#160;</span> <a class="#if($foot.id == $hcontent.titleId)actived#end" href="/product/help/help${foot.id}.html">$foot.name</a></li></ul>
+					</div>
+				#end
+				#foreach($help in $helpCenter)
+					<h3>$help.name</h3>
+					#foreach($child in $help.childrenList)
+						<div class="divborder my_content" style="border-top:none;border-bottom:none;">
+							<ul><li><span>&#160;</span> <a class="#if($child.id == $hcontent.titleId)actived#end" href="/product/help/help${child.id}.html">$child.name</a></li></ul>
+						</div>
+					#end
+				#end
+			</div>
+		</div>
+	
+		<div class="column grid_13">
+			<div class="row">
+				<div class="column grid_13">
+					<div class="mytitle">
+						<h1>$!currentHcn.name</h1>
+					</div>
+				</div>
+			</div>
+			<div id="grid13_border" class="row">
+				<div class="column grid_13">
+					<div class="my_content_form">
+						$!hcontent.content
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  	#parse("/footTemplate.vm")
+</body>
+</html>
