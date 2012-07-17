@@ -1,3 +1,0 @@
-#foreach($field in $bean.viewFields)
-${bean.className}.$field.name=$util.toUnicode($field.label)
-#end
