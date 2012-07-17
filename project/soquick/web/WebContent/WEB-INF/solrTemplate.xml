@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<solr persistent="true">
-  <cores adminPath="/admin/cores" adminHandler="com.apusic.ebiz.soquick.admin.SoQuickAdminHandler" defaultCoreName="collection1">
-    <core name="collection1" instanceDir=".\" dataDir="d:/solr/data"/>
-  </cores>
-</solr>
